@@ -12,7 +12,10 @@ export function HomeFaq() {
     <Section className="bg-background">
       <div className="mx-auto max-w-3xl">
         <div className="mb-10 text-center">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">FAQs</h2>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">Support</p>
+          <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+            Frequently Asked Questions
+          </h2>
           <p className="mt-3 text-primary/65">Answers to common questions before you book.</p>
         </div>
 

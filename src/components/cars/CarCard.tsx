@@ -59,12 +59,12 @@ export function CarCard({ car, className }: CarCardProps) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent opacity-70 transition duration-300 group-hover:opacity-90" />
           {car.badge ? (
-            <span className="absolute left-3 top-3 rounded-[10px] bg-accent px-2.5 py-1 text-xs font-semibold text-primary shadow-sm">
+            <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary shadow-sm">
               {car.badge}
             </span>
           ) : null}
-          <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">
-            <p className="rounded-[10px] bg-white/95 px-2.5 py-1 text-xs font-semibold text-primary backdrop-blur">
+          <div className="absolute bottom-3 left-3">
+            <p className="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-primary backdrop-blur">
               {formatPrice(car.priceDay)}
               <span className="font-normal text-primary/55"> / day</span>
             </p>
@@ -89,19 +89,19 @@ export function CarCard({ car, className }: CarCardProps) {
             From <span className="font-medium text-primary">{formatPrice(car.priceMonth)}</span> / month
           </p>
 
-          <div className="mt-auto grid grid-cols-3 gap-2 pt-4">
+          <div className="mt-auto grid grid-cols-3 gap-1.5 pt-4 xs:gap-2">
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-[11px] font-semibold text-primary transition duration-200 hover:brightness-95 sm:text-xs"
+              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-accent px-1.5 text-[10px] font-semibold text-primary transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
             >
               <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">WhatsApp</span>
             </a>
             <a
               href={`tel:${brand.phone}`}
-              className="inline-flex min-h-10 items-center justify-center gap-1.5 rounded-[10px] bg-secondary px-2 text-[11px] font-semibold text-primary transition duration-200 hover:brightness-95 sm:text-xs"
+              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-secondary px-1.5 text-[10px] font-semibold text-primary transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
             >
               <PhoneIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">Call Us</span>
@@ -109,7 +109,7 @@ export function CarCard({ car, className }: CarCardProps) {
             <button
               type="button"
               onClick={() => setInquireOpen(true)}
-              className="inline-flex min-h-10 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-2 text-[11px] font-semibold !text-white transition duration-200 hover:bg-primary/90 sm:text-xs"
+              className="inline-flex min-h-10 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-1.5 text-[10px] font-semibold !text-white transition duration-200 hover:bg-primary/90 sm:px-2 sm:text-xs"
             >
               Inquire Now
             </button>

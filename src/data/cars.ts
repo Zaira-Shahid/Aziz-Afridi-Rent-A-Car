@@ -180,6 +180,30 @@ export const blogPosts: BlogPost[] = [
     excerpt: "How businesses save time with monthly and executive car rental plans.",
     image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1200&q=80",
   },
+  {
+    slug: "lahore-city-rental-guide",
+    title: "Lahore City Guide for Car Rentals",
+    category: "travel-guides",
+    date: "Jun 15, 2026",
+    excerpt: "Best routes, parking tips, and which car size works best for Lahore traffic.",
+    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "northern-areas-suv-guide",
+    title: "Northern Areas: Why You Need an SUV",
+    category: "travel-guides",
+    date: "Jun 02, 2026",
+    excerpt: "Hunza, Skardu, and Naran trips — what to expect and which SUVs perform best.",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "airport-transfer-checklist",
+    title: "Airport Transfer Checklist",
+    category: "car-rental-tips",
+    date: "May 20, 2026",
+    excerpt: "Flight delays, meet-and-greet, and how to book a reliable airport pickup.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
+  },
 ];
 
 export const homeFaqs: FaqItem[] = [
@@ -202,5 +226,25 @@ export const homeFaqs: FaqItem[] = [
     question: "Are airport pickups available?",
     answer:
       "Yes. Airport pick & drop is available for Islamabad Airport and other major routes on request.",
+  },
+  {
+    question: "What documents do I need for self-drive?",
+    answer:
+      "A valid CNIC and a driving license are required. For tourists, a passport and international driving permit may be needed.",
+  },
+  {
+    question: "Is fuel included in the rental price?",
+    answer:
+      "Daily rates are typically without fuel unless stated otherwise. We can arrange full-to-full policies and clarify costs before booking.",
+  },
+  {
+    question: "Can I rent a car for a week or a month?",
+    answer:
+      "Yes. We offer daily, weekly, and monthly packages with better rates for longer durations — ideal for corporate and family use.",
+  },
+  {
+    question: "Do you deliver cars to hotels or homes?",
+    answer:
+      "Yes. Doorstep delivery is available in major cities subject to location and timing. Share your address when you inquire.",
   },
 ];

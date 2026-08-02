@@ -1,65 +1,70 @@
 import Image from "next/image";
-import { Reveal } from "@/components/ui/Reveal";
-import { Section } from "@/components/ui/Section";
+import Link from "next/link";
+import { Container } from "@/components/ui/Container";
 
-const points = [
+const FEATURES = [
   {
-    title: "Clean, inspected fleet",
-    text: "Every car is checked before handover so your trip starts smooth.",
+    icon: "verified",
+    title: "Impeccable Fleet Maintenance",
+    text: "Every vehicle undergoes a 50-point inspection and deep detailing after every rental.",
   },
   {
-    title: "City & tourist coverage",
-    text: "Islamabad, Lahore, Karachi, Murree, Hunza, and more destinations.",
-  },
-  {
-    title: "Flexible rental plans",
-    text: "Daily, weekly, monthly, corporate, and wedding packages available.",
-  },
-  {
-    title: "Fast WhatsApp support",
-    text: "Quick replies for bookings, changes, and airport pickups.",
+    icon: "support_agent",
+    title: "24/7 Concierge Service",
+    text: "Our dedicated assistants are always available to help with any request during your rental.",
   },
 ];
 
+const IMAGE =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuCQEloNqcb2r1-SUuMSIhMG9c6HtNIohNtGgY8isRNnduk8piLHAXAtn-y6TvegQ6vdH_seIqdlCo7bMaKfGbI45a3PTPATwCIbjJ_GizCPsKQsNAbd6xRPJ1g5cNIjWmj9OZ9GC-oB5rYJixz6t4kuXo_qf5b1CxP2075F5SPadqTy0BAmfEHT-jTeI-vJM6uKqJ8XaffuXnRrwz4Q5wGJrzUJFcfeTKKW4eeUsGD6WXsKTVSF48PA";
+
 export function WhyChooseUs() {
   return (
-    <Section className="bg-primary">
-      <div className="grid items-center gap-10 lg:grid-cols-2">
-        <Reveal>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[12px]">
-            <Image
-              src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?auto=format&fit=crop&w=1400&q=80"
-              alt="Signature Rent A Car fleet"
-              fill
-              className="object-cover transition duration-700 hover:scale-105"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
-        </Reveal>
-        <div>
-          <Reveal>
-            <p className="font-heading text-sm font-medium uppercase tracking-[0.2em] text-secondary">
-              Why Signature
-            </p>
-            <h2 className="mt-3 font-heading text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">
-              Built for trust. Designed for comfort.
-            </h2>
-            <p className="mt-4 text-sm text-white/65 sm:text-base">
-              A modern rental experience with clear pricing, dependable vehicles, and service that feels premium.
-            </p>
-          </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {points.map((point, index) => (
-              <Reveal key={point.title} delay={index * 100}>
-                <div className="h-full rounded-[12px] border border-white/10 bg-white/5 p-4 transition duration-300 hover:border-secondary/40 hover:bg-white/10">
-                  <h3 className="text-base font-semibold text-white">{point.title}</h3>
-                  <p className="mt-2 text-sm text-white/60">{point.text}</p>
+    <section className="bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
+      <Container className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            The Signature Edge
+          </span>
+          <h2 className="mt-4 font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+            Uncompromising Standards for Unforgettable Journeys
+          </h2>
+          <p className="mt-6 text-base leading-relaxed text-white/70 sm:text-lg">
+            We don&apos;t just rent cars; we curate experiences. Our commitment to excellence ensures every
+            mile you drive is defined by comfort, safety, and prestige.
+          </p>
+          <div className="mt-10 space-y-6">
+            {FEATURES.map((item) => (
+              <div key={item.title} className="flex gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-accent/20">
+                  <span className="material-symbols-outlined text-accent">{item.icon}</span>
                 </div>
-              </Reveal>
+                <div>
+                  <h3 className="text-lg font-semibold">{item.title}</h3>
+                  <p className="mt-1 text-sm text-white/60 sm:text-base">{item.text}</p>
+                </div>
+              </div>
             ))}
           </div>
+          <Link
+            href="/about"
+            className="mt-8 inline-flex items-center gap-1 text-sm font-semibold text-accent transition hover:gap-2"
+          >
+            Learn more about us <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+          </Link>
         </div>
-      </div>
-    </Section>
+
+        <div className="relative lg:col-span-7">
+          <div className="relative aspect-video overflow-hidden rounded-2xl shadow-2xl">
+            <Image src={IMAGE} alt="Premium key handover service" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 55vw" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
+          </div>
+          <div className="absolute -bottom-6 -left-2 hidden rounded-xl bg-accent p-6 text-primary shadow-xl sm:block md:-left-6 md:p-8">
+            <div className="font-heading text-3xl font-bold md:text-4xl">15+</div>
+            <div className="text-xs font-semibold uppercase tracking-wide">Years of Excellence</div>
+          </div>
+        </div>
+      </Container>
+    </section>
   );
 }

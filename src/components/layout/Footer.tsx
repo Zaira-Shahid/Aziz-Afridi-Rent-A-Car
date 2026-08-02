@@ -1,103 +1,78 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
-import { cities, carCategories, mainNav, policyLinks, services } from "@/data";
+import {
+  footerCompanyLinks,
+  footerLocationLinks,
+  footerServiceLinks,
+  policyLinks,
+} from "@/data";
 import { brand } from "@/lib/brand";
 
-export function Footer() {
-  const primaryCities = cities.filter((city) => city.type === "primary").slice(0, 8);
-
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
   return (
-    <footer className="bg-primary text-white">
-      <Container className="py-10 sm:py-14">
-        <div className="grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="sm:col-span-2 lg:col-span-1">
+    <div>
+      <h4 className="mb-6 text-base font-semibold">{title}</h4>
+      <ul className="space-y-3">
+        {links.map((item) => (
+          <li key={item.href}>
+            <Link href={item.href} className="text-sm text-white/55 transition hover:text-accent">
+              {item.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function Footer() {
+  return (
+    <footer className="bg-navy text-white">
+      <Container className="py-14 sm:py-20">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="space-y-5 sm:col-span-2 lg:col-span-1">
             <Logo />
-            <p className="mt-4 text-sm text-white/65">{brand.tagline}</p>
-            <div className="mt-5 space-y-1 text-sm text-white/70">
-              <p>{brand.phone}</p>
-              <p>{brand.email}</p>
+            <p className="max-w-xs text-sm leading-relaxed text-white/55">
+              Redefining luxury travel standards across Pakistan. Your premium mobility partner.
+            </p>
+            <div className="flex gap-3">
+              <a
+                href={`https://wa.me/${brand.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:bg-accent hover:text-primary"
+                aria-label="WhatsApp"
+              >
+                <span className="material-symbols-outlined text-[18px]">chat</span>
+              </a>
+              <a
+                href={`tel:${brand.phone}`}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:bg-accent hover:text-primary"
+                aria-label="Call"
+              >
+                <span className="material-symbols-outlined text-[18px]">call</span>
+              </a>
+              <a
+                href={`mailto:${brand.email}`}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:bg-accent hover:text-primary"
+                aria-label="Email"
+              >
+                <span className="material-symbols-outlined text-[18px]">mail</span>
+              </a>
             </div>
           </div>
 
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">Explore</p>
-            <ul className="space-y-2">
-              {mainNav.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-white/70 transition-colors hover:text-secondary">
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">Popular Cities</p>
-            <ul className="space-y-2">
-              {primaryCities.map((item) => (
-                <li key={item.slug}>
-                  <Link
-                    href={`/rent-a-car/${item.slug}`}
-                    className="text-sm text-white/70 transition-colors hover:text-secondary"
-                  >
-                    Rent a Car {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">Categories</p>
-            <ul className="space-y-2">
-              {carCategories.map((item) => (
-                <li key={item.slug}>
-                  <Link
-                    href={`/categories/${item.slug}`}
-                    className="text-sm text-white/70 transition-colors hover:text-secondary"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Right side: Services */}
-          <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-secondary">Services</p>
-            <ul className="space-y-2">
-              {services.map((item) => (
-                <li key={item.slug}>
-                  <Link
-                    href={`/services/${item.slug}`}
-                    className="text-sm text-white/70 transition-colors hover:text-secondary"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn title="Company" links={footerCompanyLinks} />
+          <FooterColumn title="Services" links={footerServiceLinks} />
+          <FooterColumn title="Popular Locations" links={footerLocationLinks} />
+          <FooterColumn title="Legal" links={policyLinks} />
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-white/50">
+        <div className="mt-14 border-t border-white/10 pt-6">
+          <p className="text-xs text-white/45">
             © {new Date().getFullYear()} {brand.name}. All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-4">
-            {policyLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm text-white/55 transition-colors hover:text-secondary"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
         </div>
       </Container>
     </footer>

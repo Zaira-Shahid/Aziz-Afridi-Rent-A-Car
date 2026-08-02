@@ -25,10 +25,10 @@ export function HomeBlog() {
         </div>
       </Reveal>
 
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {blogPosts.map((post, index) => (
-          <Reveal key={post.slug} delay={index * 100}>
-            <article className="group h-full overflow-hidden rounded-[12px] border border-primary/8 bg-background transition duration-300 hover:-translate-y-1.5 hover:border-secondary/25 hover:shadow-[0_16px_40px_rgba(0,11,29,0.08)]">
+          <Reveal key={post.slug} delay={Math.min(index, 5) * 80}>
+            <article className="group flex h-full flex-col overflow-hidden rounded-[12px] border border-primary/8 bg-background transition duration-300 hover:-translate-y-1.5 hover:border-secondary/25 hover:shadow-[0_16px_40px_rgba(0,11,29,0.08)]">
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
                   src={post.image}
@@ -38,14 +38,20 @@ export function HomeBlog() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="p-5">
+              <div className="flex flex-1 flex-col p-5">
                 <p className="text-xs uppercase tracking-wide text-secondary">{post.date}</p>
                 <h3 className="mt-2 text-lg font-semibold text-primary">
                   <Link href={`/blog/${post.category}`} className="transition-colors hover:text-secondary">
                     {post.title}
                   </Link>
                 </h3>
-                <p className="mt-2 text-sm text-primary/60">{post.excerpt}</p>
+                <p className="mt-2 flex-1 text-sm text-primary/60">{post.excerpt}</p>
+                <Link
+                  href={`/blog/${post.category}`}
+                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition hover:text-secondary"
+                >
+                  Read more <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </Link>
               </div>
             </article>
           </Reveal>

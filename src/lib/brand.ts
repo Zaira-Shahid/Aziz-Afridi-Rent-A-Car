@@ -9,8 +9,8 @@ export const brand = {
   colors: {
     primary: "#000B1D",
     secondary: "#04C4E3",
-    accent: "#AEE20F",
-    background: "#F6F7F8",
+    accent: "#BFF52C",
+    background: "#F8F9FA",
   },
 } as const;
 

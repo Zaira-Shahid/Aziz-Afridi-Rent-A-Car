@@ -3,6 +3,18 @@ export type NavLink = {
   href: string;
 };
 
+export type NavGroup = {
+  label: string;
+  items: NavLink[];
+};
+
+export type NavItem = {
+  label: string;
+  href: string;
+  children?: NavLink[];
+  groups?: NavGroup[];
+};
+
 export type CityPage = {
   slug: string;
   name: string;
