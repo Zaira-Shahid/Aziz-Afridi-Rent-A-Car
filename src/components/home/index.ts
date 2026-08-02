@@ -1,0 +1,9 @@
+export { HomeHero } from "./HomeHero";
+export { BookingBar } from "./BookingBar";
+export { BrandStrip } from "./BrandStrip";
+export { PromoBanner } from "./PromoBanner";
+export { HowItWorks } from "./HowItWorks";
+export { WhyChooseUs } from "./WhyChooseUs";
+export { HomeFaq } from "./HomeFaq";
+export { HomeBlog } from "./HomeBlog";
+export { LocationsStrip } from "./LocationsStrip";
