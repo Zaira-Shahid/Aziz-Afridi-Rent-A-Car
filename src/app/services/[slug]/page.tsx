@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentPage } from "@/components/shared";
-import { services } from "@/data";
+import {
+  DailyCarRentalDetail,
+  ExecutiveCarRentalDetail,
+  HotelTransferDetail,
+  WeddingCarRentalDetail,
+} from "@/components/services";
+import { serviceDetails, services } from "@/data";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+const detailComponents = {
+  "hotel-transfer": HotelTransferDetail,
+  "executive-car-rental": ExecutiveCarRentalDetail,
+  "wedding-car-rental": WeddingCarRentalDetail,
+  "daily-car-rental": DailyCarRentalDetail,
+} as const;
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -16,9 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = services.find((item) => item.slug === slug);
   if (!service) return { title: "Service Not Found" };
 
+  const detail = serviceDetails[slug];
+
   return {
     title: service.name,
-    description: `${service.name} with Signature Rent A Car — professional and on-time service.`,
+    description: detail?.metaDescription ?? `${service.name} with Signature Rent A Car — professional and on-time service.`,
   };
 }
 
@@ -26,6 +41,13 @@ export default async function ServicePage({ params }: Props) {
   const { slug } = await params;
   const service = services.find((item) => item.slug === slug);
   if (!service) notFound();
+
+  const DetailComponent = detailComponents[slug as keyof typeof detailComponents];
+  const detail = serviceDetails[slug];
+
+  if (DetailComponent && detail) {
+    return <DetailComponent data={detail} />;
+  }
 
   return (
     <ContentPage

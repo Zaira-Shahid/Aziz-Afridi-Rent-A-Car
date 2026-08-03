@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { cities } from "@/data";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -62,6 +63,70 @@ const STEPS = [
     n: "03",
     title: "24/7 Elite Support",
     text: "A dedicated support line is at your disposal throughout your rental period.",
+  },
+];
+
+const OFFERINGS = [
+  {
+    icon: "flight",
+    title: "Airport Transfers",
+    text: "Meet-and-greet pickups and drop-offs at Islamabad International and other major airports.",
+    href: "/services/airport-pick-drop",
+  },
+  {
+    icon: "business_center",
+    title: "Corporate Rentals",
+    text: "Monthly and executive fleet plans with invoicing for companies and embassies.",
+    href: "/services/corporate-car-rental",
+  },
+  {
+    icon: "favorite",
+    title: "Wedding Cars",
+    text: "Decorated luxury sedans and SUVs for baraat, walima, and wedding convoys.",
+    href: "/services/wedding-car-rental",
+  },
+  {
+    icon: "today",
+    title: "Daily Rentals",
+    text: "Flexible self-drive or chauffeur-driven bookings for everyday city travel.",
+    href: "/services/daily-car-rental",
+  },
+  {
+    icon: "hotel",
+    title: "Hotel Transfers",
+    text: "Reliable pickups and drop-offs coordinated directly with your hotel concierge.",
+    href: "/services/hotel-transfer",
+  },
+  {
+    icon: "tour",
+    title: "City Tours",
+    text: "Guided sightseeing trips across Islamabad, Lahore, Karachi, and the northern valleys.",
+    href: "/city-services",
+  },
+];
+
+const PRIMARY_CITIES = cities.filter((city) => city.type === "primary");
+
+const GUARANTEES = [
+  {
+    icon: "verified",
+    title: "Verified Fleet",
+    text: "Every vehicle passes a multi-point inspection before it reaches you.",
+  },
+  {
+    icon: "price_check",
+    title: "No Hidden Charges",
+    text: "The price you're quoted is the price you pay — always transparent.",
+  },
+  {
+    icon: "support_agent",
+    title: "24/7 Support",
+    text: "Our concierge line stays open around the clock for help on the road.",
+  },
+  {
+    icon: "local_shipping",
+    title: "On-Time Delivery",
+    text: "Punctual doorstep delivery and pickup, tracked and confirmed in advance.",
   },
 ];
 
@@ -130,12 +195,59 @@ export default function AboutPage() {
               From executive sedans to premium SUVs, our vehicles are meticulously maintained to meet the
               highest standards of performance and aesthetics across Pakistan.
             </p>
+            <p className="text-sm leading-relaxed text-muted sm:text-base">
+              Headquartered in Islamabad, we operate a nationwide network spanning the twin cities of
+              Rawalpindi, the cultural capital Lahore, and the commercial hub of Karachi, with dedicated
+              teams covering Faisalabad, Multan, and Peshawar. Our chauffeurs know every route intimately —
+              from the boulevards of Blue Area to the winding Karakoram Highway — and our fleet includes
+              specialized 4x4 vehicles for northern expeditions to Hunza, Skardu, and Naran. Whether it's a
+              same-day airport transfer or a month-long corporate lease, our local presence means faster
+              delivery, better route knowledge, and support that understands Pakistan's roads and seasons.
+            </p>
           </div>
           <div className="relative">
             <div className="absolute -inset-3 -z-10 rounded-2xl bg-accent/20 sm:-inset-4" />
             <div className="relative h-[360px] overflow-hidden rounded-xl shadow-2xl sm:h-[500px]">
               <Image src={STORY} alt="Luxury SUV outside modern building" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="mb-12 text-center sm:mb-16">
+            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+              What We Offer
+            </span>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              A Service for Every Journey
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">
+              From daily errands to grand celebrations, our range of services is built around how you
+              actually travel.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {OFFERINGS.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="group rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition hover:-translate-y-1 hover:border-secondary/40 sm:p-8"
+              >
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10 text-secondary transition group-hover:bg-secondary group-hover:text-white">
+                  <span className="material-symbols-outlined">{item.icon}</span>
+                </div>
+                <h4 className="font-heading text-lg font-semibold sm:text-xl">{item.title}</h4>
+                <p className="mt-3 text-sm text-muted">{item.text}</p>
+                <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                  Learn more
+                  <span className="material-symbols-outlined text-[18px] transition group-hover:translate-x-1">
+                    arrow_forward
+                  </span>
+                </span>
+              </Link>
+            ))}
           </div>
         </Container>
       </section>
@@ -150,6 +262,21 @@ export default function AboutPage() {
                 </div>
                 <div className="text-xs font-semibold uppercase tracking-widest text-white/50">{item.label}</div>
               </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-primary/8 bg-white py-10 sm:py-12">
+        <Container>
+          <p className="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+            Proudly Serving
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {PRIMARY_CITIES.map((city) => (
+              <span key={city.slug} className="text-sm font-semibold text-primary/70 sm:text-base">
+                {city.name}
+              </span>
             ))}
           </div>
         </Container>
@@ -213,6 +340,33 @@ export default function AboutPage() {
                 </div>
                 <h4 className="font-heading text-lg font-semibold sm:text-xl">{item.title}</h4>
                 <p className="mt-3 text-sm text-muted">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="mb-12 text-center sm:mb-16">
+            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+              Our Promise
+            </span>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Guarantees You Can Count On
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {GUARANTEES.map((item) => (
+              <div key={item.title} className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center sm:p-8">
+                <span
+                  className="material-symbols-outlined mb-4 inline-flex text-4xl text-accent"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  {item.icon}
+                </span>
+                <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
+                <p className="mt-2 text-sm text-white/55">{item.text}</p>
               </div>
             ))}
           </div>

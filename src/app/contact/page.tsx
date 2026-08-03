@@ -1,46 +1,326 @@
 import type { Metadata } from "next";
-import { PageHero, CtaBanner } from "@/components/shared";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { Section } from "@/components/ui/Section";
+import Image from "next/image";
+import Link from "next/link";
+import { ContactForm } from "@/components/contact/ContactForm";
+import { Container } from "@/components/ui/Container";
+import { homeFaqs } from "@/data";
 import { brand } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Book a car or ask about availability with Signature Rent A Car.",
+  description: "Reach the Signature Rent A Car concierge team for bookings, quotes, and trip planning support.",
 };
+
+const HERO =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuDf4FIkMIy2ygFija_w8x1BOPggeofsUj15Y87MxzaEmVsbAB1zLNG_xPItUmkcFdCGRFNpkUtOnv-PHnHeOkzAJeXA0xRhZOedoRr5-PgNRNgiJGDdot132XIh9-CvBZDiYu75KFvPUWhLmWgZFJFmVfNAFCNtSjyPp6y0_kRtcrn8PNO6uboQ6KwvVtD5pKr9UZdpC8OIgMoEkpy8oryqz6Q47e1xQqEYXKw0PZN9GY4SrkGJd73e";
+
+const OFFICE_MAP =
+  "https://lh3.googleusercontent.com/aida-public/AB6AXuCOLcLgvntMjN0RKlanOO3hzDIQbvZuKjd4WntHKjUnZINDAaS9oMupBV4tr0QvZSUnrCLDh6tGRuvkQnZ8w3GVhqSF4tf1QC6JnvxsPjRAGW7OJeO778wbBrI6B_m4jNmMJnEp8lvJJDkl_FTybKegol1Euq7BMp9acaAM6slsr5q0aYI8QWhQnokHcEn0yIsxiK1KLCd9JvVAp71oLrA2kEBUGa3F9Gxn_pgQ0YWQqFbtDEbmdOGi";
+
+const OFFICES = [
+  {
+    title: "Islamabad HQ",
+    address: "Signature Plaza, Blue Area, Islamabad",
+    hours: "Mon - Sat: 09:00 - 20:00 | Sunday: 10:00 - 18:00",
+    href: "https://www.google.com/maps/search/?api=1&query=Blue+Area+Islamabad",
+  },
+  {
+    title: "Rawalpindi / Islamabad Airport Desk",
+    address: "Service desk near Islamabad International Airport arrivals, serving Rawalpindi & the airport corridor",
+    hours: "Daily: 05:00 - 01:00 (flight-aligned)",
+    href: "https://www.google.com/maps/search/?api=1&query=Islamabad+International+Airport",
+  },
+];
+
+const RESPONSE_PROMISES = [
+  { icon: "bolt", value: "< 15 min", label: "WhatsApp Response" },
+  { icon: "request_quote", value: "< 60 min", label: "Quote Turnaround" },
+  { icon: "local_shipping", value: "45 min", label: "Avg. Delivery Time" },
+];
+
+const WHATSAPP_TIPS = [
+  "Share your city and pickup location (home, hotel, or airport).",
+  "Mention your travel dates and approximate rental duration.",
+  "Tell us the vehicle type or occasion — daily, corporate, wedding, or a northern trip.",
+  "Let us know if you need a chauffeur or prefer self-drive.",
+];
+
+const INFO_CARDS = [
+  {
+    icon: "call",
+    title: "Call Us",
+    text: "Available for immediate booking & roadside support.",
+    href: `tel:${brand.phone}`,
+    linkLabel: brand.phone,
+  },
+  {
+    icon: "mail",
+    title: "Email Us",
+    text: "For corporate inquiries and long-term lease quotes.",
+    href: `mailto:${brand.email}`,
+    linkLabel: brand.email,
+  },
+  {
+    icon: "location_on",
+    title: "Our Office",
+    text: "Signature Plaza, Blue Area, Islamabad, Pakistan.",
+    href: "https://www.google.com/maps/search/?api=1&query=Blue+Area+Islamabad",
+    linkLabel: "Get Directions",
+  },
+  {
+    icon: "schedule",
+    title: "Operating Hours",
+    hours: [
+      { label: "Mon - Sat", value: "09:00 - 20:00" },
+      { label: "Sunday", value: "10:00 - 18:00" },
+    ],
+  },
+];
 
 export default function ContactPage() {
   return (
     <>
-      <PageHero
-        title="Contact Us"
-        description="Reach out for bookings, quotes, and trip planning support."
-        ctaHref=""
-      />
-      <Section>
-        <div className="mx-auto max-w-3xl space-y-4">
-          <p className="text-base leading-relaxed text-primary/75">
-            Call us at {brand.phone} or email {brand.email}.
+      <header className="relative flex min-h-[320px] items-center overflow-hidden py-16 sm:min-h-[420px] sm:py-20 lg:min-h-[520px]">
+        <Image
+          src={HERO}
+          alt="Luxury sedan in a corporate district of Islamabad at twilight"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-primary/55" />
+        <Container className="relative z-10">
+          <nav className="mb-4 flex gap-2 text-[10px] font-semibold uppercase tracking-widest text-white/80 sm:mb-6 sm:text-xs">
+            <Link href="/" className="hover:text-white">
+              Home
+            </Link>
+            <span>/</span>
+            <span className="text-white">Contact Us</span>
+          </nav>
+          <h1 className="max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            Connect With <span className="text-accent">Excellence</span>
+          </h1>
+          <p className="mt-4 max-w-xl text-sm text-white/80 sm:text-base lg:text-lg">
+            Experience premium mobility with personalized support. Our concierge team is available 24/7 to
+            assist with your luxury transportation needs across Pakistan.
           </p>
-          <p className="text-base leading-relaxed text-primary/75">
-            Share your city, dates, and preferred car — we’ll confirm availability quickly.
-          </p>
-          <div className="flex flex-wrap gap-3 pt-2">
-            <ButtonLink
-              href={`https://wa.me/${brand.whatsapp}`}
-              variant="accent"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Chat on WhatsApp
-            </ButtonLink>
-            <ButtonLink href={`mailto:${brand.email}`} variant="primary">
-              Email Us
-            </ButtonLink>
+        </Container>
+      </header>
+
+      <section className="py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {INFO_CARDS.map((card) => (
+              <div
+                key={card.title}
+                className="luxury-card-shadow group rounded-2xl border border-primary/8 bg-white p-8 transition hover:-translate-y-1 sm:p-10"
+              >
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-secondary/10 text-secondary transition group-hover:bg-secondary group-hover:text-white">
+                  <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    {card.icon}
+                  </span>
+                </div>
+                <h3 className="font-heading text-lg font-semibold sm:text-xl">{card.title}</h3>
+                {card.hours ? (
+                  <div className="mt-4 space-y-1">
+                    {card.hours.map((row) => (
+                      <p key={row.label} className="flex justify-between text-sm text-muted">
+                        <span>{row.label}:</span>
+                        <span>{row.value}</span>
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <>
+                    <p className="mt-2 text-sm text-muted">{card.text}</p>
+                    <a
+                      href={card.href}
+                      target={card.href?.startsWith("http") ? "_blank" : undefined}
+                      rel={card.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="mt-4 block text-sm font-semibold text-secondary hover:underline"
+                    >
+                      {card.linkLabel}
+                    </a>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {RESPONSE_PROMISES.map((item) => (
+              <div
+                key={item.label}
+                className="flex items-center gap-4 rounded-2xl border border-primary/8 bg-white p-6"
+              >
+                <span className="material-symbols-outlined text-3xl text-secondary">{item.icon}</span>
+                <div>
+                  <p className="font-heading text-xl font-bold text-primary">{item.value}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted">{item.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="mb-12 text-center sm:mb-16">
+            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+              Our Locations
+            </span>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Two Ways to Reach Us in Person
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {OFFICES.map((office) => (
+              <div
+                key={office.title}
+                className="luxury-card-shadow rounded-2xl border border-primary/8 bg-white p-8 sm:p-10"
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10 text-secondary">
+                  <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    location_on
+                  </span>
+                </div>
+                <h3 className="font-heading text-lg font-semibold sm:text-xl">{office.title}</h3>
+                <p className="mt-2 text-sm text-muted">{office.address}</p>
+                <p className="mt-3 text-sm font-semibold text-primary">{office.hours}</p>
+                <a
+                  href={office.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+                >
+                  Get Directions
+                  <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </a>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="grid items-center gap-10 rounded-2xl bg-navy p-8 text-white sm:p-12 lg:grid-cols-2 lg:gap-16 lg:p-16">
+            <div>
+              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                Fastest Way to Book
+              </span>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Booking via WhatsApp
+              </h2>
+              <p className="mt-5 text-sm text-white/60 sm:text-base">
+                Most of our bookings are confirmed over WhatsApp in minutes. Here&apos;s what to include in
+                your first message so our concierge team can respond with an instant quote.
+              </p>
+              <a
+                href={`https://wa.me/${brand.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95"
+              >
+                <span className="material-symbols-outlined text-[18px]">chat</span>
+                Message Us Now
+              </a>
+            </div>
+            <ul className="space-y-4">
+              {WHATSAPP_TIPS.map((tip, index) => (
+                <li key={tip} className="flex items-start gap-4 rounded-xl bg-white/5 p-4">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <span className="text-sm text-white/80">{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
+
+      <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+            <div className="luxury-card-shadow rounded-2xl border border-primary/8 bg-white p-8 lg:col-span-7 sm:p-12">
+              <div className="mb-10">
+                <h2 className="font-heading text-2xl font-semibold sm:text-3xl">Send us a message</h2>
+                <p className="mt-2 text-sm text-muted sm:text-base">
+                  Fill out the form below and our concierge team will contact you within 60 minutes.
+                </p>
+              </div>
+              <ContactForm />
+            </div>
+
+            <div className="flex flex-col justify-between gap-10 lg:col-span-5">
+              <div>
+                <h2 className="font-heading text-2xl font-semibold sm:text-3xl">Frequent Questions</h2>
+                <div className="mt-6 space-y-5">
+                  {homeFaqs.slice(0, 5).map((item) => (
+                    <div key={item.question} className="border-b border-primary/8 pb-5">
+                      <h4 className="text-sm font-semibold text-primary sm:text-base">{item.question}</h4>
+                      <p className="mt-2 text-sm leading-relaxed text-muted">{item.answer}</p>
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/faq"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-secondary transition hover:gap-3"
+                >
+                  View All FAQs <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </Link>
+              </div>
+
+              <div className="relative overflow-hidden rounded-2xl bg-navy p-8 text-white">
+                <div className="relative z-10">
+                  <h3 className="font-heading text-lg font-semibold sm:text-xl">Need Immediate Assistance?</h3>
+                  <p className="mt-2 text-sm text-white/60">
+                    Reach our 24/7 concierge line directly for urgent bookings or roadside support.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <a
+                      href={`https://wa.me/${brand.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-primary transition hover:brightness-95"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">chat</span>
+                      WhatsApp
+                    </a>
+                    <a
+                      href={`tel:${brand.phone}`}
+                      className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-accent hover:text-accent"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">call</span>
+                      Call Us
+                    </a>
+                  </div>
+                </div>
+                <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-secondary/10 blur-3xl" />
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="relative h-[360px] w-full sm:h-[440px]">
+        <Image src={OFFICE_MAP} alt="Map to Signature Rent A Car office in Blue Area, Islamabad" fill className="object-cover" sizes="100vw" />
+        <div className="absolute inset-0 bg-primary/20" />
+        <div className="absolute inset-0 flex items-center justify-center px-4">
+          <div className="luxury-card-shadow flex items-center gap-4 rounded-2xl bg-white p-6">
+            <span className="material-symbols-outlined text-4xl text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
+              location_on
+            </span>
+            <div className="text-left">
+              <p className="font-semibold text-primary">Signature Rent A Car</p>
+              <p className="text-sm text-muted">Blue Area, Islamabad</p>
+            </div>
           </div>
         </div>
-      </Section>
-      <CtaBanner />
+      </section>
     </>
   );
 }

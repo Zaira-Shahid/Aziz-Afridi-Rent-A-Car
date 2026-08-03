@@ -1,6 +1,7 @@
 export type NavLink = {
   label: string;
   href: string;
+  icon?: string;
 };
 
 export type NavGroup = {
@@ -11,6 +12,7 @@ export type NavGroup = {
 export type NavItem = {
   label: string;
   href: string;
+  icon?: string;
   children?: NavLink[];
   groups?: NavGroup[];
 };
@@ -24,6 +26,112 @@ export type CityPage = {
 export type ServicePage = {
   slug: string;
   name: string;
+};
+
+export type ServiceHero = {
+  badge: string;
+  title: string;
+  accent?: string;
+  description: string;
+  image: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta: { label: string; href: string };
+};
+
+export type ServiceFeature = {
+  icon: string;
+  title: string;
+  text: string;
+};
+
+export type ServiceCategory = {
+  icon: string;
+  title: string;
+  text: string;
+  bullets?: string[];
+};
+
+export type ServiceFleetItem = {
+  name: string;
+  tag: string;
+  seats: number;
+  transmission: string;
+  image: string;
+  priceDay: number;
+};
+
+export type ServiceCoverageCity = {
+  name: string;
+  tag: string;
+  image: string;
+};
+
+export type ServiceProcessStep = {
+  icon: string;
+  title: string;
+  text: string;
+};
+
+export type ServiceTestimonial = {
+  quote: string;
+  name: string;
+  role: string;
+};
+
+export type ServicePricingPackage = {
+  name: string;
+  priceDay: number;
+  features: { text: string; included: boolean }[];
+  featured?: boolean;
+};
+
+export type ServiceFaq = {
+  question: string;
+  answer: string;
+};
+
+export type ServiceStory = {
+  title: string;
+  description: string;
+  image: string;
+  stat: { value: string; label: string };
+  points: { icon: string; title: string; text: string }[];
+};
+
+export type ServiceBooking = {
+  title: string;
+  description: string;
+  highlights?: { icon: string; text: string }[];
+  contact?: { icon: string; label: string; value: string }[];
+};
+
+export type ServiceInfoBlock = {
+  title: string;
+  description?: string;
+  items: { icon: string; title?: string; text: string }[];
+};
+
+export type ServiceDetail = {
+  slug: string;
+  name: string;
+  metaDescription: string;
+  hero: ServiceHero;
+  features: { title: string; description: string; items: ServiceFeature[] };
+  fleet: { title: string; description: string; items: ServiceFleetItem[] };
+  coverage?: { title: string; description: string; cities: ServiceCoverageCity[] };
+  process?: { title: string; steps: ServiceProcessStep[] };
+  categories?: { title: string; description: string; items: ServiceCategory[] };
+  testimonials?: { title: string; ratingSummary?: { value: string; label: string }; items: ServiceTestimonial[] };
+  packages?: { title: string; description: string; items: ServicePricingPackage[] };
+  faqs?: { title: string; items: ServiceFaq[] };
+  booking?: ServiceBooking;
+  story?: ServiceStory;
+  /** "What's Included" checklist (chauffeur, fuel policy, amenities, waiting time, etc). */
+  included?: ServiceInfoBlock;
+  /** "Who It's For" audience section. */
+  audience?: ServiceInfoBlock;
+  /** Service-specific extra notes (flight delay tips, corporate perks, decoration options, etc). */
+  notes?: ServiceInfoBlock;
 };
 
 export type CarCategory = {

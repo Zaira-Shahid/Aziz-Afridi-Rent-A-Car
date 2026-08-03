@@ -204,6 +204,38 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Flight delays, meet-and-greet, and how to book a reliable airport pickup.",
     image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
   },
+  {
+    slug: "self-drive-vs-chauffeur",
+    title: "Self-Drive vs Chauffeur: Which Is Right for You?",
+    category: "car-rental-tips",
+    date: "May 08, 2026",
+    excerpt: "A quick breakdown of costs, convenience, and comfort to help you pick the right rental style.",
+    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "rawalpindi-day-trip-guide",
+    title: "Rawalpindi Day Trip: Where to Go and What to Rent",
+    category: "rawalpindi-travel-guide",
+    date: "Apr 22, 2026",
+    excerpt: "Saddar bazaar, Ayub National Park, and the best compact SUV for the twin city's busy streets.",
+    image: "https://images.unsplash.com/photo-1616422285623-13ff0162193b?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "karachi-business-travel-guide",
+    title: "Karachi Business Travel: A Car Rental Guide",
+    category: "travel-guides",
+    date: "Apr 05, 2026",
+    excerpt: "Navigating meetings across the port city with a reliable executive sedan and a local driver.",
+    image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "signature-fleet-expansion-2026",
+    title: "Signature Expands Fleet with New SUV Additions",
+    category: "company-news",
+    date: "Mar 18, 2026",
+    excerpt: "New 4x4-ready SUVs join our lineup to meet growing demand for northern area expeditions.",
+    image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80",
+  },
 ];
 
 export const homeFaqs: FaqItem[] = [

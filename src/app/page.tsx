@@ -24,7 +24,6 @@ export default function HomePage() {
     <>
       <HomeHero />
       <BrandStrip />
-      <HowItWorks />
       <HomeFleet cars={featured} />
       <PromoBanner />
       <CarGridSection
@@ -42,6 +41,7 @@ export default function HomePage() {
         viewAllHref="/categories/suv"
         viewAllLabel="Browse Family Options"
       />
+      <HowItWorks />
       <WhyChooseUs />
       <HomeServices />
       <HomeDestinations />

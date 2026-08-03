@@ -1,6 +1,6 @@
 # Signature Rent A Car
 
-Next.js 16 website for Signature Rent A Car — component-based, reusable structure with brand guidelines and Phase 1 SEO pages.
+Premium car rental website for Signature Rent A Car — built with Next.js App Router, TypeScript, and Tailwind CSS. Designs converted from Google Stitch into responsive production pages.
 
 ## Stack
 
@@ -21,55 +21,89 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-- `yarn dev` — start development server (Turbopack)
+- `yarn dev` — development server (Turbopack)
 - `yarn build` — production build
-- `yarn start` — start production server
-- `yarn lint` — run ESLint
+- `yarn start` — production server
+- `yarn lint` — ESLint
 
-## Signature Rent A Car – Website Brand Guidelines
+## Brand guidelines
 
-Please follow the brand guidelines below throughout the website for a consistent and professional look.
-
-### Brand Colors
-
-| Role | Hex | Name |
-|------|-----|------|
-| Primary | `#000B1D` | Deep Midnight Navy |
-| Secondary | `#04C4E3` | Signature Cyan |
-| Accent / CTA | `#AEE20F` | Lime Green |
-| Background | `#F6F7F8` | Soft Ice White |
-
-### Usage
-
-- `#000B1D` — Header, Footer, Navigation, Hero Sections, Headings
-- `#04C4E3` — Primary Buttons, Icons, Links, Hover Effects
-- `#AEE20F` — Book Now, WhatsApp, Offers, Important CTAs (use sparingly)
-- `#F6F7F8` — Website Background, Cards, Forms, Content Sections
-
-### Typography
+| Role | Hex | Usage |
+|------|-----|--------|
+| Primary | `#000B1D` | Header, footer, heroes, headings |
+| Secondary | `#04C4E3` | Links, icons, accents, Call Us |
+| Accent / CTA | `#BFF52C` | Book Now, WhatsApp, primary CTAs |
+| Background | `#F8F9FA` | Page background, cards, forms |
 
 - Headings: **Sora**
-- Body Text: **Inter**
+- Body: **Inter**
+- Style: modern, premium, clean, fully responsive
 
-### Design Style
+Tokens live in `src/lib/brand.ts` and `src/app/globals.css`.
 
-Keep the design modern, premium, clean, minimal, and fully responsive. Use consistent spacing, subtle animations, rounded corners (10–12px), and avoid excessive gradients or effects.
+## Stitch screens (full UI)
 
-**Goal:** Build a professional, trustworthy, and modern car rental website that reflects the Signature Rent A Car brand.
+These pages use full Stitch-based layouts:
 
-> These guidelines are already applied in the project (`src/lib/brand.ts`, `src/app/globals.css`, layout + UI components).
+| Page | URL |
+|------|-----|
+| Home | `/` |
+| About | `/about` |
+| City Services | `/city-services` |
+| Hotel Transfer | `/services/hotel-transfer` |
+| Executive Car Rental | `/services/executive-car-rental` |
+| Wedding Car Rental | `/services/wedding-car-rental` |
+| Daily Car Rental | `/services/daily-car-rental` |
+| Reviews | `/reviews` |
+| Terms & Conditions | `/terms` |
+| Contact Us | `/contact` |
+| Booking Policy | `/booking-policy` |
+| Blog | `/blog` |
+| FAQ | `/faq` |
+
+## Other routes
+
+- `/cars` + `/cars/[slug]` — fleet listing and car detail
+- `/categories/[slug]` — economy, sedan, SUV, luxury, hiace
+- `/services` + remaining service slugs (airport, corporate, weekly, monthly)
+- `/rent-a-car/[slug]` — city SEO pages (31 cities)
+- `/blog/[slug]` — blog categories
+- `/privacy`
+
+## Features
+
+- Responsive layout (mobile → desktop)
+- Car cards with **WhatsApp**, **Call Us**, and **Inquiry** actions
+- Inquiry modal (opens WhatsApp with booking details)
+- Sticky header with desktop + mobile navigation
+- Service detail pages with fleet, includes, audience, FAQs
+- Blog, FAQ accordion, reviews, legal/policy pages
 
 ## Folder structure
 
 ```text
 src/
-  app/                 # Routes (pages)
+  app/                    # App Router pages
   components/
-    ui/                # Reusable base UI (Button, Container, Section…)
-    layout/            # Header, Footer, SiteShell
-    shared/            # Cross-page blocks (PageHero, CtaBanner…)
-    home/              # Home-only sections
-  data/                # Cities, cars, services, navigation
-  lib/                 # Brand + helpers
-  types/               # Shared TypeScript types
+    ui/                   # Button, Container, Section, Logo…
+    layout/               # Header, Footer, SiteShell
+    shared/               # PageHero, CtaBanner…
+    home/                 # Home sections
+    cars/                 # CarCard, InquireModal, CarGridSection
+    services/             # Stitch service page layouts + fleet grid
+    city/                 # City Services content
+    contact/              # Contact form
+    faq/                  # FAQ accordion
+  data/                   # Cars, cities, services, service-details, nav
+  lib/                    # Brand + helpers
+  types/                  # Shared TypeScript types
+```
+
+## Deploy
+
+Built for Vercel. Push to `main` and connect the GitHub repo, or run:
+
+```bash
+yarn build
+yarn start
 ```

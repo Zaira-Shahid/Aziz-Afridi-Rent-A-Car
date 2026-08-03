@@ -74,6 +74,62 @@ const CITY_CARDS = [
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCxtoridxoRYv-Wrfwj5dXtNfOEwI1q923go8nTqbUz1ZuoFPnKI41iarOXzOF4WDMOcZItfkFvKsJ4V_CmX2YurqXt43F1RVJS74hg4R8Hv_izfiiAd38KzNqKzei82dbe8YXyWdOs47CRxVZdQyXNoe6z51JPXiFfjPw2_pP2ZJZ62hjfVLRAnWh3uUtDzQ75cn6g4jZG29KSvgHpMPlGBcKgrmrRVVtHsZkA0z2zkE4SREzVQ3AJ",
   },
+  {
+    slug: "faisalabad",
+    name: "Faisalabad",
+    text: "Pakistan's industrial powerhouse. Dependable sedans and SUVs for business trips across the city.",
+    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "multan",
+    name: "Multan",
+    text: "The city of saints, made easy to explore. Comfortable rentals for shrine visits and local commerce.",
+    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "peshawar",
+    name: "Peshawar",
+    text: "Gateway to the northwest. Rugged, reliable vehicles for the historic frontier city and beyond.",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    slug: "abbottabad",
+    name: "Abbottabad",
+    text: "Cool hills, easy access. The ideal stop for travelers heading further into the northern valleys.",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+  },
+];
+
+const POPULAR_ROUTES = [
+  { from: "Islamabad", to: "Murree", icon: "landscape", text: "A 1.5 hour scenic climb — our most requested weekend route." },
+  { from: "Islamabad Airport", to: "City Center", icon: "flight_land", text: "Meet-and-greet transfers timed to your flight, day or night." },
+  { from: "Islamabad", to: "Hunza / Skardu", icon: "terrain", text: "Multi-day northern expeditions with 4x4-equipped vehicles." },
+  { from: "Islamabad", to: "Lahore", icon: "route", text: "Motorway-ready sedans for the intercity business run." },
+  { from: "Rawalpindi", to: "Naran / Kaghan", icon: "hiking", text: "Rugged crossovers built for the Kaghan valley's mountain roads." },
+  { from: "Karachi", to: "Hyderabad", icon: "signpost", text: "Comfortable long-distance sedans for the coastal corridor." },
+];
+
+const WHY_CITY = [
+  {
+    icon: "person_pin_circle",
+    title: "Local, Vetted Drivers",
+    text: "Chauffeurs based in-city who know the shortcuts, checkpoints, and traffic patterns.",
+  },
+  {
+    icon: "home_pin",
+    title: "Doorstep Delivery",
+    text: "Your car arrives at your home, office, or hotel — no counter queues, no delays.",
+  },
+  {
+    icon: "4x4_mobility",
+    title: "4x4 for the North",
+    text: "Purpose-built SUVs and off-roaders for Hunza, Skardu, and Naran terrain.",
+  },
+  {
+    icon: "sell",
+    title: "Fixed City Rates",
+    text: "Transparent, city-specific pricing agreed upfront — no surprise surcharges.",
+  },
 ];
 
 const STEPS = [
@@ -194,7 +250,10 @@ export function CityServicesContent() {
               </h2>
               <p className="mt-5 text-base text-muted sm:text-lg">
                 From the modern boulevards of Islamabad to the rugged beauty of Hunza, Signature provides
-                seamless luxury car rentals tailored to each city&apos;s unique terrain and lifestyle.
+                seamless luxury car rentals tailored to each city&apos;s unique terrain and lifestyle. Every
+                location is served by a dedicated local team, so whether you&apos;re navigating Karachi&apos;s
+                coastal traffic or climbing into the Karakoram, your vehicle and driver are matched to the
+                journey ahead.
               </p>
             </div>
             <div className="flex gap-2">
@@ -268,6 +327,33 @@ export function CityServicesContent() {
         </Container>
       </section>
 
+      <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="mb-10 text-center sm:mb-16">
+            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+              Local Advantage
+            </span>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Why Rent by City
+            </h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {WHY_CITY.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-primary/8 bg-white p-6 text-center shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8"
+              >
+                <span className="material-symbols-outlined mb-4 inline-flex text-4xl text-secondary">
+                  {item.icon}
+                </span>
+                <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
+                <p className="mt-2 text-sm text-muted">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="overflow-hidden bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
         <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="relative order-2 aspect-square overflow-hidden rounded-3xl shadow-2xl lg:order-1 lg:aspect-video">
@@ -300,6 +386,38 @@ export function CityServicesContent() {
                 </div>
               ))}
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-16 sm:py-24 lg:py-[100px]">
+        <Container>
+          <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16">
+            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+              Frequent Journeys
+            </span>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Popular Routes
+            </h2>
+            <p className="mt-4 text-muted sm:text-lg">
+              The trips our clients book most often, matched with the right vehicle for the road.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {POPULAR_ROUTES.map((route) => (
+              <div
+                key={`${route.from}-${route.to}`}
+                className="rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8"
+              >
+                <span className="material-symbols-outlined mb-4 inline-flex text-3xl text-secondary">
+                  {route.icon}
+                </span>
+                <h4 className="font-heading text-base font-semibold sm:text-lg">
+                  {route.from} <span className="text-secondary">&harr;</span> {route.to}
+                </h4>
+                <p className="mt-2 text-sm text-muted">{route.text}</p>
+              </div>
+            ))}
           </div>
         </Container>
       </section>

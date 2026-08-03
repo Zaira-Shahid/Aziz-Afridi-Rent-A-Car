@@ -38,3 +38,6 @@ yarn-error.log*
 # stitch design exports
 /stitch-export
 
+# typescript
+*.tsbuildinfo
+

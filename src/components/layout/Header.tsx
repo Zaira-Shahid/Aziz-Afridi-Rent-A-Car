@@ -8,7 +8,7 @@ import { Logo } from "@/components/ui/Logo";
 import { mainNav } from "@/data/navigation";
 import { brand } from "@/lib/brand";
 import { cn } from "@/lib/utils";
-import type { NavItem } from "@/types";
+import type { NavItem, NavLink } from "@/types";
 
 function isActive(pathname: string, item: NavItem) {
   if (item.href === "/") return pathname === "/";
@@ -20,6 +20,29 @@ function isActive(pathname: string, item: NavItem) {
 
 function hasMenu(item: NavItem) {
   return Boolean(item.children?.length || item.groups?.length);
+}
+
+function DropdownLink({
+  item,
+  onClick,
+  className,
+}: {
+  item: NavLink;
+  onClick?: () => void;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={item.href}
+      onClick={onClick}
+      className={cn("inline-flex items-center gap-2.5 transition", className)}
+    >
+      {item.icon ? (
+        <span className="material-symbols-outlined shrink-0 text-[18px] opacity-70">{item.icon}</span>
+      ) : null}
+      <span>{item.label}</span>
+    </Link>
+  );
 }
 
 export function Header() {
@@ -95,7 +118,7 @@ export function Header() {
                   <div
                     className={cn(
                       "max-h-[70vh] overflow-y-auto rounded-[14px] border border-primary/10 bg-white p-4 text-primary shadow-[0_18px_50px_rgba(0,11,29,0.12)]",
-                      !item.groups?.length && "min-w-[220px]",
+                      !item.groups?.length && "min-w-[240px]",
                       item.groups?.length === 2 && "min-w-[480px]",
                       (item.groups?.length ?? 0) >= 3 && "min-w-[min(640px,90vw)]",
                     )}
@@ -109,12 +132,10 @@ export function Header() {
                       >
                         {item.children.map((child) => (
                           <li key={child.href}>
-                            <Link
-                              href={child.href}
-                              className="block rounded-[10px] px-3 py-2 text-sm text-primary/80 transition hover:bg-background hover:text-primary"
-                            >
-                              {child.label}
-                            </Link>
+                            <DropdownLink
+                              item={child}
+                              className="w-full rounded-[10px] px-3 py-2 text-sm text-primary/80 hover:bg-background hover:text-primary"
+                            />
                           </li>
                         ))}
                       </ul>
@@ -136,12 +157,10 @@ export function Header() {
                             <ul className="space-y-0.5">
                               {group.items.map((child) => (
                                 <li key={child.href}>
-                                  <Link
-                                    href={child.href}
-                                    className="block rounded-[10px] px-3 py-2 text-sm text-primary/80 transition hover:bg-background hover:text-primary"
-                                  >
-                                    {child.label}
-                                  </Link>
+                                  <DropdownLink
+                                    item={child}
+                                    className="w-full rounded-[10px] px-3 py-2 text-sm text-primary/80 hover:bg-background hover:text-primary"
+                                  />
                                 </li>
                               ))}
                             </ul>
@@ -198,11 +217,14 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "rounded-[10px] px-3 py-3 text-sm hover:bg-white/5 hover:text-accent",
+                      "inline-flex items-center gap-2.5 rounded-[10px] px-3 py-3 text-sm hover:bg-white/5 hover:text-accent",
                       active ? "bg-white/5 font-semibold text-accent" : "text-white/85",
                     )}
                     onClick={() => setOpen(false)}
                   >
+                    {item.icon ? (
+                      <span className="material-symbols-outlined text-[18px] opacity-70">{item.icon}</span>
+                    ) : null}
                     {item.label}
                   </Link>
                 );
@@ -219,7 +241,12 @@ export function Header() {
                     aria-expanded={expanded}
                     onClick={() => setMobileSection(expanded ? null : item.href)}
                   >
-                    <span className={cn(expanded && "font-semibold")}>{item.label}</span>
+                    <span className={cn("inline-flex items-center gap-2.5", expanded && "font-semibold")}>
+                      {item.icon ? (
+                        <span className="material-symbols-outlined text-[18px] opacity-70">{item.icon}</span>
+                      ) : null}
+                      {item.label}
+                    </span>
                     <span
                       className={cn(
                         "material-symbols-outlined text-[20px] text-white/70 transition",
@@ -241,14 +268,12 @@ export function Header() {
                       </Link>
 
                       {item.children?.map((child) => (
-                        <Link
+                        <DropdownLink
                           key={child.href}
-                          href={child.href}
-                          className="block py-1.5 text-sm text-white/70 hover:text-accent"
+                          item={child}
                           onClick={() => setOpen(false)}
-                        >
-                          {child.label}
-                        </Link>
+                          className="py-1.5 text-sm text-white/70 hover:text-accent"
+                        />
                       ))}
 
                       {item.groups?.map((group) => (
@@ -258,14 +283,12 @@ export function Header() {
                           </p>
                           <div className="space-y-1">
                             {group.items.map((child) => (
-                              <Link
+                              <DropdownLink
                                 key={child.href}
-                                href={child.href}
-                                className="block py-1.5 text-sm text-white/70 hover:text-accent"
+                                item={child}
                                 onClick={() => setOpen(false)}
-                              >
-                                {child.label}
-                              </Link>
+                                className="py-1.5 text-sm text-white/70 hover:text-accent"
+                              />
                             ))}
                           </div>
                         </div>

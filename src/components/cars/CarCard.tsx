@@ -111,7 +111,7 @@ export function CarCard({ car, className }: CarCardProps) {
               onClick={() => setInquireOpen(true)}
               className="inline-flex min-h-10 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-1.5 text-[10px] font-semibold !text-white transition duration-200 hover:bg-primary/90 sm:px-2 sm:text-xs"
             >
-              Inquire Now
+              Inquiry
             </button>
           </div>
         </div>
