@@ -2,6 +2,10 @@ export type NavLink = {
   label: string;
   href: string;
   icon?: string;
+  /** Material icon accent color (hex) */
+  iconColor?: string;
+  /** Optional brand/logo image path for colorful submenu icons */
+  logo?: string;
 };
 
 export type NavGroup = {
@@ -13,6 +17,7 @@ export type NavItem = {
   label: string;
   href: string;
   icon?: string;
+  iconColor?: string;
   children?: NavLink[];
   groups?: NavGroup[];
 };

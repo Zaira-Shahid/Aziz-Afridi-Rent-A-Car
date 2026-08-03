@@ -13,15 +13,15 @@ export function Logo({ className, priority = false }: LogoProps) {
   return (
     <Link
       href="/"
-      className={cn("inline-flex h-12 shrink-0 items-center sm:h-14 lg:h-[60px]", className)}
+      className={cn("inline-flex shrink-0 items-center", className)}
       aria-label={brand.name}
     >
       <Image
         src={logo}
         alt={brand.name}
         priority={priority}
-        className="h-full w-auto object-contain"
-        sizes="220px"
+        className="h-full w-auto max-w-full object-contain object-left"
+        sizes="(max-width: 640px) 160px, (max-width: 1024px) 200px, 220px"
       />
     </Link>
   );
