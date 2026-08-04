@@ -19,20 +19,20 @@ export function DailyCarRentalDetail({ data }: DailyCarRentalDetailProps) {
 
   return (
     <>
-      <section className="relative flex min-h-[78vh] items-center overflow-hidden py-16 sm:min-h-[85vh] sm:py-20 lg:min-h-[90vh] lg:py-24">
+      <section className="relative flex min-h-[420px] items-center overflow-hidden py-14 sm:min-h-[480px] sm:py-16 lg:min-h-[520px] lg:py-20">
         <Image src={hero.image} alt={hero.title} fill priority className="object-cover" sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/45 to-primary/10" />
         <Container className="relative z-10 grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="text-white lg:col-span-7">
-            <span className="glass-panel mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest">
+            <span className="glass-panel mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest sm:mb-6">
               <span className="h-2 w-2 rounded-full bg-accent" />
               {hero.badge}
             </span>
-            <h1 className="hero-shadow font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="hero-shadow font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl">
               {hero.title}
               {hero.accent ? <> <span className="text-accent">{hero.accent}</span></> : null}
             </h1>
-            <p className="mt-4 max-w-xl text-sm text-white/85 sm:mt-6 sm:text-base lg:text-lg">{hero.description}</p>
+            <p className="mt-4 max-w-xl text-sm text-white/85 sm:mt-5 sm:text-base lg:text-lg">{hero.description}</p>
           </div>
           <div className="w-full lg:col-span-5" id="fleet-search">
             <BookingBar />

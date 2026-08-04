@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDObDk9FnJ_zDMDuCf8585s03QVwuFCHe4TImsKGgPU32m6ovZhgEwBdnyXi870THDwWfvaIFZ0uw9XuzOFPKbuIs4H4-4JDSmYt4IDQEM4XuERd3uK9RzH3gXFHW8eWFS9HNXRZokYrrqXAs1yNpd7f6SA-BkcQjlBnRpiv01F9UFVu4dZkAMsuot1VpqDVimLLopsXK3PwkbzUyZsl2itlw9n5s7qR8tuhjVkz_sGrDKdTI0KcdGn";
@@ -191,18 +192,18 @@ export function CityServicesContent() {
 
   return (
     <>
-      <section className="relative flex min-h-[62vh] items-center justify-center overflow-hidden px-4 py-16 sm:min-h-[75vh] sm:px-6 sm:py-20 lg:min-h-[80vh] lg:px-8 lg:py-24">
+      <section className="relative flex min-h-[420px] items-center justify-center overflow-hidden px-4 py-14 sm:min-h-[480px] sm:px-6 sm:py-16 lg:min-h-[520px] lg:px-8 lg:py-20">
         <Image src={HERO} alt="City skyline at golden hour" fill priority className="object-cover" sizes="100vw" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <nav className="mb-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/80">
+          <nav className="animate-fade-up mb-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/80">
             <Link href="/" className="hover:text-white">
               Home
             </Link>
             <span className="material-symbols-outlined text-sm">chevron_right</span>
             <span className="text-white">City Services</span>
           </nav>
-          <h1 className="font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="hero-shadow animate-fade-up font-heading text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
             Elite Mobility Across the Nation&apos;s Pulse
           </h1>
           <form
@@ -210,7 +211,7 @@ export function CityServicesContent() {
               e.preventDefault();
               setPage(0);
             }}
-            className="glass-panel mx-auto mt-8 flex max-w-3xl flex-col gap-4 rounded-2xl p-4 shadow-2xl sm:mt-10 sm:flex-row sm:p-6"
+            className="glass-panel animate-fade-up-delay mx-auto mt-8 flex max-w-3xl flex-col gap-4 rounded-2xl p-4 shadow-2xl sm:mt-10 sm:flex-row sm:p-6"
           >
             <div className="relative flex-1">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
@@ -240,49 +241,51 @@ export function CityServicesContent() {
 
       <section className="py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-10 flex flex-col items-start justify-between gap-6 sm:mb-16 md:flex-row md:items-end">
-            <div className="max-w-2xl">
-              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-                Our Presence
-              </span>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Discover Excellence in Every Destination
-              </h2>
-              <p className="mt-5 text-base text-muted sm:text-lg">
-                From the modern boulevards of Islamabad to the rugged beauty of Hunza, Signature provides
-                seamless luxury car rentals tailored to each city&apos;s unique terrain and lifestyle. Every
-                location is served by a dedicated local team, so whether you&apos;re navigating Karachi&apos;s
-                coastal traffic or climbing into the Karakoram, your vehicle and driver are matched to the
-                journey ahead.
-              </p>
+          <Reveal>
+            <div className="mb-10 flex flex-col items-start justify-between gap-6 sm:mb-16 md:flex-row md:items-end">
+              <div className="max-w-2xl">
+                <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+                  Our Presence
+                </span>
+                <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                  Discover Excellence in Every Destination
+                </h2>
+                <p className="mt-5 text-base text-muted sm:text-lg">
+                  From the modern boulevards of Islamabad to the rugged beauty of Hunza, Signature provides
+                  seamless luxury car rentals tailored to each city&apos;s unique terrain and lifestyle. Every
+                  location is served by a dedicated local team, so whether you&apos;re navigating Karachi&apos;s
+                  coastal traffic or climbing into the Karakoram, your vehicle and driver are matched to the
+                  journey ahead.
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  aria-label="Previous cities"
+                  disabled={safePage === 0}
+                  onClick={() => setPage((p) => Math.max(0, p - 1))}
+                  className="rounded-full border border-primary/20 p-3 transition hover:bg-primary hover:text-white disabled:opacity-40"
+                >
+                  <span className="material-symbols-outlined">west</span>
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next cities"
+                  disabled={safePage >= totalPages - 1}
+                  onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                  className="rounded-full border border-primary/20 p-3 transition hover:bg-primary hover:text-white disabled:opacity-40"
+                >
+                  <span className="material-symbols-outlined">east</span>
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                aria-label="Previous cities"
-                disabled={safePage === 0}
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
-                className="rounded-full border border-primary/20 p-3 transition hover:bg-primary hover:text-white disabled:opacity-40"
-              >
-                <span className="material-symbols-outlined">west</span>
-              </button>
-              <button
-                type="button"
-                aria-label="Next cities"
-                disabled={safePage >= totalPages - 1}
-                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-                className="rounded-full border border-primary/20 p-3 transition hover:bg-primary hover:text-white disabled:opacity-40"
-              >
-                <span className="material-symbols-outlined">east</span>
-              </button>
-            </div>
-          </div>
+          </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            {visible.map((city) => (
+            {visible.map((city, index) => (
+              <Reveal key={city.slug} delay={Math.min(index, 3) * 80}>
               <article
-                key={city.slug}
-                className="group luxury-card-shadow overflow-hidden rounded-2xl bg-white transition duration-500 hover:-translate-y-2"
+                className="group luxury-card-shadow h-full overflow-hidden rounded-2xl bg-white transition duration-500 hover:-translate-y-2"
               >
                 <div className="relative h-56 overflow-hidden sm:h-64">
                   <Image
@@ -318,6 +321,7 @@ export function CityServicesContent() {
                   </Link>
                 </div>
               </article>
+              </Reveal>
             ))}
           </div>
 
@@ -329,26 +333,27 @@ export function CityServicesContent() {
 
       <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-10 text-center sm:mb-16">
-            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-              Local Advantage
-            </span>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Why Rent by City
-            </h2>
-          </div>
+          <Reveal>
+            <div className="mb-10 text-center sm:mb-16">
+              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+                Local Advantage
+              </span>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Why Rent by City
+              </h2>
+            </div>
+          </Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {WHY_CITY.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-primary/8 bg-white p-6 text-center shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8"
-              >
-                <span className="material-symbols-outlined mb-4 inline-flex text-4xl text-secondary">
-                  {item.icon}
-                </span>
-                <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
-                <p className="mt-2 text-sm text-muted">{item.text}</p>
-              </div>
+            {WHY_CITY.map((item, index) => (
+              <Reveal key={item.title} delay={index * 80}>
+                <div className="h-full rounded-2xl border border-primary/8 bg-white p-6 text-center shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8">
+                  <span className="material-symbols-outlined mb-4 inline-flex text-4xl text-secondary">
+                    {item.icon}
+                  </span>
+                  <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
+                  <p className="mt-2 text-sm text-muted">{item.text}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -356,7 +361,7 @@ export function CityServicesContent() {
 
       <section className="overflow-hidden bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
         <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative order-2 aspect-square overflow-hidden rounded-3xl shadow-2xl lg:order-1 lg:aspect-video">
+          <Reveal className="relative order-2 aspect-square overflow-hidden rounded-3xl shadow-2xl lg:order-1 lg:aspect-video">
             <Image
               src={MAP}
               alt="Pakistan service coverage map"
@@ -366,8 +371,8 @@ export function CityServicesContent() {
             />
             <div className="absolute left-1/2 top-1/4 h-4 w-4 -translate-x-1/2 rounded-full bg-accent" />
             <div className="absolute left-1/2 top-1/4 h-4 w-4 -translate-x-1/2 animate-ping rounded-full bg-accent" />
-          </div>
-          <div className="order-1 space-y-6 lg:order-2">
+          </Reveal>
+          <Reveal delay={120} className="order-1 space-y-6 lg:order-2">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Network Reach</span>
             <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
               Nationwide Excellence, Local Precision
@@ -386,37 +391,38 @@ export function CityServicesContent() {
                 </div>
               ))}
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       <section className="py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16">
-            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-              Frequent Journeys
-            </span>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Popular Routes
-            </h2>
-            <p className="mt-4 text-muted sm:text-lg">
-              The trips our clients book most often, matched with the right vehicle for the road.
-            </p>
-          </div>
+          <Reveal>
+            <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16">
+              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+                Frequent Journeys
+              </span>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Popular Routes
+              </h2>
+              <p className="mt-4 text-muted sm:text-lg">
+                The trips our clients book most often, matched with the right vehicle for the road.
+              </p>
+            </div>
+          </Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {POPULAR_ROUTES.map((route) => (
-              <div
-                key={`${route.from}-${route.to}`}
-                className="rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8"
-              >
-                <span className="material-symbols-outlined mb-4 inline-flex text-3xl text-secondary">
-                  {route.icon}
-                </span>
-                <h4 className="font-heading text-base font-semibold sm:text-lg">
-                  {route.from} <span className="text-secondary">&harr;</span> {route.to}
-                </h4>
-                <p className="mt-2 text-sm text-muted">{route.text}</p>
-              </div>
+            {POPULAR_ROUTES.map((route, index) => (
+              <Reveal key={`${route.from}-${route.to}`} delay={Math.min(index, 5) * 70}>
+                <div className="h-full rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8">
+                  <span className="material-symbols-outlined mb-4 inline-flex text-3xl text-secondary">
+                    {route.icon}
+                  </span>
+                  <h4 className="font-heading text-base font-semibold sm:text-lg">
+                    {route.from} <span className="text-secondary">&harr;</span> {route.to}
+                  </h4>
+                  <p className="mt-2 text-sm text-muted">{route.text}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -424,24 +430,28 @@ export function CityServicesContent() {
 
       <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Your Journey in Three Steps
-            </h2>
-            <p className="mt-4 text-muted sm:text-lg">
-              Luxury should be effortless. We&apos;ve refined our process to be as smooth as our vehicles.
-            </p>
-          </div>
+          <Reveal>
+            <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Your Journey in Three Steps
+              </h2>
+              <p className="mt-4 text-muted sm:text-lg">
+                Luxury should be effortless. We&apos;ve refined our process to be as smooth as our vehicles.
+              </p>
+            </div>
+          </Reveal>
           <div className="relative mx-auto grid max-w-5xl gap-10 md:grid-cols-3 md:gap-12">
             <div className="absolute left-0 top-1/2 hidden h-px w-full -translate-y-1/2 bg-primary/10 md:block" />
-            {STEPS.map((step) => (
-              <div key={step.title} className="group relative z-10 flex flex-col items-center text-center">
-                <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-primary/15 bg-white shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition group-hover:bg-primary group-hover:text-white">
-                  <span className="material-symbols-outlined text-4xl">{step.icon}</span>
+            {STEPS.map((step, index) => (
+              <Reveal key={step.title} delay={index * 100}>
+                <div className="group relative z-10 flex flex-col items-center text-center">
+                  <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-primary/15 bg-white shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition group-hover:bg-primary group-hover:text-white">
+                    <span className="material-symbols-outlined text-4xl">{step.icon}</span>
+                  </div>
+                  <h4 className="font-heading text-xl font-semibold">{step.title}</h4>
+                  <p className="mt-3 text-sm text-muted sm:text-base">{step.text}</p>
                 </div>
-                <h4 className="font-heading text-xl font-semibold">{step.title}</h4>
-                <p className="mt-3 text-sm text-muted sm:text-base">{step.text}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -449,19 +459,21 @@ export function CityServicesContent() {
 
       <section className="overflow-hidden py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-10 sm:mb-16">
-            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-              Testimonials
-            </span>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Voices of Satisfaction
-            </h2>
-          </div>
+          <Reveal>
+            <div className="mb-10 sm:mb-16">
+              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+                Testimonials
+              </span>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Voices of Satisfaction
+              </h2>
+            </div>
+          </Reveal>
           <div className="grid gap-6 md:grid-cols-3 md:gap-8">
-            {REVIEWS.map((item) => (
+            {REVIEWS.map((item, index) => (
+              <Reveal key={item.name} delay={index * 90}>
               <article
-                key={item.name}
-                className="rounded-3xl border border-primary/8 bg-[#f3f4f5] p-8 sm:p-10"
+                className="h-full rounded-3xl border border-primary/8 bg-[#f3f4f5] p-8 sm:p-10"
               >
                 <div className="mb-6 flex gap-1 text-accent">
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -485,6 +497,7 @@ export function CityServicesContent() {
                   </div>
                 </div>
               </article>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -492,6 +505,7 @@ export function CityServicesContent() {
 
       <section className="pb-16 sm:pb-24 lg:pb-[100px]">
         <Container>
+          <Reveal>
           <div className="relative overflow-hidden rounded-[28px] px-6 py-16 text-center sm:rounded-[40px] sm:px-12 sm:py-24 md:px-24">
             <div className="absolute inset-0 bg-primary" />
             <Image src={CTA_BG} alt="" fill className="object-cover opacity-20 mix-blend-overlay" sizes="100vw" />
@@ -519,6 +533,7 @@ export function CityServicesContent() {
               </div>
             </div>
           </div>
+          </Reveal>
         </Container>
       </section>
     </>

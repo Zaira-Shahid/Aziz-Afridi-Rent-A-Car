@@ -220,6 +220,12 @@ a {
 
 a.bg-primary,
 button.bg-primary,
+a.bg-navy,
+button.bg-navy,
+a.bg-secondary,
+button.bg-secondary,
+a.bg-accent,
+button.bg-accent,
 a.border-white {
   color: #ffffff !important;
 }
@@ -227,4 +233,22 @@ a.border-white {
 img {
   max-width: 100%;
   display: block;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .brand-strip-wave {
+    height: 56px;
+    top: 54%;
+  }
+
+  .brand-gold-card {
+    border-radius: 18px;
+    padding: 8px;
+  }
+
+  .brand-gold-card::before {
+    inset: 8px;
+    border-radius: 12px;
+  }
 }

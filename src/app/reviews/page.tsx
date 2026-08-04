@@ -3,11 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Reviews",
-  description: "Customer reviews and testimonials for Signature Rent A Car.",
-};
+  description: "Customer reviews and testimonials for Signature Rent A Car across Pakistan.",
+  path: "/reviews",
+  keywords: ["car rental reviews", "Signature Rent A Car testimonials"],
+});
+
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuD0KMKhRNrVTWjs6lo2c5IpQiTRMm4yN05WhPyEApAC8nEZH_q-Xki_olgfUckmoavNUnXYFxnIpnhl_U15wSjcpsjixHrbxZMT2JI9skG4qoQOqbNavHQBNGr34B4OtJuKMRFwUgj7FV-T9uHItfApXOYv57c_f6LILs-v5KvfcqETwMgtok1RXunj_QYj8tpmVm781mZeFaDy_PvDAM5hoa3PRts2nfsmN3Th-t1_0y1Aza-JdutX";

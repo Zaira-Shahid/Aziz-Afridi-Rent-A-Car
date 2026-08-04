@@ -150,7 +150,7 @@ export function CarCard({ car, className }: CarCardProps) {
             </a>
             <a
               href={`tel:${brand.phone}`}
-              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-secondary px-1.5 text-[10px] font-semibold text-primary transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
+              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-secondary px-1.5 text-[10px] font-semibold !text-white transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
             >
               <PhoneIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">Call Us</span>

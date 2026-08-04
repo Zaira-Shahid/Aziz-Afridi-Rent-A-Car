@@ -3,11 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { brand } from "@/lib/brand";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Terms & Conditions",
   description: "Terms and conditions for Signature Rent A Car bookings and rentals.",
-};
+  path: "/terms",
+});
+
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuD94szhMRd1So2I6jXVuFIZ2tQbFKaT4zBBLATaAWysZMcTnkWlqTfcKoiPnl4lDDMDJS0Va5Hvd-RpJ24HPehx7rUABKnCdSMv5GJrVrDx9zuEF52W39EthPpz_ZLvSVs8CWqZYMdPdkqwepdvOnBcigUucoJM3zRN6cpoS8PTDxip4rt-DX10lKmmNn0sDs303-NN-w2NS3-wo_9ar-erHkSyWUWVD8PEQTsQZUsTrdCpDIpjMIjp";

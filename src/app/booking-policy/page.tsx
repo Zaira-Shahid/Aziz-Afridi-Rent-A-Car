@@ -4,11 +4,14 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { brand } from "@/lib/brand";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Booking Policy",
   description: "Booking, cancellation, and payment policy for Signature Rent A Car.",
-};
+  path: "/booking-policy",
+});
+
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuAZUw0ldcd0m67b3_J2JfrSAhSKXWTJg6rI-wkqVq_K1FEskb8c6kUdv1SfiCh9Tk-gbFZ8Z6C6-5NzhjkdOAhWEU9CMOa0rPyNBnIB_keSH50GAqdttRaxfdr12_-JWiQIrDaSiUcyY3xzOSaqtOKNGdSybwl1RL3H__LdW5RS6v7MelqDS49Ir3fZ7RngiCCZDiiYpJZ_DQcIlqK0RroMlVQzWDFaBZz248x6bHUQnbrjObmdGF9c";

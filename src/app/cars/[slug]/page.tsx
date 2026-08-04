@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ContentPage } from "@/components/shared";
-import { carModels } from "@/data";
+import { CarDetailBody, CarsHero } from "@/components/cars";
+import { CtaBanner } from "@/components/shared";
+import { brand, formatPrice } from "@/lib/brand";
+import { carCategories, carModels } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,10 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const car = carModels.find((item) => item.slug === slug);
   if (!car) return { title: "Car Not Found" };
 
-  return {
+  return pageMeta({
     title: `${car.name} Rental`,
-    description: `Rent a ${car.name} with Signature Rent A Car for city and outstation trips.`,
-  };
+    description: `Rent a ${car.name} (${car.brand}) with Signature Rent A Car. From ${formatPrice(car.priceDay)}/day. Self-drive and chauffeur options available.`,
+    path: `/cars/${car.slug}`,
+    keywords: [`${car.name} rental`, `${car.brand} rent a car`, `${car.category} car rental`],
+    image: car.image,
+  });
 }
 
 export default async function CarModelPage({ params }: Props) {
@@ -27,14 +33,43 @@ export default async function CarModelPage({ params }: Props) {
   const car = carModels.find((item) => item.slug === slug);
   if (!car) notFound();
 
+  const category = carCategories.find((item) => item.slug === car.category);
+  const related = carModels
+    .filter((item) => item.category === car.category && item.slug !== car.slug)
+    .slice(0, 3);
+
   return (
-    <ContentPage
-      title={`${car.name} Rental`}
-      description={`Book a ${car.name} for daily, weekly, or monthly hire.`}
-      body={[
-        `The ${car.name} is a popular choice for comfortable travel with Signature Rent A Car.`,
-        "Contact us to check availability, pricing, and chauffeur options for your dates.",
-      ]}
-    />
+    <>
+      <CarsHero
+        badge={car.badge ?? car.brand}
+        title={car.name}
+        accent="Rental"
+        description={`Book the ${car.name} for daily, weekly, or monthly hire — comfortable travel with Signature Rent A Car across Pakistan.`}
+        image={car.image}
+        imageAlt={`${car.name} rental`}
+        primaryCta={{ label: "Inquire Now", href: "/contact" }}
+        secondaryCta={{
+          label: "Call Us",
+          href: `tel:${brand.phone}`,
+        }}
+        stats={[
+          { value: formatPrice(car.priceDay), label: "Per Day" },
+          { value: formatPrice(car.priceMonth), label: "Per Month" },
+          { value: `${car.seats}`, label: "Seats" },
+          { value: car.transmission, label: car.fuel },
+        ]}
+      />
+
+      <CarDetailBody
+        car={car}
+        categoryName={category?.name ?? car.category}
+        related={related}
+      />
+
+      <CtaBanner
+        title={`Ready to book the ${car.name}?`}
+        description="Confirm dates on WhatsApp or call — we reply quickly with availability."
+      />
+    </>
   );
 }

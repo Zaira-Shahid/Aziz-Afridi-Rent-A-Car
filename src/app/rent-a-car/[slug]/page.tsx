@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ContentPage } from "@/components/shared";
+import { CityDetailContent } from "@/components/city/CityDetailContent";
 import { cities } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,25 +17,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = cities.find((item) => item.slug === slug);
   if (!city) return { title: "City Not Found" };
 
-  return {
-    title: `Rent a Car ${city.name}`,
-    description: `Rent a car in ${city.name} with Signature Rent A Car. Reliable vehicles for local and outstation travel.`,
-  };
+  return pageMeta({
+    title: `Rent a Car in ${city.name}`,
+    description: `Affordable and premium car rental in ${city.name}. Self-drive and chauffeur cars for business, tourism, and family travel with Signature Rent A Car.`,
+    path: `/rent-a-car/${city.slug}`,
+    keywords: [`rent a car ${city.name}`, `${city.name} car rental`, `car hire ${city.name}`],
+  });
 }
+
 
 export default async function CityPage({ params }: Props) {
   const { slug } = await params;
   const city = cities.find((item) => item.slug === slug);
   if (!city) notFound();
 
-  return (
-    <ContentPage
-      title={`Rent a Car ${city.name}`}
-      description={`Premium car rental service in ${city.name} for daily trips, airport transfers, and tourist travel.`}
-      body={[
-        `Looking for rent a car in ${city.name}? Signature Rent A Car offers clean, reliable vehicles with flexible booking options.`,
-        "Choose economy, sedan, SUV, luxury, or Hiace options based on your trip needs.",
-      ]}
-    />
-  );
+  return <CityDetailContent city={city} />;
 }

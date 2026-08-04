@@ -3,11 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { cities } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "About Us",
-  description: "Learn about Signature Rent A Car and our commitment to premium car rental service.",
-};
+  description:
+    "Learn about Signature Rent A Car — premium self-drive and chauffeur car rental across Pakistan since 2010.",
+  path: "/about",
+  keywords: ["about Signature Rent A Car", "car rental company Pakistan"],
+});
+
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuBopJHdXDuZuIBjX5OwbmNweeQU-cLtnE1cZFbKtZgNnrP51n68VEEi0VPoE4r6ldymkYlUJSq2G7zWrFf8bp0pi-4yQ5mroP8Y-T5klhTTZgrQkDRgrZNz1LSLaax9S3QwyynCOBlcV8lMe0cH0a_bFnCqZAzw2Q7eIv_Zue4QeUlnUGR1WEAGOcyClW5JLI3KWj7_dYNcZ5PCiniNNQyVvbUtq8JhumFtxGrPIQ0KKp76Dib_le3g";
@@ -382,7 +387,7 @@ export default function AboutPage() {
             <div className="mt-10 space-y-10 sm:mt-12 sm:space-y-12">
               {STEPS.map((step) => (
                 <div key={step.n} className="group flex gap-5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-secondary font-heading text-lg font-semibold text-secondary transition group-hover:bg-secondary group-hover:text-primary">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-secondary font-heading text-lg font-semibold text-secondary transition group-hover:bg-secondary group-hover:text-white">
                     {step.n}
                   </div>
                   <div>

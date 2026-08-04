@@ -266,7 +266,7 @@ export function Header() {
                   <Link
                     href="/contact"
                     onClick={() => setOpen(false)}
-                    className="rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-primary"
+                    className="rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider !text-white"
                   >
                     Book Now
                   </Link>
@@ -397,7 +397,7 @@ export function Header() {
             </a>
             <Link
               href="/contact"
-              className="rounded-full bg-accent px-6 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary transition hover:brightness-110"
+              className="rounded-full bg-accent px-6 py-2.5 text-xs font-semibold uppercase tracking-wider !text-white transition hover:brightness-110"
             >
               Book Now
             </Link>

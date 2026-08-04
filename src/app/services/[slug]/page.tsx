@@ -8,6 +8,7 @@ import {
   WeddingCarRentalDetail,
 } from "@/components/services";
 import { serviceDetails, services } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -31,11 +32,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const detail = serviceDetails[slug];
 
-  return {
+  return pageMeta({
     title: service.name,
-    description: detail?.metaDescription ?? `${service.name} with Signature Rent A Car — professional and on-time service.`,
-  };
+    description:
+      detail?.metaDescription ??
+      `${service.name} with Signature Rent A Car — professional and on-time service across Pakistan.`,
+    path: `/services/${service.slug}`,
+    keywords: [service.name.toLowerCase(), "car rental service Pakistan"],
+  });
 }
+
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentPage } from "@/components/shared";
 import { blogCategories } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,11 +17,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = blogCategories.find((item) => item.slug === slug);
   if (!category) return { title: "Category Not Found" };
 
-  return {
+  return pageMeta({
     title: category.name,
-    description: `${category.name} articles from Signature Rent A Car.`,
-  };
+    description: `${category.name} articles and tips from Signature Rent A Car.`,
+    path: `/blog/${category.slug}`,
+    keywords: [category.name.toLowerCase(), "car rental blog"],
+  });
 }
+
 
 export default async function BlogCategoryPage({ params }: Props) {
   const { slug } = await params;

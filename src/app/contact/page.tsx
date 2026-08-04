@@ -5,11 +5,16 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { homeFaqs } from "@/data";
 import { brand } from "@/lib/brand";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Contact Us",
-  description: "Reach the Signature Rent A Car concierge team for bookings, quotes, and trip planning support.",
-};
+  description:
+    "Contact Signature Rent A Car for bookings, quotes, and trip planning. Call, WhatsApp, or send an inquiry online.",
+  path: "/contact",
+  keywords: ["car rental contact", "book rent a car Pakistan"],
+});
+
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDf4FIkMIy2ygFija_w8x1BOPggeofsUj15Y87MxzaEmVsbAB1zLNG_xPItUmkcFdCGRFNpkUtOnv-PHnHeOkzAJeXA0xRhZOedoRr5-PgNRNgiJGDdot132XIh9-CvBZDiYu75KFvPUWhLmWgZFJFmVfNAFCNtSjyPp6y0_kRtcrn8PNO6uboQ6KwvVtD5pKr9UZdpC8OIgMoEkpy8oryqz6Q47e1xQqEYXKw0PZN9GY4SrkGJd73e";

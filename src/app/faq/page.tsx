@@ -4,11 +4,16 @@ import Link from "next/link";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
 import { Container } from "@/components/ui/Container";
 import { brand } from "@/lib/brand";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "FAQ",
-  description: "Frequently asked questions about booking, payments, drivers, and airport pickups with Signature Rent A Car.",
-};
+  description:
+    "Frequently asked questions about booking, payments, drivers, and airport pickups with Signature Rent A Car.",
+  path: "/faq",
+  keywords: ["car rental FAQ", "booking questions"],
+});
+
 
 const CONCIERGE_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDPLC4kkZB9hmXBWeY7xb-LD71vqjB--zSCe2BgORa44v6Wa1G35kb4aWmh_0ZoAKbIRJpD9_YH60280I2uDRdcQcKxbgpe5OPglHKzuKkip27reb4jUgZL55uCbCOkOmLKakBaK11ok5oBoVXP9fAY1t4Qqj1iU929DCEK9FyGcFsqTp0Sqn4KciEmQxf1Mo1pdG4waynxIGvH8GsoYcU_Ghp4Nd6bykfB4xkCn62fbptmogK3dnRX";

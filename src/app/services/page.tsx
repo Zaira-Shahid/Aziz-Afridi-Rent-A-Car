@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { CtaBanner, LinkGridSection, PageHero } from "@/components/shared";
 import { services } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Services",
-  description: "Airport transfers, corporate, daily, weekly, monthly, and wedding car rental.",
-};
+  description:
+    "Airport transfers, corporate, daily, weekly, monthly, executive, and wedding car rental services across Pakistan.",
+  path: "/services",
+  keywords: ["airport transfer", "corporate car rental", "wedding car rental"],
+});
+
 
 export default function ServicesIndexPage() {
   return (

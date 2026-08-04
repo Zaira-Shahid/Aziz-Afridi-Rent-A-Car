@@ -3,11 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { blogCategories, blogPosts } from "@/data";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Blog",
   description: "Car rental tips, travel guides, and company updates from Signature Rent A Car.",
-};
+  path: "/blog",
+  keywords: ["car rental tips", "Pakistan travel guide"],
+});
+
 
 const FEATURED_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCi-ndTegXz92ZOPBS7tCROXMLevIDwNzLDAQzT7XzwPLORdEBH3brK1GQHj5RstsVtOO6nARzzY4tzhhbYmlLBD57-_nXk--ucpjisOaEp7WAzeVezq3sPs0xf4_irrAaJny4V9yd6VgUc3X4nKYrQk9PM9taVktRl-E7-PSJKIZT_Z69ZTQc6rLfjCKo3cM82ugNrq6O12jcIHC1JuXUwrVOtGdqyou1JgOc2HDB9vcM0o5qT18Xn";
