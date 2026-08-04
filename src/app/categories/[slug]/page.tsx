@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CtaBanner, LinkGridSection, PageHero } from "@/components/shared";
-import { carCategories, carModels } from "@/data";
+import { CarGridSection } from "@/components/cars";
+import { CtaBanner, PageHero } from "@/components/shared";
+import { carCategories, getCarsForCategory } from "@/data";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -18,7 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: category.name,
-    description: `Browse ${category.name.toLowerCase()} available for rent with Signature Rent A Car.`,
+    description:
+      category.description ??
+      `Browse ${category.name.toLowerCase()} available for rent with Signature Rent A Car.`,
   };
 }
 
@@ -27,27 +30,24 @@ export default async function CategoryPage({ params }: Props) {
   const category = carCategories.find((item) => item.slug === slug);
   if (!category) notFound();
 
-  const models = carModels.filter((car) => car.category === category.slug);
+  const models = getCarsForCategory(category.slug);
 
   return (
     <>
       <PageHero
         title={category.name}
-        description={`Explore our ${category.name.toLowerCase()} available for city and outstation travel.`}
-      />
-      <LinkGridSection
-        title="Available models"
-        items={
-          models.length > 0
-            ? models.map((item) => ({
-                href: `/cars/${item.slug}`,
-                title: `${item.name} Rental`,
-              }))
-            : carModels.slice(0, 4).map((item) => ({
-                href: `/cars/${item.slug}`,
-                title: `${item.name} Rental`,
-              }))
+        description={
+          category.description ??
+          `Explore our ${category.name.toLowerCase()} available for city and outstation travel.`
         }
+      />
+      <CarGridSection
+        title="Available models"
+        description={`Book any ${category.name.toLowerCase()} vehicle via WhatsApp, call, or inquiry.`}
+        cars={models}
+        viewAllHref="/cars"
+        viewAllLabel="View All Cars"
+        className="bg-white"
       />
       <CtaBanner />
     </>

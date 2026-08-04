@@ -11,6 +11,7 @@ type CarGridSectionProps = {
   cars: CarModel[];
   viewAllHref?: string;
   viewAllLabel?: string;
+  showViewAll?: boolean;
   className?: string;
   dark?: boolean;
 };
@@ -21,6 +22,7 @@ export function CarGridSection({
   cars,
   viewAllHref = "/cars",
   viewAllLabel = "View All Cars",
+  showViewAll = true,
   className,
   dark = false,
 }: CarGridSectionProps) {
@@ -51,24 +53,26 @@ export function CarGridSection({
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {cars.map((car, index) => (
-          <Reveal key={car.slug} delay={index * 100}>
+          <Reveal key={car.slug} delay={Math.min(index * 60, 300)}>
             <CarCard car={car} />
           </Reveal>
         ))}
       </div>
 
-      <Reveal delay={200}>
-        <div className="mt-10 flex justify-center">
-          <ButtonLink
-            href={viewAllHref}
-            variant={dark ? "accent" : "secondary"}
-            size="lg"
-            className="hover:-translate-y-0.5"
-          >
-            {viewAllLabel}
-          </ButtonLink>
-        </div>
-      </Reveal>
+      {showViewAll ? (
+        <Reveal delay={200}>
+          <div className="mt-10 flex justify-center">
+            <ButtonLink
+              href={viewAllHref}
+              variant={dark ? "accent" : "secondary"}
+              size="lg"
+              className="hover:-translate-y-0.5"
+            >
+              {viewAllLabel}
+            </ButtonLink>
+          </div>
+        </Reveal>
+      ) : null}
     </Section>
   );
 }

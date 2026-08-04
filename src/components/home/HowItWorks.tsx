@@ -4,24 +4,24 @@ import { Reveal } from "@/components/ui/Reveal";
 
 const steps = [
   {
+    icon: "directions_car",
     title: "Choose a vehicle",
     text: "Browse our fleet and pick the car that fits your trip.",
-    image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=400&q=80",
   },
   {
+    icon: "chat",
     title: "Request a car",
     text: "Send your booking details through the form or WhatsApp.",
-    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=400&q=80",
   },
   {
+    icon: "payments",
     title: "Just send payment",
     text: "Confirm your booking with a simple payment when ready.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=400&q=80",
   },
   {
+    icon: "local_shipping",
     title: "Delivery ride",
     text: "We deliver the car to your location and you hit the road.",
-    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=400&q=80",
   },
 ] as const;
 
@@ -42,7 +42,7 @@ export function HowItWorks() {
 
         <div className="relative mt-10 pr-0 sm:mt-14 lg:pr-28">
           <svg
-            className="pointer-events-none absolute left-0 right-28 top-[42px] hidden h-16 w-[calc(100%-7rem)] lg:block"
+            className="pointer-events-none absolute left-0 right-28 top-[34px] hidden h-16 w-[calc(100%-7rem)] lg:block"
             viewBox="0 0 1000 64"
             fill="none"
             preserveAspectRatio="none"
@@ -58,9 +58,8 @@ export function HowItWorks() {
             />
           </svg>
 
-          {/* Arrow from step 4 toward final car image */}
           <svg
-            className="pointer-events-none absolute right-16 top-[28px] hidden h-14 w-24 lg:block"
+            className="pointer-events-none absolute right-16 top-[20px] hidden h-14 w-24 lg:block"
             viewBox="0 0 96 56"
             fill="none"
             aria-hidden="true"
@@ -73,21 +72,27 @@ export function HowItWorks() {
               strokeLinecap="round"
               fill="none"
             />
-            <path d="M70 22 L82 30 L68 36" stroke="#c41e3a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <path
+              d="M70 22 L82 30 L68 36"
+              stroke="#c41e3a"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
           </svg>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {steps.map((step, index) => (
               <Reveal key={step.title} delay={index * 80}>
                 <div className="relative flex flex-col items-center text-center">
-                  <div className="relative z-10 h-[88px] w-[88px] overflow-hidden rounded-full border-4 border-[#fde8e9] shadow-md sm:h-[96px] sm:w-[96px]">
-                    <Image
-                      src={step.image}
-                      alt={step.title}
-                      fill
-                      className="object-cover"
-                      sizes="96px"
-                    />
+                  <div className="relative z-10 flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[#fde8e9] sm:h-[76px] sm:w-[76px]">
+                    <span
+                      className="material-symbols-outlined text-[28px] text-[#c41e3a] sm:text-[32px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      {step.icon}
+                    </span>
                   </div>
                   <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c41e3a]">
                     Step {index + 1}
@@ -108,8 +113,8 @@ export function HowItWorks() {
             ))}
           </div>
 
-          <div className="pointer-events-none absolute right-0 top-4 hidden lg:block" aria-hidden="true">
-            <div className="relative h-14 w-24 overflow-hidden rounded-lg border-2 border-[#c41e3a]/25 shadow-md">
+          <div className="pointer-events-none absolute right-0 top-2 hidden lg:block" aria-hidden="true">
+            <div className="relative h-14 w-24 overflow-hidden rounded-lg shadow-md">
               <Image
                 src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=300&q=80"
                 alt=""

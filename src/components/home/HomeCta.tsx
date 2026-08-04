@@ -29,7 +29,7 @@ export function HomeCta() {
               </Link>
               <Link
                 href="/contact"
-                className="rounded-full border-2 border-white px-10 py-4 text-sm font-semibold text-white transition hover:bg-white hover:text-primary"
+                className="rounded-full border-2 border-white bg-transparent px-10 py-4 text-sm font-semibold !text-white transition hover:bg-white/15 hover:!text-white"
               >
                 Speak to an Agent
               </Link>

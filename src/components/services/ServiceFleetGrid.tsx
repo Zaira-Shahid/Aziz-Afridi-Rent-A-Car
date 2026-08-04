@@ -22,6 +22,7 @@ function toCarModel(item: ServiceFleetItem): CarModel {
     priceDay: item.priceDay,
     priceMonth: item.priceDay * 22,
     image: item.image,
+    imageAlt: item.imageAlt,
     badge: item.tag,
   };
 }
@@ -50,22 +51,45 @@ function PhoneIcon({ className }: { className?: string }) {
 
 function FleetCard({ item }: { item: ServiceFleetItem }) {
   const [inquireOpen, setInquireOpen] = useState(false);
+  const [showAlt, setShowAlt] = useState(false);
   const car = toCarModel(item);
+  const hasAlt = Boolean(item.imageAlt && item.imageAlt !== item.image);
   const whatsappHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
     `Hi, I want to inquire about ${item.name} rental.`,
   )}`;
 
+  function toggleAltImage() {
+    if (hasAlt) setShowAlt((value) => !value);
+  }
+
   return (
     <>
       <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_10px_30px_rgba(14,28,46,0.06)] transition duration-500 hover:-translate-y-2">
-        <div className="relative h-48 overflow-hidden sm:h-56">
+        <div
+          className="relative h-48 cursor-pointer overflow-hidden sm:h-56"
+          onMouseEnter={() => hasAlt && setShowAlt(true)}
+          onMouseLeave={() => setShowAlt(false)}
+          onClick={toggleAltImage}
+          role={hasAlt ? "button" : undefined}
+          tabIndex={hasAlt ? 0 : undefined}
+          aria-label={hasAlt ? `View alternate image of ${item.name}` : undefined}
+        >
           <Image
             src={item.image}
             alt={item.name}
             fill
-            className="object-cover transition duration-700 group-hover:scale-110"
+            className={`object-cover transition duration-500 ${hasAlt && showAlt ? "scale-105 opacity-0" : "opacity-100"} ${!hasAlt ? "group-hover:scale-110" : ""}`}
             sizes="(max-width: 768px) 100vw, 25vw"
           />
+          {hasAlt ? (
+            <Image
+              src={item.imageAlt!}
+              alt={`${item.name} alternate`}
+              fill
+              className={`object-cover transition duration-500 ${showAlt ? "scale-105 opacity-100" : "opacity-0"}`}
+              sizes="(max-width: 768px) 100vw, 25vw"
+            />
+          ) : null}
           <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">
             {item.tag}
           </span>

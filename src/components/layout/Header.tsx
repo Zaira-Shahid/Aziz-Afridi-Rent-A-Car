@@ -328,9 +328,9 @@ export function Header() {
                   <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                     <div
                       className={cn(
-                        "max-h-[70vh] overflow-y-auto rounded-[14px] border border-primary/10 bg-white p-4 text-primary shadow-[0_18px_50px_rgba(0,11,29,0.12)]",
-                        !item.groups?.length && "min-w-[240px]",
-                        item.groups?.length === 2 && "w-[min(480px,90vw)]",
+                        "max-h-[min(70vh,560px)] overflow-y-auto rounded-[14px] border border-primary/10 bg-white p-4 text-primary shadow-[0_18px_50px_rgba(0,11,29,0.12)]",
+                        !item.groups?.length && "min-w-[280px]",
+                        item.groups?.length === 2 && "w-[min(560px,92vw)]",
                         (item.groups?.length ?? 0) >= 3 && "w-[min(720px,92vw)]",
                       )}
                     >

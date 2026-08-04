@@ -29,6 +29,21 @@
   }
 }
 
+@keyframes fleet-heading-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fleet-heading-anim {
+  animation: fleet-heading-in 0.45s ease-out both;
+}
+
 @keyframes soft-pulse {
   0%,
   100% {
@@ -51,7 +66,7 @@
 }
 
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  animation: marquee 14s linear infinite;
 }
 
 .marquee-track:hover {
@@ -59,7 +74,7 @@
 }
 
 .brand-strip-section {
-  background: linear-gradient(180deg, #1a3a2a 0%, #1a3a2a 52%, #ffffff 52%, #ffffff 100%);
+  background: linear-gradient(180deg, #000b1d 0%, #000b1d 52%, #f8f9fa 52%, #f8f9fa 100%);
   padding-bottom: 1.5rem;
 }
 
@@ -69,27 +84,26 @@
   right: 0;
   top: 52%;
   height: 90px;
-  background: #ffffff;
+  background: #f8f9fa;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   transform: scaleX(1.15);
 }
 
-.brand-gold-card {
+.brand-logo-card {
   position: relative;
   overflow: hidden;
   border-radius: 22px;
-  padding: 5px;
-  background:
-    linear-gradient(145deg, #f0d78c 0%, #c9a24a 28%, #a67c2e 55%, #e8c56a 78%, #b8923f 100%);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  padding: 3px;
+  background: linear-gradient(145deg, #04c4e3 0%, #000b1d 45%, #bff52c 100%);
+  box-shadow: 0 10px 22px rgba(0, 11, 29, 0.22);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
 }
 
-.brand-gold-card:hover {
+.brand-logo-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 14px 28px rgba(4, 196, 227, 0.28);
 }
 
 
@@ -205,7 +219,8 @@ a {
 }
 
 a.bg-primary,
-button.bg-primary {
+button.bg-primary,
+a.border-white {
   color: #ffffff !important;
 }
 

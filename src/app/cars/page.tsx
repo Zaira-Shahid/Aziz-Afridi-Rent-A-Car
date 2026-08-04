@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { CarGridSection } from "@/components/cars";
 import { CtaBanner, LinkGridSection, PageHero } from "@/components/shared";
 import { carCategories, carModels } from "@/data";
 
 export const metadata: Metadata = {
   title: "Our Cars",
-  description: "Browse economy, sedan, SUV, luxury, and Hiace rental options.",
+  description: "Browse economy, standard, premium, luxury, SUV, and group travel rental options.",
 };
 
 export default function CarsPage() {
@@ -21,12 +22,12 @@ export default function CarsPage() {
           title: item.name,
         }))}
       />
-      <LinkGridSection
+      <CarGridSection
         title="All models"
-        items={carModels.map((item) => ({
-          href: `/cars/${item.slug}`,
-          title: `${item.name} Rental`,
-        }))}
+        description="Every car in our fleet — named and priced for daily or monthly rental."
+        cars={carModels}
+        showViewAll={false}
+        className="bg-white"
       />
       <CtaBanner />
     </>

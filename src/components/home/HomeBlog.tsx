@@ -26,7 +26,7 @@ export function HomeBlog() {
       </Reveal>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((post, index) => (
+        {blogPosts.slice(0, 6).map((post, index) => (
           <Reveal key={post.slug} delay={Math.min(index, 5) * 80}>
             <article className="group flex h-full flex-col overflow-hidden rounded-[12px] border border-primary/8 bg-background transition duration-300 hover:-translate-y-1.5 hover:border-secondary/25 hover:shadow-[0_16px_40px_rgba(0,11,29,0.08)]">
               <div className="relative aspect-[16/10] overflow-hidden">

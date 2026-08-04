@@ -37,9 +37,16 @@ function PhoneIcon({ className }: { className?: string }) {
 
 export function CarCard({ car, className }: CarCardProps) {
   const [inquireOpen, setInquireOpen] = useState(false);
+  const [showAlt, setShowAlt] = useState(false);
+  const hasAlt = Boolean(car.imageAlt && car.imageAlt !== car.image);
+
   const whatsappHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
     `Hi, I want to inquire about ${car.name} rental.`,
   )}`;
+
+  function toggleAltImage() {
+    if (hasAlt) setShowAlt((value) => !value);
+  }
 
   return (
     <>
@@ -49,18 +56,53 @@ export function CarCard({ car, className }: CarCardProps) {
           className,
         )}
       >
-        <div className="relative aspect-[16/10] overflow-hidden bg-background">
+        <div
+          className="relative aspect-[16/10] cursor-pointer overflow-hidden bg-background"
+          onMouseEnter={() => hasAlt && setShowAlt(true)}
+          onMouseLeave={() => setShowAlt(false)}
+          onClick={toggleAltImage}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggleAltImage();
+            }
+          }}
+          role={hasAlt ? "button" : undefined}
+          tabIndex={hasAlt ? 0 : undefined}
+          aria-label={hasAlt ? `View alternate image of ${car.name}` : undefined}
+        >
           <Image
             src={car.image}
             alt={`${car.name} rental`}
             fill
-            className="object-cover transition duration-700 group-hover:scale-110"
+            className={cn(
+              "object-cover transition duration-500",
+              hasAlt && showAlt ? "scale-105 opacity-0" : "scale-100 opacity-100",
+              !hasAlt && "group-hover:scale-110",
+            )}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent opacity-70 transition duration-300 group-hover:opacity-90" />
+          {hasAlt ? (
+            <Image
+              src={car.imageAlt!}
+              alt={`${car.name} alternate color`}
+              fill
+              className={cn(
+                "object-cover transition duration-500",
+                showAlt ? "scale-105 opacity-100" : "scale-100 opacity-0",
+              )}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : null}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent opacity-70 transition duration-300 group-hover:opacity-90" />
           {car.badge ? (
             <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary shadow-sm">
               {car.badge}
+            </span>
+          ) : null}
+          {hasAlt ? (
+            <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary/70 backdrop-blur">
+              {showAlt ? "2 / 2" : "1 / 2"}
             </span>
           ) : null}
           <div className="absolute bottom-3 left-3">
@@ -83,9 +125,16 @@ export function CarCard({ car, className }: CarCardProps) {
             <span className="rounded-[10px] bg-background px-2.5 py-1">{car.seats} Seats</span>
             <span className="rounded-[10px] bg-background px-2.5 py-1">{car.transmission}</span>
             <span className="rounded-[10px] bg-background px-2.5 py-1">{car.fuel}</span>
+            {car.colors?.length ? (
+              <span className="rounded-[10px] bg-background px-2.5 py-1">{car.colors.join(" / ")}</span>
+            ) : null}
           </div>
 
-          <p className="mt-4 text-xs text-primary/50">
+          <p className="mt-4 text-sm font-semibold text-primary">
+            {formatPrice(car.priceDay)}
+            <span className="font-normal text-primary/55"> / day</span>
+          </p>
+          <p className="mt-1 text-xs text-primary/50">
             From <span className="font-medium text-primary">{formatPrice(car.priceMonth)}</span> / month
           </p>
 

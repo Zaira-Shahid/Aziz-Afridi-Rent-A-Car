@@ -47,7 +47,7 @@ export function ContactForm() {
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <label className="text-xs font-semibold uppercase tracking-wide text-muted">Phone Number</label>
-          <input required name="phone" type="tel" placeholder="+92 300 0000000" className={inputClasses} />
+          <input required name="phone" type="tel" placeholder="03299499996" className={inputClasses} />
         </div>
         <div className="space-y-2">
           <label className="text-xs font-semibold uppercase tracking-wide text-muted">Pickup Location</label>

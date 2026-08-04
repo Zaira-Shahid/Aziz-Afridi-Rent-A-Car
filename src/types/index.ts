@@ -62,6 +62,7 @@ export type ServiceFleetItem = {
   seats: number;
   transmission: string;
   image: string;
+  imageAlt?: string;
   priceDay: number;
 };
 
@@ -142,6 +143,14 @@ export type ServiceDetail = {
 export type CarCategory = {
   slug: string;
   name: string;
+  description?: string;
+};
+
+export type FleetSection = {
+  slug: string;
+  name: string;
+  description: string;
+  carSlugs: string[];
 };
 
 export type CarModel = {
@@ -155,6 +164,10 @@ export type CarModel = {
   priceDay: number;
   priceMonth: number;
   image: string;
+  /** Second color/angle — shown on hover or touch */
+  imageAlt?: string;
+  /** Available paint colors shown on the card */
+  colors?: string[];
   badge?: string;
   featured?: boolean;
   sale?: boolean;
