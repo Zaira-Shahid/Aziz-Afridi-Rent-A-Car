@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Container } from "@/components/ui/Container";
 import { homeFaqs } from "@/data";
 import { brand } from "@/lib/brand";
@@ -103,10 +104,10 @@ export default function ContactPage() {
             <span>/</span>
             <span className="text-white">Contact Us</span>
           </nav>
-          <h1 className="max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="hero-shadow animate-fade-up max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Connect With <span className="text-accent">Excellence</span>
           </h1>
-          <p className="mt-4 max-w-xl text-sm text-white/80 sm:text-base lg:text-lg">
+          <p className="animate-fade-up-delay mt-4 max-w-xl text-sm text-white/80 sm:text-base lg:text-lg">
             Experience premium mobility with personalized support. Our concierge team is available 24/7 to
             assist with your luxury transportation needs across Pakistan.
           </p>
@@ -116,10 +117,10 @@ export default function ContactPage() {
       <section className="py-16 sm:py-24 lg:py-[100px]">
         <Container>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {INFO_CARDS.map((card) => (
+            {INFO_CARDS.map((card, index) => (
+              <AnimateIn key={card.title} delay={index * 80}>
               <div
-                key={card.title}
-                className="luxury-card-shadow group rounded-2xl border border-primary/8 bg-white p-8 transition hover:-translate-y-1 sm:p-10"
+                className="luxury-card-shadow group h-full rounded-2xl border border-primary/8 bg-white p-8 transition hover:-translate-y-1 sm:p-10"
               >
                 <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-secondary/10 text-secondary transition group-hover:bg-secondary group-hover:text-white">
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -150,14 +151,15 @@ export default function ContactPage() {
                   </>
                 )}
               </div>
+              </AnimateIn>
             ))}
           </div>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {RESPONSE_PROMISES.map((item) => (
+            {RESPONSE_PROMISES.map((item, index) => (
+              <AnimateIn key={item.label} delay={index * 70}>
               <div
-                key={item.label}
-                className="flex items-center gap-4 rounded-2xl border border-primary/8 bg-white p-6"
+                className="flex h-full items-center gap-4 rounded-2xl border border-primary/8 bg-white p-6"
               >
                 <span className="material-symbols-outlined text-3xl text-secondary">{item.icon}</span>
                 <div>
@@ -165,6 +167,7 @@ export default function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted">{item.label}</p>
                 </div>
               </div>
+              </AnimateIn>
             ))}
           </div>
         </Container>

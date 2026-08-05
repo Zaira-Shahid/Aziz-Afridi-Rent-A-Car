@@ -87,6 +87,8 @@ export type ServiceTestimonial = {
 export type ServicePricingPackage = {
   name: string;
   priceDay: number;
+  /** Display unit suffix, e.g. "/day", "/week", "/month", "/24hr" */
+  unit?: string;
   features: { text: string; included: boolean }[];
   featured?: boolean;
 };
@@ -186,6 +188,14 @@ export type BlogPost = {
   date: string;
   excerpt: string;
   image: string;
+  author: string;
+  readTime: string;
+  /** Full article paragraphs */
+  content: string[];
+  /** Optional tip boxes / takeaways */
+  tips?: string[];
+  /** Closing CTA line */
+  cta?: string;
 };
 
 export type FaqItem = {

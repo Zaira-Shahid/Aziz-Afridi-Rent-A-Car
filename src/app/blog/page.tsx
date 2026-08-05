@@ -33,7 +33,7 @@ export default function BlogPage() {
           <span className="mb-4 inline-block w-fit rounded-full bg-secondary px-4 py-1 text-xs font-semibold uppercase tracking-wider text-white sm:mb-6">
             Featured Article
           </span>
-          <h1 className="max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="hero-shadow animate-fade-up max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Mastering Luxury: The Ultimate Guide to Renting Supercars in Islamabad
           </h1>
           <p className="mt-4 max-w-xl text-sm text-white/80 sm:text-base lg:text-lg">
@@ -42,7 +42,7 @@ export default function BlogPage() {
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
             <Link
-              href="/blog/islamabad-travel-guide"
+              href="/blog/mastering-luxury-islamabad"
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-sm font-semibold text-primary transition hover:brightness-95 sm:w-auto"
             >
               Read Featured Story
@@ -124,14 +124,18 @@ export default function BlogPage() {
                       </div>
                       <div className="flex flex-1 flex-col p-8">
                         <h3 className="font-heading text-lg font-semibold leading-tight text-primary sm:text-xl">
-                          {post.title}
+                          <Link href={`/blog/${post.slug}`} className="transition hover:text-secondary">
+                            {post.title}
+                          </Link>
                         </h3>
                         <p className="mt-3 flex-1 text-sm text-muted">{post.excerpt}</p>
                         <div className="mt-6 flex items-center justify-between border-t border-primary/8 pt-6">
-                          <span className="text-xs text-muted">{post.date}</span>
+                          <span className="text-xs text-muted">
+                            {post.date} • {post.readTime}
+                          </span>
                         </div>
                         <Link
-                          href={`/blog/${post.category}`}
+                          href={`/blog/${post.slug}`}
                           className="mt-6 w-full rounded-lg border border-primary py-3 text-center text-sm font-semibold text-primary transition hover:bg-primary hover:!text-white"
                         >
                           Read More
@@ -171,7 +175,7 @@ export default function BlogPage() {
                 <h4 className="border-b border-primary/8 pb-4 font-heading text-lg font-semibold">Popular Reads</h4>
                 <div className="mt-6 space-y-6">
                   {blogPosts.slice(0, 3).map((post) => (
-                    <Link key={post.slug} href={`/blog/${post.category}`} className="group flex gap-4">
+                    <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex gap-4">
                       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg">
                         <Image
                           src={post.image}

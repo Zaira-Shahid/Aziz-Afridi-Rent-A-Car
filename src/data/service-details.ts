@@ -1,4 +1,5 @@
 import type { ServiceDetail } from "@/types";
+import { formatPhoneDisplay } from "@/lib/brand";
 
 const hotelTransfer: ServiceDetail = {
   slug: "hotel-transfer",
@@ -485,7 +486,7 @@ const weddingCarRental: ServiceDetail = {
     description:
       "Fill out the form and our wedding concierge will get back to you within 2 hours with a customized quote and availability.",
     contact: [
-      { icon: "call", label: "Direct Line", value: "+92 300 0000000" },
+      { icon: "call", label: "Direct Line", value: formatPhoneDisplay() },
       { icon: "mail", label: "Email Us", value: "info@signaturerentacar.com" },
     ],
   },
@@ -749,11 +750,863 @@ const dailyCarRental: ServiceDetail = {
   },
 };
 
+const monthlyCarRental: ServiceDetail = {
+  slug: "monthly-car-rental",
+  name: "Monthly Car Rental",
+  metaDescription:
+    "Flexible monthly car rental plans with Signature Rent A Car — no maintenance hassles, replacement vehicles, and premium insurance across Pakistan.",
+  hero: {
+    badge: "Premium Long-Term Mobility",
+    title: "Monthly Car Rental Plans For Your",
+    accent: "Long-Term Needs",
+    description:
+      "Elevate your commute with flexible monthly subscriptions. Designed for companies, families, and professionals who value prestige and peace of mind — with doorstep delivery and transparent billing.",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCCoCn8jpaPUn3AnfWzEpoHCI_JGUERsh4pzO2b8x6zTU3JvSaDfHGKjo3ygmksMhoVGYVCINJB2aO8yc84vJSQ1GyQHuVhoSMEm_N-LsgWxSQ7PL-g2cMu-UOmK0g-KMggOm42NAOdIGrMBK_IP9JEe4GwNXsBdsrw3U4Z_BrP0fUTi0xYZpONuj6tRDSnGk2qHvZF0B7px0BYw1ibORwRlNpHpusYE3rmbmF5_b08FEfhG3otKl36",
+    primaryCta: { label: "Browse Inventory", href: "#fleet" },
+    secondaryCta: { label: "Talk to an Advisor", href: "/contact" },
+  },
+  features: {
+    title: "Why Choose Monthly Rental?",
+    description:
+      "Skip the commitments of ownership and the hassle of short-term rentals. Our monthly plans are built for convenience.",
+    items: [
+      {
+        icon: "engineering",
+        title: "No Maintenance Hassle",
+        text: "Routine servicing, oil changes, and tire rotations are all handled by us. We keep you moving without the paperwork.",
+      },
+      {
+        icon: "swap_horiz",
+        title: "Replacement Vehicle",
+        text: "If your car needs major repairs or is due for service, we provide an immediate replacement of equal class.",
+      },
+      {
+        icon: "calendar_today",
+        title: "Flexible Period",
+        text: "Extend, shorten, or switch your vehicle month-to-month. No long-term lock-ins or predatory termination fees.",
+      },
+      {
+        icon: "verified",
+        title: "Premium Insurance",
+        text: "Comprehensive cover included on every monthly plan, with optional zero-liability upgrades for total peace of mind.",
+      },
+    ],
+  },
+  fleet: {
+    title: "Our Monthly Packages",
+    description: "Tailored fleets for every professional need — priced clearly per day.",
+    items: [
+      {
+        name: "Economy Elite",
+        tag: "Best Value",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/corolla%20white.png",
+        imageAlt: "/images/corolla%20black.png",
+        priceDay: 4500,
+      },
+      {
+        name: "Corporate Sedan",
+        tag: "Business",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/Civic%20white.png",
+        imageAlt: "/images/Civic%20Black.png",
+        priceDay: 7000,
+      },
+      {
+        name: "Family SUV",
+        tag: "Family",
+        seats: 7,
+        transmission: "Automatic",
+        image: "/images/fortuner%20white.png",
+        imageAlt: "/images/fortuner%20black.png",
+        priceDay: 14000,
+      },
+      {
+        name: "Luxe Prestige",
+        tag: "Premium Choice",
+        seats: 4,
+        transmission: "Automatic",
+        image: "/images/s400%20white.png",
+        imageAlt: "/images/S400%20Black.png",
+        priceDay: 80000,
+      },
+    ],
+  },
+  packages: {
+    title: "Monthly Plan Tiers",
+    description:
+      "Choose the plan that matches your mileage and vehicle class. Billing is on a 30-day cycle with transparent daily rates shown on every car.",
+    items: [
+      {
+        name: "Economy Elite",
+        priceDay: 4500,
+        unit: "/day",
+        features: [
+          { text: "Toyota Corolla or similar", included: true },
+          { text: "3000 KM / month included", included: true },
+          { text: "Hybrid / Petrol options", included: true },
+          { text: "Chauffeur available", included: false },
+        ],
+      },
+      {
+        name: "Corporate Sedan",
+        priceDay: 7000,
+        unit: "/day",
+        featured: true,
+        features: [
+          { text: "Audi A4 / Civic class", included: true },
+          { text: "4500 KM / month included", included: true },
+          { text: "Full comprehensive cover", included: true },
+          { text: "Priority support", included: true },
+        ],
+      },
+      {
+        name: "Luxe Prestige",
+        priceDay: 80000,
+        unit: "/day",
+        features: [
+          { text: "Mercedes S-Class or similar", included: true },
+          { text: "Unlimited mileage", included: true },
+          { text: "Chauffeur available", included: true },
+          { text: "Concierge service", included: true },
+        ],
+      },
+    ],
+  },
+  testimonials: {
+    title: "Trust from High-Performers",
+    ratingSummary: { value: "4.9/5 Rating", label: "Chosen by CEOs and industry leaders" },
+    items: [
+      {
+        quote:
+          "Signature has completely transformed our company's executive travel. The monthly plan is seamless, and the replacement vehicle service is a lifesaver during maintenance.",
+        name: "Sarah Jenkins",
+        role: "Director, TechFlow Inc.",
+      },
+      {
+        quote:
+          "I needed a premium SUV for a 4-month relocation. The process was entirely digital, and the car was delivered to my doorstep in pristine condition.",
+        name: "Marcus Thorne",
+        role: "Founder, E-com Ventures",
+      },
+      {
+        quote:
+          "The S-Class was practically new. The level of professionalism from the Signature team is unmatched in the monthly rental market.",
+        name: "Dorian Gray",
+        role: "Creative Director",
+      },
+    ],
+  },
+  faqs: {
+    title: "Frequently Asked Questions",
+    items: [
+      {
+        question: "What documents do I need for a monthly rental?",
+        answer:
+          "For residents, we require a valid Driving License, CNIC/Passport, and a credit/debit card. International clients also need an International Driving Permit (IDP). All documents must be original at handover.",
+      },
+      {
+        question: "Can I change my vehicle mid-month?",
+        answer:
+          "Yes, you can upgrade or downgrade. Price adjustments are applied pro-rata to your next billing cycle. A small logistics fee may apply for vehicle swaps outside major cities.",
+      },
+      {
+        question: "Is comprehensive insurance included?",
+        answer:
+          "All monthly rentals include standard comprehensive insurance. Zero-liability upgrades are available for total peace of mind.",
+      },
+      {
+        question: "What is the minimum rental period?",
+        answer:
+          "Monthly plans are calculated on a 30-day basis. You can return earlier, but the minimum billing cycle remains 30 days.",
+      },
+    ],
+  },
+  included: {
+    title: "What's Included",
+    description: "Every monthly plan comes with these standard inclusions.",
+    items: [
+      { icon: "engineering", text: "Routine maintenance and servicing handled by us" },
+      { icon: "swap_horiz", text: "Equal-class replacement vehicle during repairs" },
+      { icon: "verified", text: "Comprehensive insurance on every plan" },
+      { icon: "support_agent", text: "24/7 roadside assistance and support" },
+      { icon: "local_shipping", text: "Doorstep delivery and pickup in major cities" },
+    ],
+  },
+  audience: {
+    title: "Who It's For",
+    description: "Built for people who need a car for weeks or months — not just a weekend.",
+    items: [
+      {
+        icon: "business_center",
+        title: "Companies & Teams",
+        text: "Reliable monthly mobility for executives, sales teams, and visiting staff.",
+      },
+      {
+        icon: "family_restroom",
+        title: "Families Relocating",
+        text: "A comfortable vehicle for 1–6 months while you settle into a new city.",
+      },
+      {
+        icon: "work",
+        title: "Professionals on Assignment",
+        text: "Skip ownership costs when your project or posting has a clear end date.",
+      },
+    ],
+  },
+};
+
+const weeklyCarRental: ServiceDetail = {
+  slug: "weekly-car-rental",
+  name: "Weekly Car Rental",
+  metaDescription:
+    "Flexible weekly car rental plans with Signature Rent A Car — save up to 30% vs daily rates, seamless extensions, and premium fleet across Pakistan.",
+  hero: {
+    badge: "Premium Weekly Plans",
+    title: "Flexible Weekly Car Rental",
+    accent: "Plans",
+    description:
+      "Experience uncompromising mobility. Whether it's for executive travel or a long getaway, our weekly packages offer the perfect balance of luxury and value.",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAaiwazytZfpceG4LZ5PkOu1-RykKPLYoV6_XfOwc4I3AnyOtAMZ8wsr4fX9Z_mEBOVEyFfEFtZTXU3zoyQd-g0WRDr5vrDIDQdd24Oqr0UI_tBlIjpCezvpCC40TfgqEA2xjU-f57R6I6OrSFdzduwxGcAVSIBFanGpXJsNi3tzZF-0iUUbHGl_aGJ4oyU5PiVHY-Yi89xKqKclm7TJnWbu_denG4LI2twV77OLmn5cvVC2V7X1pN3",
+    primaryCta: { label: "Explore Plans", href: "#packages" },
+    secondaryCta: { label: "View Fleet", href: "#fleet" },
+  },
+  features: {
+    title: "Why Choose Weekly?",
+    description:
+      "Designed for those who value time and comfort. Our weekly plans provide seamless integration into your lifestyle with exclusive perks.",
+    items: [
+      {
+        icon: "savings",
+        title: "Save More",
+        text: "Reduce your daily rate by up to 30% compared to standard short-term bookings. Efficiency meets economy in our premium tier.",
+      },
+      {
+        icon: "airline_seat_recline_extra",
+        title: "Long-Term Comfort",
+        text: "Personalized seat settings and premium climate control for your extended journey — so every day feels like your own car.",
+      },
+      {
+        icon: "update",
+        title: "Seamless Extensions",
+        text: "Plans changed? Extend your rental with a quick WhatsApp message. No paperwork, no hassle — just pure flexibility.",
+      },
+      {
+        icon: "support_agent",
+        title: "24/7 Assistance",
+        text: "Roadside support and booking help whenever you need it, day or night, across our service cities.",
+      },
+    ],
+  },
+  fleet: {
+    title: "Elite Weekly Fleet",
+    description: "Preview models available for weekly hire — priced per day.",
+    items: [
+      {
+        name: "Audi A6 Business Class",
+        tag: "Available Now",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/Audi%20A6%20White.png",
+        imageAlt: "/images/Audi%20A6%20black.png",
+        priceDay: 55000,
+      },
+      {
+        name: "Range Rover / Fortuner",
+        tag: "SUV",
+        seats: 7,
+        transmission: "Automatic",
+        image: "/images/fortuner%20white.png",
+        imageAlt: "/images/fortuner%20black.png",
+        priceDay: 14000,
+      },
+      {
+        name: "Mercedes-Benz S-Class",
+        tag: "Elite Choice",
+        seats: 4,
+        transmission: "Automatic",
+        image: "/images/s500%20white.png",
+        imageAlt: "/images/s500%20black.png",
+        priceDay: 110000,
+      },
+      {
+        name: "Honda Civic 2025",
+        tag: "Sedan",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/Civic%20white.png",
+        imageAlt: "/images/Civic%20Black.png",
+        priceDay: 10000,
+      },
+    ],
+  },
+  packages: {
+    title: "Curated Weekly Plans",
+    description:
+      "Select the tier that best suits your mission. All plans include 24/7 roadside assistance and basic insurance. Car cards show daily rates.",
+    items: [
+      {
+        name: "Economy",
+        priceDay: 4000,
+        unit: "/day",
+        features: [
+          { text: "Compact hatchbacks", included: true },
+          { text: "City mileage package", included: true },
+          { text: "1 driver included", included: true },
+          { text: "Airport valet", included: false },
+        ],
+      },
+      {
+        name: "Sedan",
+        priceDay: 6500,
+        unit: "/day",
+        features: [
+          { text: "Full-size sedans", included: true },
+          { text: "Premium infotainment", included: true },
+          { text: "2 drivers included", included: true },
+          { text: "Airport valet", included: false },
+        ],
+      },
+      {
+        name: "SUV",
+        priceDay: 12000,
+        unit: "/day",
+        featured: true,
+        features: [
+          { text: "Mid to large SUVs", included: true },
+          { text: "All-wheel drive options", included: true },
+          { text: "Airport valet drop-off", included: true },
+          { text: "Priority support", included: true },
+        ],
+      },
+      {
+        name: "Luxury",
+        priceDay: 55000,
+        unit: "/day",
+        features: [
+          { text: "High-end elite fleet", included: true },
+          { text: "Personal concierge", included: true },
+          { text: "Full coverage insurance", included: true },
+          { text: "Chauffeur available", included: true },
+        ],
+      },
+    ],
+  },
+  process: {
+    title: "Start Your Weekly Journey in 3 Steps",
+    steps: [
+      {
+        icon: "directions_car",
+        title: "Select Your Plan",
+        text: "Choose from Economy, Sedan, SUV, or Luxury tiers based on your space and prestige requirements.",
+      },
+      {
+        icon: "inventory_2",
+        title: "Choose Your Vehicle",
+        text: "Browse our real-time inventory of late-model vehicles. What you see is exactly what you drive.",
+      },
+      {
+        icon: "verified",
+        title: "Confirm & Drive",
+        text: "Secure your booking via WhatsApp or call. Pick up at our lounge or have it delivered to your doorstep.",
+      },
+    ],
+  },
+  testimonials: {
+    title: "Weekly Drivers Love Signature",
+    ratingSummary: { value: "4.9/5", label: "Based on recent weekly bookings" },
+    items: [
+      {
+        quote:
+          "Booked an SUV for a week-long northern trip. Fair weekly rate, spotless car, and extending by two days was just one WhatsApp away.",
+        name: "Hassan Ali",
+        role: "Travel Planner",
+      },
+      {
+        quote:
+          "Needed a Civic for a project week in Lahore. Transparent daily pricing on the card and smooth doorstep delivery.",
+        name: "Ayesha Noor",
+        role: "Consultant",
+      },
+    ],
+  },
+  faqs: {
+    title: "Frequently Asked Questions",
+    items: [
+      {
+        question: "How much do I save with a weekly plan?",
+        answer:
+          "Weekly packages typically reduce the effective daily rate by up to 30% versus day-by-day bookings, depending on vehicle class and season.",
+      },
+      {
+        question: "Can I extend mid-week?",
+        answer:
+          "Yes. Message us on WhatsApp before your return time and we will confirm availability and the extended daily rate.",
+      },
+      {
+        question: "Is mileage limited?",
+        answer:
+          "Economy and Sedan tiers include a city mileage package. SUV and Luxury plans offer higher or unlimited packages — confirmed at booking.",
+      },
+      {
+        question: "Do you deliver for weekly rentals?",
+        answer:
+          "Yes. Doorstep delivery and pickup are available in Islamabad, Rawalpindi, Lahore, Karachi, and other major hubs.",
+      },
+    ],
+  },
+  included: {
+    title: "What's Included",
+    description: "Standard inclusions on every weekly hire.",
+    items: [
+      { icon: "support_agent", text: "24/7 roadside assistance" },
+      { icon: "verified", text: "Basic comprehensive insurance" },
+      { icon: "sanitizer", text: "Sanitized vehicle before handover" },
+      { icon: "water_drop", text: "Complimentary bottled water" },
+      { icon: "schedule", text: "Grace period on pickup and return" },
+    ],
+  },
+  audience: {
+    title: "Who It's For",
+    description: "Ideal when a day is too short and a month is too long.",
+    items: [
+      {
+        icon: "luggage",
+        title: "Week-Long Trips",
+        text: "Northern getaways, family visits, and multi-city tours with one reliable car.",
+      },
+      {
+        icon: "work",
+        title: "Project Weeks",
+        text: "Consultants and contractors who need a car for a defined work sprint.",
+      },
+      {
+        icon: "celebration",
+        title: "Events & Guests",
+        text: "Wedding weeks, conferences, and visiting relatives who need flexible mobility.",
+      },
+    ],
+  },
+};
+
+const corporateCarRental: ServiceDetail = {
+  slug: "corporate-car-rental",
+  name: "Corporate Car Rental",
+  metaDescription:
+    "Professional corporate car rental with Signature Rent A Car — dedicated account managers, flexible plans, monthly billing, and business-class fleet across Pakistan.",
+  hero: {
+    badge: "Premium Corporate Service",
+    title: "Professional Corporate Car Rental",
+    accent: "Solutions",
+    description:
+      "Streamline your business travel with bespoke fleet management and executive transportation designed for the modern enterprise.",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuA0PN26zchzhvzBRLrr4cCZLVIaFKG79hlIWs8hAzu1P4cPQiHDj4o5i0oZsw7iqaop_Si8AuBUtcXNL7U2PP9frhdlQvmQYEzhbprmrWKWcM7w5Qin8Hi5KuSA1FPE4KJbqXKtnaCVKqQCnLGKXFcCH174v5O61MVM8t7s5PjZBib8fy0bkTKf0XW0ILLg9JXF_Hv9DqiZnAq1tyi2i-DZwmHmwFdruxudCCDN3j9VmM3j6xaKPaFT",
+    primaryCta: { label: "Setup Corporate Account", href: "#booking" },
+    secondaryCta: { label: "View Fleet", href: "#fleet" },
+  },
+  features: {
+    title: "Why Partner With Signature?",
+    description: "Elevate your operational efficiency with benefits tailored to corporate demands.",
+    items: [
+      {
+        icon: "person_celebrate",
+        title: "Dedicated Account Manager",
+        text: "A single point of contact for all your bookings, modifications, and administrative needs. We handle the logistics while you focus on business.",
+      },
+      {
+        icon: "calendar_month",
+        title: "Flexible Plans",
+        text: "From daily rentals to long-term leases, our contracts scale with your business growth.",
+      },
+      {
+        icon: "receipt_long",
+        title: "Monthly Billing",
+        text: "Simplified consolidated invoicing. Manage all corporate travel expenses in one monthly statement with detailed reporting.",
+      },
+      {
+        icon: "directions_car",
+        title: "Business Class Vehicles",
+        text: "Access to a meticulously maintained fleet of the latest models, ensuring safety, reliability, and executive presence.",
+      },
+    ],
+  },
+  categories: {
+    title: "Engineered for Every Use Case",
+    description: "One partner for airports, meetings, and large corporate events.",
+    items: [
+      {
+        icon: "flight_land",
+        title: "Airport Transfers",
+        text: "Punctual, stress-free arrivals and departures for your executives and clients.",
+      },
+      {
+        icon: "groups",
+        title: "Executive Meetings",
+        text: "Impress stakeholders with professional transport to and from crucial business venues.",
+      },
+      {
+        icon: "event",
+        title: "Corporate Events",
+        text: "Scalable fleet solutions for conferences, summits, and employee retreats.",
+      },
+    ],
+  },
+  fleet: {
+    title: "The Executive Fleet",
+    description: "Modern, safe, and impeccably maintained vehicles — daily rates only.",
+    items: [
+      {
+        name: "Toyota Corolla",
+        tag: "2024+",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/corolla%20white.png",
+        imageAlt: "/images/corolla%20black.png",
+        priceDay: 6000,
+      },
+      {
+        name: "Honda Civic",
+        tag: "2024+",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/Civic%20white.png",
+        imageAlt: "/images/Civic%20Black.png",
+        priceDay: 7000,
+      },
+      {
+        name: "Toyota Camry / Grande",
+        tag: "2024+",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/corolla%20white.png",
+        imageAlt: "/images/corolla%20black.png",
+        priceDay: 7000,
+      },
+      {
+        name: "Fortuner SUV",
+        tag: "2024+",
+        seats: 7,
+        transmission: "Automatic",
+        image: "/images/fortuner%20white.png",
+        imageAlt: "/images/fortuner%20black.png",
+        priceDay: 14000,
+      },
+    ],
+  },
+  process: {
+    title: "How Corporate Onboarding Works",
+    steps: [
+      {
+        icon: "handshake",
+        title: "Share Requirements",
+        text: "Tell us headcount, preferred cities, and vehicle classes for your team.",
+      },
+      {
+        icon: "description",
+        title: "Approve Account Terms",
+        text: "We set billing cycles, insurance options, and approved bookers on your account.",
+      },
+      {
+        icon: "rocket_launch",
+        title: "Book & Report",
+        text: "Your team books via WhatsApp or portal; you receive clear trip logs and invoices.",
+      },
+    ],
+  },
+  booking: {
+    title: "Partner With the Industry Leader",
+    description:
+      "Join hundreds of organizations that trust Signature for mobility. Let us design a custom plan that fits your corporate structure.",
+    highlights: [
+      { icon: "check_circle", text: "Priority vehicle allocation" },
+      { icon: "check_circle", text: "Customized insurance packages" },
+      { icon: "check_circle", text: "24/7 roadside assistance & support" },
+    ],
+    contact: [
+      { icon: "call", label: "Direct Line", value: formatPhoneDisplay() },
+      { icon: "mail", label: "Email Us", value: "info@signaturerentacar.com" },
+    ],
+  },
+  testimonials: {
+    title: "Trusted by Leading Teams",
+    ratingSummary: { value: "500+", label: "Companies served across Pakistan" },
+    items: [
+      {
+        quote:
+          "Consolidated monthly invoicing and a dedicated manager made corporate travel finally painless for our sales team.",
+        name: "Imran Qureshi",
+        role: "Operations Lead",
+      },
+      {
+        quote:
+          "Airport transfers and meeting cars are always on time. The fleet looks executive and stays well maintained.",
+        name: "Nadia Shah",
+        role: "EA to CEO",
+      },
+    ],
+  },
+  faqs: {
+    title: "Corporate FAQs",
+    items: [
+      {
+        question: "Can we get monthly invoicing?",
+        answer:
+          "Yes. Registered companies on approved accounts receive consolidated monthly invoices with detailed trip logs.",
+      },
+      {
+        question: "Do you support multi-city fleets?",
+        answer:
+          "Yes. We cover Islamabad, Rawalpindi, Lahore, Karachi, and major tourist destinations with coordinated booking.",
+      },
+      {
+        question: "Can employees book themselves?",
+        answer:
+          "You can authorize named bookers or open WhatsApp booking for approved staff under your corporate rate card.",
+      },
+      {
+        question: "What vehicles are available for executives?",
+        answer:
+          "From Corolla and Civic to Fortuner, Prado, and luxury sedans — allocated by priority for corporate accounts.",
+      },
+    ],
+  },
+  included: {
+    title: "Corporate Inclusions",
+    description: "What every corporate account can expect.",
+    items: [
+      { icon: "person", text: "Dedicated account manager" },
+      { icon: "receipt_long", text: "Consolidated monthly billing" },
+      { icon: "priority_high", text: "Priority vehicle allocation" },
+      { icon: "verified", text: "Customizable insurance packages" },
+      { icon: "support_agent", text: "24/7 support for travelers on the road" },
+    ],
+  },
+  notes: {
+    title: "By The Numbers",
+    description: "Scale and reliability for enterprise travel.",
+    items: [
+      { icon: "apartment", title: "500+", text: "Companies served" },
+      { icon: "route", title: "12k+", text: "Monthly trips coordinated" },
+      { icon: "location_on", title: "Nationwide", text: "Cities covered across Pakistan" },
+      { icon: "verified", title: "100%", text: "Fleet availability focus for account holders" },
+    ],
+  },
+};
+
+const airportPickDrop: ServiceDetail = {
+  slug: "airport-pick-drop",
+  name: "Airport Pick & Drop",
+  metaDescription:
+    "Reliable airport pick and drop across Pakistan with Signature Rent A Car — flight monitoring, meet & greet, and professional chauffeurs at ISB, LHE, KHI, and SKT.",
+  hero: {
+    badge: "Premium Chauffeur",
+    title: "Reliable Airport Pick & Drop Service Across",
+    accent: "Pakistan",
+    description:
+      "Experience seamless transitions from flight to road. Our executive fleet and professional chauffeurs ensure you reach your hotel or office in absolute comfort and safety.",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBwU5kmS8-7Ah-pzafVpenFKcqCbVJJndjtTIBerrSK82P21ZTlCdGnMQ9141vlf2LEScGewr_hyHCj4WR4Lo_q_A2Ysu2ZYdhgWFAOqbPLYWL1zclpcvle-ly2C_XNxcuhLBa7BHKQnuvyh41KgYbxQSt8YwvhsPy8sMKO5qpepy4h24WkN3az4TevY4pU_HpwxPdxgL4c7MbjJtKQ1nznYT1FXhnD2UFgcUolyBFOwLkGO-11LFqX",
+    primaryCta: { label: "Book Transfer", href: "#book" },
+    secondaryCta: { label: "View Fleet", href: "#fleet" },
+  },
+  features: {
+    title: "The Signature Advantage",
+    description:
+      "Why discerning travelers choose our airport transfer services for corporate and private needs.",
+    items: [
+      {
+        icon: "schedule",
+        title: "On-Time Pickup",
+        text: "We value your time. Our chauffeurs arrive 15 minutes early to ensure a stress-free departure or arrival.",
+      },
+      {
+        icon: "airline_seat_recline_extra",
+        title: "Professional Drivers",
+        text: "Uniformed, background-checked chauffeurs trained in executive hospitality and airport protocols.",
+      },
+      {
+        icon: "monitoring",
+        title: "Flight Monitoring",
+        text: "We track your flight in real time. Whether early or delayed, we adjust your pickup automatically.",
+      },
+      {
+        icon: "sanitizer",
+        title: "Clean Vehicles",
+        text: "Every vehicle is sanitized and detailed before your transfer for a pristine ride from the terminal.",
+      },
+    ],
+  },
+  coverage: {
+    title: "Serving Major Airports In Pakistan",
+    description: "Fixed-route airport transfers with clear pricing from these hubs.",
+    cities: [
+      { name: "Islamabad", tag: "ISB Airport", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-JhpogXLpfqCtEfTGOOxjaj2LK9WEUp-Sl7Mi90pWgFz1pfN-pCJWeiISE6KRFviqKOiptrSRx5n2NWuhyB7FO5-cy9bWDVP1LOydTECZO1WYrqlK-VUBUeedzPam7dyzZhqB8P7aX9rEO0CBaPM9Y8tMxZJT7WzJZkQFFVJQ2c2TP7i3TBF3aPV1HBEjAwcD1vP3l3BNKgSKDgxD4Bn6dmdgknHF6i5XWsYF7EdZPtqU-lRbbUfJ" },
+      { name: "Lahore", tag: "LHE Airport", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD5cqoX_Rdx80A9jBa6kuwWFxomB4YyhkwcBOdUlYYB656XiQuEWhqzzF6gWmkHNtlxWZ5s4RR_wl3MBVwZc9ff-c1GOfns6EjpG2LlEvZfCtS4x5D7V0SiSi4myXEKaAA9ZTmyrPDka5SbmR_hIL69bgR5dv2br8iIPWovkEjSe6GKW9ZQF_CuKcxSmpVLwEgFr1dDpHa5_Rd3OL6G3X6JuOHIItQ0EBAUHLJcAZJdHfhMNBiaymnT" },
+      { name: "Karachi", tag: "KHI Airport", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAfSE4BVlTmJty8EmNDXRno3EOr4XGm0pIDPqJ4pgcefmY3ogkJxPMfgat5umfMARnYl6QoG3yo_-Cmc4M0MkGc02znhUtRqq0rB3yKE8pIAuil36e_PydUGcN2MK2Gywt6BEHhyMHwVMlgvTXH4g3PL0EgcNXB1cmfQH6tQ7cn1_NLHuLBFY1HbaZc0hx5kMohjCdyhqrplUX3dM6H2FizoScN3ePyu71v7ZqqUs-9N52-oxwcAm-V" },
+      { name: "Sialkot", tag: "SKT Airport", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSA51EHZnqaWPUSTYNeB5v2GX9M-R-Ctr_DNWQDgGPlD1q2WFlK9fwNesApJlFoc_v-cVPpEtmC7sCZ_3Flz7Tyw-VDRIXt0cYD0oOTtFbTUiuv7ZOiodL-GjD7kCpcQzTH4s2_tJDIfLmtBPjeR2YndnXAWEmR3KXvStyErYOi-3-OAv2Z2_06aGQO-wDiUCa1dcJG9aGHo0DjOZHnGiOBJBFRCLfXvMybF8zzF1vbUevF7StDmmC" },
+    ],
+  },
+  fleet: {
+    title: "Choose Your Ride",
+    description: "Tailored fleet for every requirement — from solo executive travel to large groups. Daily / transfer rates shown clearly.",
+    items: [
+      {
+        name: "Executive Sedan",
+        tag: "Executive",
+        seats: 3,
+        transmission: "Automatic",
+        image: "/images/corolla%20white.png",
+        imageAlt: "/images/corolla%20black.png",
+        priceDay: 4500,
+      },
+      {
+        name: "Luxury SUV",
+        tag: "Premium",
+        seats: 5,
+        transmission: "Automatic",
+        image: "/images/fortuner%20white.png",
+        imageAlt: "/images/fortuner%20black.png",
+        priceDay: 8500,
+      },
+      {
+        name: "Signature Elite",
+        tag: "Signature",
+        seats: 3,
+        transmission: "Automatic",
+        image: "/images/s400%20white.png",
+        imageAlt: "/images/S400%20Black.png",
+        priceDay: 25000,
+      },
+      {
+        name: "Executive Hiace",
+        tag: "Group",
+        seats: 10,
+        transmission: "Automatic",
+        image: "/images/grand%20cabin%20white.png",
+        imageAlt: "/images/grand%20cabin%20grey.png",
+        priceDay: 12000,
+      },
+    ],
+  },
+  process: {
+    title: "Simple, Seamless Booking",
+    steps: [
+      {
+        icon: "edit_calendar",
+        title: "Book Online",
+        text: "Fill our quick form or message us on WhatsApp with your flight details.",
+      },
+      {
+        icon: "mark_email_read",
+        title: "Receive Confirmation",
+        text: "Get confirmation with driver and vehicle details before your arrival.",
+      },
+      {
+        icon: "waving_hand",
+        title: "Meet & Greet",
+        text: "Your chauffeur waits at arrivals with a personalized nameplate.",
+      },
+      {
+        icon: "airport_shuttle",
+        title: "Arrive Safely",
+        text: "Enjoy a smooth ride directly to your hotel or office destination.",
+      },
+    ],
+  },
+  faqs: {
+    title: "Frequently Asked Questions",
+    items: [
+      {
+        question: "How do I find my driver at the airport?",
+        answer:
+          "Your chauffeur waits in the arrivals hall with a name board showing your name. We also send the driver photo, vehicle plate, and contact number before landing.",
+      },
+      {
+        question: "What happens if my flight is delayed?",
+        answer:
+          "We monitor your flight number in real time and adjust pickup automatically — no extra charge for standard delays within the included waiting window.",
+      },
+      {
+        question: "Are there any hidden waiting charges?",
+        answer:
+          "No. Transfers include complimentary waiting time after landing for immigration and baggage. Extra waiting beyond that window is confirmed upfront if needed.",
+      },
+      {
+        question: "Can I book a hotel drop or city drop?",
+        answer:
+          "Yes. Choose any hotel, residence, or office address. Fixed pricing is confirmed when you share pickup airport and drop location.",
+      },
+    ],
+  },
+  included: {
+    title: "What's Included",
+    description: "Every airport transfer is priced clearly — no surprise add-ons at the curb.",
+    items: [
+      { icon: "person", text: "Professional chauffeur for the entire journey" },
+      { icon: "flight", text: "Live flight monitoring for arrivals and departures" },
+      { icon: "badge", text: "Meet & greet with name board at arrivals" },
+      { icon: "local_gas_station", text: "Fuel included in the fixed transfer fare" },
+      { icon: "schedule", text: "Complimentary waiting time after landing" },
+    ],
+  },
+  audience: {
+    title: "Who It's For",
+    description: "Built for travelers who want a calm exit from the terminal.",
+    items: [
+      {
+        icon: "flight",
+        title: "International Arrivals",
+        text: "Land, clear immigration, and step into a waiting private vehicle — no taxi queues.",
+      },
+      {
+        icon: "business_center",
+        title: "Corporate Travelers",
+        text: "Punctual transfers for executives, clients, and visiting staff to hotels or offices.",
+      },
+      {
+        icon: "groups",
+        title: "Families & Groups",
+        text: "SUVs and Hiace options for families and teams with luggage.",
+      },
+    ],
+  },
+  notes: {
+    title: "Airport Protocols We Follow",
+    description: "Designed around flight timing, not rigid schedules.",
+    items: [
+      {
+        icon: "flight_land",
+        title: "Real-Time Flight Tracking",
+        text: "Delayed or early arrivals never leave you without a car.",
+      },
+      {
+        icon: "luggage",
+        title: "Luggage Assistance",
+        text: "Your chauffeur helps with bags from the terminal to the vehicle.",
+      },
+      {
+        icon: "nightlight",
+        title: "24/7 Operations",
+        text: "Early-morning and late-night flights are covered across major airports.",
+      },
+    ],
+  },
+};
+
 export const serviceDetails: Record<string, ServiceDetail> = {
   "hotel-transfer": hotelTransfer,
   "executive-car-rental": executiveCarRental,
   "wedding-car-rental": weddingCarRental,
   "daily-car-rental": dailyCarRental,
+  "monthly-car-rental": monthlyCarRental,
+  "weekly-car-rental": weeklyCarRental,
+  "corporate-car-rental": corporateCarRental,
+  "airport-pick-drop": airportPickDrop,
 };
 
 export const serviceDetailSlugs = Object.keys(serviceDetails);

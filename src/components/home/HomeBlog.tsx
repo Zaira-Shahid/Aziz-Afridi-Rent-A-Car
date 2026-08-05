@@ -41,13 +41,13 @@ export function HomeBlog() {
               <div className="flex flex-1 flex-col p-5">
                 <p className="text-xs uppercase tracking-wide text-secondary">{post.date}</p>
                 <h3 className="mt-2 text-lg font-semibold text-primary">
-                  <Link href={`/blog/${post.category}`} className="transition-colors hover:text-secondary">
+                  <Link href={`/blog/${post.slug}`} className="transition-colors hover:text-secondary">
                     {post.title}
                   </Link>
                 </h3>
                 <p className="mt-2 flex-1 text-sm text-primary/60">{post.excerpt}</p>
                 <Link
-                  href={`/blog/${post.category}`}
+                  href={`/blog/${post.slug}`}
                   className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition hover:text-secondary"
                 >
                   Read more <span className="material-symbols-outlined text-[16px]">arrow_forward</span>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 
 const DESTINATIONS = [
   {
@@ -41,33 +42,33 @@ export function HomeDestinations() {
   return (
     <section className="bg-[#f3f4f5] py-16 sm:py-24 lg:py-[100px]">
       <Container>
-        <div className="mb-10 text-center sm:mb-12">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-            Drive Across Pakistan
-          </h2>
-          <p className="mt-4 text-muted">Discover our premier service hubs across iconic destinations.</p>
-        </div>
+        <Reveal>
+          <div className="mb-10 text-center sm:mb-12">
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Drive Across Pakistan
+            </h2>
+            <p className="mt-4 text-muted">Discover our premier service hubs across iconic destinations.</p>
+          </div>
+        </Reveal>
 
         <div className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:auto-rows-[240px] md:grid-cols-4 md:grid-rows-2 md:h-[560px] md:auto-rows-fr">
-          {DESTINATIONS.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`group relative overflow-hidden rounded-2xl ${item.className}`}
-            >
-              <Image
-                src={item.image}
-                alt={item.name}
-                fill
-                className="object-cover transition duration-1000 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 text-white sm:bottom-8 sm:left-8">
-                <h3 className="font-heading text-lg font-semibold sm:text-2xl">{item.name}</h3>
-                <p className="text-xs text-white/80 sm:text-sm">{item.meta}</p>
-              </div>
-            </Link>
+          {DESTINATIONS.map((item, index) => (
+            <Reveal key={item.name} delay={Math.min(index, 3) * 80} className={item.className}>
+              <Link href={item.href} className="group relative block h-full min-h-[220px] overflow-hidden rounded-2xl sm:min-h-[240px] md:min-h-0 md:h-full">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  className="object-cover transition duration-1000 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 text-white sm:bottom-8 sm:left-8">
+                  <h3 className="font-heading text-lg font-semibold sm:text-2xl">{item.name}</h3>
+                  <p className="text-xs text-white/80 sm:text-sm">{item.meta}</p>
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </Container>

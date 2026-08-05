@@ -2,6 +2,7 @@ import Image from "next/image";
 import { BookingBar } from "@/components/home/BookingBar";
 import { CtaBanner } from "@/components/shared";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 import { formatPrice } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 import type { ServiceDetail } from "@/types";
@@ -24,17 +25,17 @@ export function DailyCarRentalDetail({ data }: DailyCarRentalDetailProps) {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/45 to-primary/10" />
         <Container className="relative z-10 grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="text-white lg:col-span-7">
-            <span className="glass-panel mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest sm:mb-6">
+            <span className="glass-panel mb-4 inline-flex animate-fade-up items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest sm:mb-6">
               <span className="h-2 w-2 rounded-full bg-accent" />
               {hero.badge}
             </span>
-            <h1 className="hero-shadow font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl">
+            <h1 className="hero-shadow animate-fade-up font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl">
               {hero.title}
               {hero.accent ? <> <span className="text-accent">{hero.accent}</span></> : null}
             </h1>
-            <p className="mt-4 max-w-xl text-sm text-white/85 sm:mt-5 sm:text-base lg:text-lg">{hero.description}</p>
+            <p className="animate-fade-up-delay mt-4 max-w-xl text-sm text-white/85 sm:mt-5 sm:text-base lg:text-lg">{hero.description}</p>
           </div>
-          <div className="w-full lg:col-span-5" id="fleet-search">
+          <div className="animate-fade-up-delay-2 w-full lg:col-span-5" id="fleet-search">
             <BookingBar />
           </div>
         </Container>
@@ -42,20 +43,24 @@ export function DailyCarRentalDetail({ data }: DailyCarRentalDetailProps) {
 
       <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-12 text-center sm:mb-16">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{features.title}</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">{features.description}</p>
-          </div>
+          <Reveal>
+            <div className="mb-12 text-center sm:mb-16">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{features.title}</h2>
+              <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">{features.description}</p>
+            </div>
+          </Reveal>
           <ServiceFeatureGrid items={features.items} />
         </Container>
       </section>
 
       <section className="py-16 sm:py-24 lg:py-[100px]" id="fleet">
         <Container>
-          <div className="mb-12 max-w-xl sm:mb-16">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{fleet.title}</h2>
-            <p className="mt-4 text-muted sm:text-lg">{fleet.description}</p>
-          </div>
+          <Reveal>
+            <div className="mb-12 max-w-xl sm:mb-16">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{fleet.title}</h2>
+              <p className="mt-4 text-muted sm:text-lg">{fleet.description}</p>
+            </div>
+          </Reveal>
           <ServiceFleetGrid items={fleet.items} />
         </Container>
       </section>
@@ -113,7 +118,7 @@ export function DailyCarRentalDetail({ data }: DailyCarRentalDetailProps) {
                   <div className="mb-6 font-heading text-4xl font-bold sm:text-5xl">
                     {formatPrice(pkg.priceDay)}
                     <span className={cn("text-base font-normal", pkg.featured ? "text-muted" : "text-white/60")}>
-                      /24hr
+                      {pkg.unit ?? "/24hr"}
                     </span>
                   </div>
                   <ul className={cn("mb-10 space-y-4 text-sm", pkg.featured ? "text-muted" : "text-white/80")}>
@@ -217,8 +222,8 @@ export function DailyCarRentalDetail({ data }: DailyCarRentalDetailProps) {
       ) : null}
 
       <CtaBanner
-        title="Ready to rent a car for the day?"
-        description="Pick your vehicle and get it delivered to your doorstep in under 60 minutes."
+        title={`Ready to book ${data.name.toLowerCase()}?`}
+        description="Pick your vehicle and get clear daily rates with doorstep delivery across major cities."
       />
     </>
   );

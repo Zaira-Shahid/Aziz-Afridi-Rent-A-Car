@@ -1,4 +1,4 @@
-import type { BlogCategory, BlogPost, CarCategory, CarModel, FaqItem, FleetSection } from "@/types";
+import type { CarCategory, CarModel, FaqItem, FleetSection } from "@/types";
 
 /** Encode local filenames that contain spaces */
 export function carImage(filename: string) {
@@ -127,7 +127,6 @@ export const carModels: CarModel[] = [
     priceDay: 5000,
     priceMonth: 110000,
     image: carImage("Alto white.png"),
-    imageAlt: carImage("yaris white.png"),
     colors: ["White"],
     sale: true,
   },
@@ -188,8 +187,8 @@ export const carModels: CarModel[] = [
     fuel: "Petrol",
     priceDay: 7000,
     priceMonth: 154000,
-    image: carImage("corolla black.png"),
-    imageAlt: carImage("corolla white.png"),
+    image: carImage("corolla white.png"),
+    imageAlt: carImage("corolla black.png"),
     colors: ["White", "Black"],
     badge: "Grande",
     family: true,
@@ -218,8 +217,8 @@ export const carModels: CarModel[] = [
     fuel: "Petrol",
     priceDay: 10000,
     priceMonth: 220000,
-    image: carImage("Civic Black.png"),
-    imageAlt: carImage("Civic white.png"),
+    image: carImage("Civic white.png"),
+    imageAlt: carImage("Civic Black.png"),
     colors: ["White", "Black"],
     badge: "New",
     featured: true,
@@ -234,9 +233,9 @@ export const carModels: CarModel[] = [
     fuel: "Petrol",
     priceDay: 10000,
     priceMonth: 220000,
-    image: carImage("elantra black.png"),
-    imageAlt: carImage("elantra white.png"),
-    colors: ["Black", "White"],
+    image: carImage("elantra white.png"),
+    imageAlt: carImage("elantra black.png"),
+    colors: ["White", "Black"],
   },
   {
     slug: "honda-br-v",
@@ -521,97 +520,6 @@ export function getCarsForCategory(slug: string): CarModel[] {
   if (section) return getCarsBySlugs(section.carSlugs);
   return carModels.filter((car) => car.category === slug);
 }
-
-export const blogCategories: BlogCategory[] = [
-  { slug: "car-rental-tips", name: "Car Rental Tips" },
-  { slug: "travel-guides", name: "Travel Guides" },
-  { slug: "islamabad-travel-guide", name: "Islamabad Travel Guide" },
-  { slug: "rawalpindi-travel-guide", name: "Rawalpindi Travel Guide" },
-  { slug: "company-news", name: "Company News" },
-];
-
-export const blogPosts: BlogPost[] = [
-  {
-    slug: "islamabad-weekend-drive",
-    title: "Best Weekend Drives Around Islamabad",
-    category: "islamabad-travel-guide",
-    date: "Jul 18, 2026",
-    excerpt: "Scenic routes, picnic spots, and the ideal rental cars for short getaways.",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "murree-car-rental-tips",
-    title: "Murree Trip: Car Rental Tips",
-    category: "car-rental-tips",
-    date: "Jul 10, 2026",
-    excerpt: "What to book, what to avoid, and how to plan a smooth mountain drive.",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "corporate-fleet-guide",
-    title: "Corporate Fleet Rental Guide",
-    category: "company-news",
-    date: "Jun 28, 2026",
-    excerpt: "How businesses save time with monthly and executive car rental plans.",
-    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "lahore-city-rental-guide",
-    title: "Lahore City Guide for Car Rentals",
-    category: "travel-guides",
-    date: "Jun 15, 2026",
-    excerpt: "Best routes, parking tips, and which car size works best for Lahore traffic.",
-    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "northern-areas-suv-guide",
-    title: "Northern Areas: Why You Need an SUV",
-    category: "travel-guides",
-    date: "Jun 02, 2026",
-    excerpt: "Hunza, Skardu, and Naran trips — what to expect and which SUVs perform best.",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "airport-transfer-checklist",
-    title: "Airport Transfer Checklist",
-    category: "car-rental-tips",
-    date: "May 20, 2026",
-    excerpt: "Flight delays, meet-and-greet, and how to book a reliable airport pickup.",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "self-drive-vs-chauffeur",
-    title: "Self-Drive vs Chauffeur: Which Is Right for You?",
-    category: "car-rental-tips",
-    date: "May 08, 2026",
-    excerpt: "A quick breakdown of costs, convenience, and comfort to help you pick the right rental style.",
-    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "rawalpindi-day-trip-guide",
-    title: "Rawalpindi Day Trip: Where to Go and What to Rent",
-    category: "rawalpindi-travel-guide",
-    date: "Apr 22, 2026",
-    excerpt: "Saddar bazaar, Ayub National Park, and the best compact SUV for the twin city's busy streets.",
-    image: "https://images.unsplash.com/photo-1616422285623-13ff0162193b?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "karachi-business-travel-guide",
-    title: "Karachi Business Travel: A Car Rental Guide",
-    category: "travel-guides",
-    date: "Apr 05, 2026",
-    excerpt: "Navigating meetings across the port city with a reliable executive sedan and a local driver.",
-    image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    slug: "signature-fleet-expansion-2026",
-    title: "Signature Expands Fleet with New SUV Additions",
-    category: "company-news",
-    date: "Mar 18, 2026",
-    excerpt: "New 4x4-ready SUVs join our lineup to meet growing demand for northern area expeditions.",
-    image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80",
-  },
-];
 
 export const homeFaqs: FaqItem[] = [
   {

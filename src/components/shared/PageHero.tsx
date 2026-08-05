@@ -22,14 +22,14 @@ export function PageHero({
   return (
     <section className={cn("bg-primary text-white", className)}>
       <Container className="py-16 sm:py-20 lg:py-24">
-        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <h1 className="animate-fade-up max-w-3xl text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
           {title}
         </h1>
         {description ? (
-          <p className="mt-4 max-w-2xl text-base text-white/75 sm:text-lg">{description}</p>
+          <p className="animate-fade-up-delay mt-4 max-w-2xl text-base text-white/75 sm:text-lg">{description}</p>
         ) : null}
         {showCta ? (
-          <div className="mt-8">
+          <div className="animate-fade-up-delay-2 mt-8">
             <ButtonLink href={ctaHref} variant="accent" size="lg">
               {ctaLabel}
             </ButtonLink>

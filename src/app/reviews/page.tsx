@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { pageMeta } from "@/lib/seo";
@@ -140,7 +141,7 @@ export default function ReviewsPage() {
             <span>/</span>
             <span className="text-white">Reviews</span>
           </nav>
-          <h1 className="mx-auto max-w-3xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="hero-shadow animate-fade-up mx-auto max-w-3xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             What Our Customers Say
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base lg:text-lg">
@@ -220,10 +221,10 @@ export default function ReviewsPage() {
             </Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {REVIEWS.map((review) => (
+            {REVIEWS.map((review, index) => (
+              <AnimateIn key={review.name} delay={Math.min(index, 5) * 70}>
               <div
-                key={review.name}
-                className="group rounded-2xl border border-primary/8 bg-white p-8 shadow-sm transition hover:border-secondary/40"
+                className="group h-full rounded-2xl border border-primary/8 bg-white p-8 shadow-sm transition hover:border-secondary/40"
               >
                 <div className="mb-6 flex items-center gap-4">
                   <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
@@ -243,6 +244,7 @@ export default function ReviewsPage() {
                   <span className="material-symbols-outlined text-primary/30">verified_user</span>
                 </div>
               </div>
+              </AnimateIn>
             ))}
           </div>
         </Container>
@@ -332,7 +334,7 @@ export default function ReviewsPage() {
                   href="/cars"
                   variant="outline"
                   size="lg"
-                  className="border-white/30 text-white hover:border-secondary hover:text-secondary"
+                  className="border-white/30 !text-white hover:border-secondary hover:!text-secondary"
                 >
                   View Fleet
                 </ButtonLink>

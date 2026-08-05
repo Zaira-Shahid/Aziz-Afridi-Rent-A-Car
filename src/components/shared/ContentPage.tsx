@@ -1,4 +1,7 @@
+"use client";
+
 import { CtaBanner, PageHero } from "@/components/shared";
+import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 
 type ContentPageProps = {
@@ -14,10 +17,10 @@ export function ContentPage({ title, description, body = [] }: ContentPageProps)
       {body.length > 0 ? (
         <Section>
           <div className="mx-auto max-w-3xl space-y-4">
-            {body.map((paragraph) => (
-              <p key={paragraph} className="text-base leading-relaxed text-primary/75">
-                {paragraph}
-              </p>
+            {body.map((paragraph, index) => (
+              <Reveal key={paragraph} delay={index * 80}>
+                <p className="text-base leading-relaxed text-primary/75">{paragraph}</p>
+              </Reveal>
             ))}
           </div>
         </Section>

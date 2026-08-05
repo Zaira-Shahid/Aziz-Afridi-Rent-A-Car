@@ -281,7 +281,7 @@ export default function BookingPolicyPage() {
                   href="/cars"
                   variant="outline"
                   size="lg"
-                  className="border-white/30 text-white hover:border-secondary hover:text-secondary"
+                  className="border-white/30 !text-white hover:border-secondary hover:!text-secondary"
                 >
                   View Our Fleet
                 </ButtonLink>

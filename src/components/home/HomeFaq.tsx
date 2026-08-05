@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { homeFaqs } from "@/data";
 import { cn } from "@/lib/utils";
@@ -11,20 +12,22 @@ export function HomeFaq() {
   return (
     <Section className="bg-background">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-10 text-center">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">Support</p>
-          <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-            Frequently Asked Questions
-          </h2>
-          <p className="mt-3 text-primary/65">Answers to common questions before you book.</p>
-        </div>
+        <Reveal>
+          <div className="mb-10 text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">Support</p>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-3 text-primary/65">Answers to common questions before you book.</p>
+          </div>
+        </Reveal>
 
         <div className="space-y-3">
           {homeFaqs.map((item, index) => {
             const open = openIndex === index;
             return (
+              <Reveal key={item.question} delay={Math.min(index, 5) * 60}>
               <div
-                key={item.question}
                 className="overflow-hidden rounded-[12px] border border-primary/8 bg-white"
               >
                 <button
@@ -54,6 +57,7 @@ export function HomeFaq() {
                   </div>
                 </div>
               </div>
+              </Reveal>
             );
           })}
         </div>

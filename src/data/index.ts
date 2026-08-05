@@ -8,10 +8,15 @@ export {
   getCarsBySlugs,
   getCarsForCategory,
   carImage,
-  blogCategories,
-  blogPosts,
   homeFaqs,
 } from "./cars";
+export {
+  blogCategories,
+  blogPosts,
+  getBlogPost,
+  getBlogCategory,
+  getPostsByCategory,
+} from "./blog";
 export {
   mainNav,
   footerCompanyLinks,

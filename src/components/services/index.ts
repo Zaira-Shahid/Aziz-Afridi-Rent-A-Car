@@ -7,3 +7,6 @@ export { HotelTransferDetail } from "./HotelTransferDetail";
 export { ExecutiveCarRentalDetail } from "./ExecutiveCarRentalDetail";
 export { WeddingCarRentalDetail } from "./WeddingCarRentalDetail";
 export { DailyCarRentalDetail } from "./DailyCarRentalDetail";
+export { WeeklyCarRentalDetail } from "./WeeklyCarRentalDetail";
+export { CorporateCarRentalDetail } from "./CorporateCarRentalDetail";
+export { AirportPickDropDetail } from "./AirportPickDropDetail";

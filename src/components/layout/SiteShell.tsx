@@ -9,7 +9,7 @@ export function SiteShell({ children }: SiteShellProps) {
   return (
     <div className="flex min-h-dvh flex-col overflow-x-hidden">
       <Header />
-      <main className="w-full min-w-0 flex-1">{children}</main>
+      <main className="page-enter w-full min-w-0 flex-1">{children}</main>
       <Footer />
     </div>
   );

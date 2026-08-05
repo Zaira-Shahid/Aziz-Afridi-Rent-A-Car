@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContentPage } from "@/components/shared";
 import {
+  AirportPickDropDetail,
+  CorporateCarRentalDetail,
   DailyCarRentalDetail,
   ExecutiveCarRentalDetail,
   HotelTransferDetail,
   WeddingCarRentalDetail,
+  WeeklyCarRentalDetail,
 } from "@/components/services";
 import { serviceDetails, services } from "@/data";
 import { pageMeta } from "@/lib/seo";
@@ -15,10 +18,14 @@ type Props = {
 };
 
 const detailComponents = {
+  "airport-pick-drop": AirportPickDropDetail,
   "hotel-transfer": HotelTransferDetail,
   "executive-car-rental": ExecutiveCarRentalDetail,
   "wedding-car-rental": WeddingCarRentalDetail,
   "daily-car-rental": DailyCarRentalDetail,
+  "monthly-car-rental": DailyCarRentalDetail,
+  "weekly-car-rental": WeeklyCarRentalDetail,
+  "corporate-car-rental": CorporateCarRentalDetail,
 } as const;
 
 export function generateStaticParams() {

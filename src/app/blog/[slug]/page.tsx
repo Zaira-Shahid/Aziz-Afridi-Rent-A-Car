@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ContentPage } from "@/components/shared";
-import { blogCategories } from "@/data";
+import { BlogCategoryContent } from "@/components/blog/BlogCategoryContent";
+import { BlogPostContent } from "@/components/blog/BlogPostContent";
+import {
+  blogCategories,
+  blogPosts,
+  getBlogCategory,
+  getBlogPost,
+  getPostsByCategory,
+} from "@/data";
 import { pageMeta } from "@/lib/seo";
 
 type Props = {
@@ -9,36 +16,48 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  return blogCategories.map((category) => ({ slug: category.slug }));
+  const categoryParams = blogCategories.map((category) => ({ slug: category.slug }));
+  const postParams = blogPosts.map((post) => ({ slug: post.slug }));
+  return [...categoryParams, ...postParams];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const category = blogCategories.find((item) => item.slug === slug);
-  if (!category) return { title: "Category Not Found" };
+  const post = getBlogPost(slug);
+  if (post) {
+    return pageMeta({
+      title: post.title,
+      description: post.excerpt,
+      path: `/blog/${post.slug}`,
+      keywords: [post.title.toLowerCase(), "car rental blog", "Pakistan travel"],
+    });
+  }
 
-  return pageMeta({
-    title: category.name,
-    description: `${category.name} articles and tips from Signature Rent A Car.`,
-    path: `/blog/${category.slug}`,
-    keywords: [category.name.toLowerCase(), "car rental blog"],
-  });
+  const category = getBlogCategory(slug);
+  if (category) {
+    return pageMeta({
+      title: category.name,
+      description: `${category.name} articles and tips from Signature Rent A Car.`,
+      path: `/blog/${category.slug}`,
+      keywords: [category.name.toLowerCase(), "car rental blog"],
+    });
+  }
+
+  return { title: "Not Found" };
 }
 
-
-export default async function BlogCategoryPage({ params }: Props) {
+export default async function BlogSlugPage({ params }: Props) {
   const { slug } = await params;
-  const category = blogCategories.find((item) => item.slug === slug);
-  if (!category) notFound();
 
-  return (
-    <ContentPage
-      title={category.name}
-      description={`Articles and updates in ${category.name}.`}
-      body={[
-        `Posts for ${category.name} will appear here as content is published.`,
-        "This category structure is ready for SEO-friendly blog expansion.",
-      ]}
-    />
-  );
+  const post = getBlogPost(slug);
+  if (post) {
+    return <BlogPostContent post={post} />;
+  }
+
+  const category = getBlogCategory(slug);
+  if (category) {
+    return <BlogCategoryContent category={category} posts={getPostsByCategory(category.slug)} />;
+  }
+
+  notFound();
 }

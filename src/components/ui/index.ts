@@ -5,4 +5,5 @@ export { Section } from "./Section";
 export { SectionHeading } from "./SectionHeading";
 export { CardLink } from "./CardLink";
 export { Reveal } from "./Reveal";
+export { AnimateIn } from "./AnimateIn";
 export { Logo } from "./Logo";

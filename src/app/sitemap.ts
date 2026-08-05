@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { blogCategories, carCategories, carModels, cities, services } from "@/data";
+import { blogCategories, blogPosts, carCategories, carModels, cities, services } from "@/data";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://signaturerentacar.com";
 
@@ -54,12 +54,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const blogRoutes = blogCategories.map((category) => ({
+  const blogCategoryRoutes = blogCategories.map((category) => ({
     url: `${baseUrl}/blog/${category.slug}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...cityRoutes, ...serviceRoutes, ...categoryRoutes, ...carRoutes, ...blogRoutes];
+  const blogPostRoutes = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...cityRoutes,
+    ...serviceRoutes,
+    ...categoryRoutes,
+    ...carRoutes,
+    ...blogCategoryRoutes,
+    ...blogPostRoutes,
+  ];
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Container } from "@/components/ui/Container";
 import { cities } from "@/data";
 import { pageMeta } from "@/lib/seo";
@@ -176,7 +177,7 @@ export default function AboutPage() {
             <span>/</span>
             <span className="text-white">About Us</span>
           </nav>
-          <h1 className="mx-auto max-w-4xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="hero-shadow animate-fade-up mx-auto max-w-4xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Crafting Journeys with Elegance
           </h1>
         </div>
@@ -184,7 +185,7 @@ export default function AboutPage() {
 
       <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">
         <Container className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-          <div className="space-y-6">
+          <AnimateIn className="space-y-6">
             <span className="inline-block rounded-full bg-secondary/15 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-secondary">
               Our Legacy
             </span>
@@ -205,53 +206,56 @@ export default function AboutPage() {
               Rawalpindi, the cultural capital Lahore, and the commercial hub of Karachi, with dedicated
               teams covering Faisalabad, Multan, and Peshawar. Our chauffeurs know every route intimately —
               from the boulevards of Blue Area to the winding Karakoram Highway — and our fleet includes
-              specialized 4x4 vehicles for northern expeditions to Hunza, Skardu, and Naran. Whether it's a
+              specialized 4x4 vehicles for northern expeditions to Hunza, Skardu, and Naran. Whether it&apos;s a
               same-day airport transfer or a month-long corporate lease, our local presence means faster
-              delivery, better route knowledge, and support that understands Pakistan's roads and seasons.
+              delivery, better route knowledge, and support that understands Pakistan&apos;s roads and seasons.
             </p>
-          </div>
-          <div className="relative">
+          </AnimateIn>
+          <AnimateIn delay={120} className="relative">
             <div className="absolute -inset-3 -z-10 rounded-2xl bg-accent/20 sm:-inset-4" />
             <div className="relative h-[360px] overflow-hidden rounded-xl shadow-2xl sm:h-[500px]">
               <Image src={STORY} alt="Luxury SUV outside modern building" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
-          </div>
+          </AnimateIn>
         </Container>
       </section>
 
       <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-12 text-center sm:mb-16">
-            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-              What We Offer
-            </span>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              A Service for Every Journey
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">
-              From daily errands to grand celebrations, our range of services is built around how you
-              actually travel.
-            </p>
-          </div>
+          <AnimateIn>
+            <div className="mb-12 text-center sm:mb-16">
+              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
+                What We Offer
+              </span>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                A Service for Every Journey
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">
+                From daily errands to grand celebrations, our range of services is built around how you
+                actually travel.
+              </p>
+            </div>
+          </AnimateIn>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {OFFERINGS.map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className="group rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition hover:-translate-y-1 hover:border-secondary/40 sm:p-8"
-              >
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10 text-secondary transition group-hover:bg-secondary group-hover:text-white">
-                  <span className="material-symbols-outlined">{item.icon}</span>
-                </div>
-                <h4 className="font-heading text-lg font-semibold sm:text-xl">{item.title}</h4>
-                <p className="mt-3 text-sm text-muted">{item.text}</p>
-                <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                  Learn more
-                  <span className="material-symbols-outlined text-[18px] transition group-hover:translate-x-1">
-                    arrow_forward
+            {OFFERINGS.map((item, index) => (
+              <AnimateIn key={item.title} delay={Math.min(index, 5) * 70}>
+                <Link
+                  href={item.href}
+                  className="group flex h-full flex-col rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition hover:-translate-y-1 hover:border-secondary/40 sm:p-8"
+                >
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10 text-secondary transition group-hover:bg-secondary group-hover:text-white">
+                    <span className="material-symbols-outlined">{item.icon}</span>
+                  </div>
+                  <h4 className="font-heading text-lg font-semibold sm:text-xl">{item.title}</h4>
+                  <p className="mt-3 text-sm text-muted">{item.text}</p>
+                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                    Learn more
+                    <span className="material-symbols-outlined text-[18px] transition group-hover:translate-x-1">
+                      arrow_forward
+                    </span>
                   </span>
-                </span>
-              </Link>
+                </Link>
+              </AnimateIn>
             ))}
           </div>
         </Container>
@@ -260,13 +264,13 @@ export default function AboutPage() {
       <section className="relative overflow-hidden bg-navy py-16 text-white sm:py-24">
         <Container>
           <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4 md:gap-12">
-            {STATS.map((item) => (
-              <div key={item.label} className="space-y-2">
+            {STATS.map((item, index) => (
+              <AnimateIn key={item.label} delay={index * 80} className="space-y-2">
                 <div className="font-heading text-4xl font-bold text-secondary sm:text-5xl lg:text-[64px]">
                   {item.value}
                 </div>
                 <div className="text-xs font-semibold uppercase tracking-widest text-white/50">{item.label}</div>
-              </div>
+              </AnimateIn>
             ))}
           </div>
         </Container>

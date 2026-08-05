@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CtaBanner } from "@/components/shared";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 import type { ServiceDetail } from "@/types";
 import { ServiceFleetGrid } from "./ServiceFleetGrid";
 import { ServiceHero } from "./ServiceHero";
@@ -19,10 +20,12 @@ export function ExecutiveCarRentalDetail({ data }: ExecutiveCarRentalDetailProps
 
       <section className="py-16 sm:py-24 lg:py-[100px]" id="fleet">
         <Container>
-          <div className="mb-12 max-w-xl sm:mb-16">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{fleet.title}</h2>
-            <p className="mt-4 text-muted sm:text-lg">{fleet.description}</p>
-          </div>
+          <Reveal>
+            <div className="mb-12 max-w-xl sm:mb-16">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">{fleet.title}</h2>
+              <p className="mt-4 text-muted sm:text-lg">{fleet.description}</p>
+            </div>
+          </Reveal>
           <ServiceFleetGrid items={fleet.items} />
         </Container>
       </section>

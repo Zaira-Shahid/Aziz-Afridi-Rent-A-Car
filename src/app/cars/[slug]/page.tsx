@@ -54,9 +54,9 @@ export default async function CarModelPage({ params }: Props) {
         }}
         stats={[
           { value: formatPrice(car.priceDay), label: "Per Day" },
-          { value: formatPrice(car.priceMonth), label: "Per Month" },
           { value: `${car.seats}`, label: "Seats" },
-          { value: car.transmission, label: car.fuel },
+          { value: car.transmission, label: "Transmission" },
+          { value: car.fuel, label: "Fuel" },
         ]}
       />
 

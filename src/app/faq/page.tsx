@@ -226,7 +226,7 @@ export default function FaqPage() {
             <span>/</span>
             <span className="text-white">FAQ</span>
           </nav>
-          <h1 className="max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="hero-shadow animate-fade-up max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Frequently Asked <span className="text-accent">Questions</span>
           </h1>
           <p className="mt-6 max-w-xl text-sm text-white/60 sm:text-base lg:text-lg">

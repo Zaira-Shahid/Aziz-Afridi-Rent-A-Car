@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 
 const GOOGLE_REVIEWS = [
   {
@@ -71,14 +72,16 @@ export function HomeReviews() {
   return (
     <section className="bg-[#f7f8fa] py-16 sm:py-24">
       <Container>
-        <div className="mb-8 text-center sm:mb-10 sm:text-left">
-          <h2 className="font-heading text-3xl font-semibold tracking-tight text-primary sm:text-4xl">
-            What Our Clients Say
-          </h2>
-          <p className="mt-2 text-sm text-muted sm:text-base">
-            Real Google reviews from customers who booked with Signature.
-          </p>
-        </div>
+        <Reveal>
+          <div className="mb-8 text-center sm:mb-10 sm:text-left">
+            <h2 className="font-heading text-3xl font-semibold tracking-tight text-primary sm:text-4xl">
+              What Our Clients Say
+            </h2>
+            <p className="mt-2 text-sm text-muted sm:text-base">
+              Real Google reviews from customers who booked with Signature.
+            </p>
+          </div>
+        </Reveal>
 
         <div className="mb-6 flex flex-wrap items-center gap-4 border-b border-primary/10 pb-3">
           <span className="border-b-2 border-[#4285F4] pb-3 text-sm font-semibold text-primary">
@@ -109,10 +112,10 @@ export function HomeReviews() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
-          {GOOGLE_REVIEWS.map((review) => (
+          {GOOGLE_REVIEWS.map((review, index) => (
+            <Reveal key={review.name} delay={index * 100}>
             <article
-              key={review.name}
-              className="rounded-2xl border border-primary/8 bg-white p-5 shadow-[0_8px_24px_rgba(0,11,29,0.06)] sm:p-6"
+              className="h-full rounded-2xl border border-primary/8 bg-white p-5 shadow-[0_8px_24px_rgba(0,11,29,0.06)] sm:p-6"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
@@ -142,6 +145,7 @@ export function HomeReviews() {
                 Read more
               </Link>
             </article>
+            </Reveal>
           ))}
         </div>
 

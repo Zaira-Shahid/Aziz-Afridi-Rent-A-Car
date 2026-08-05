@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { CarModel } from "@/types";
 import { InquireModal } from "@/components/cars/InquireModal";
-import { brand, formatPrice } from "@/lib/brand";
+import { brand, formatPhoneDisplay, formatPrice } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 type CarCardProps = {
@@ -36,40 +37,33 @@ function PhoneIcon({ className }: { className?: string }) {
 }
 
 export function CarCard({ car, className }: CarCardProps) {
+  const router = useRouter();
   const [inquireOpen, setInquireOpen] = useState(false);
   const [showAlt, setShowAlt] = useState(false);
   const hasAlt = Boolean(car.imageAlt && car.imageAlt !== car.image);
+  const href = `/cars/${car.slug}`;
 
   const whatsappHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
     `Hi, I want to inquire about ${car.name} rental.`,
   )}`;
 
-  function toggleAltImage() {
-    if (hasAlt) setShowAlt((value) => !value);
+  function goToCar() {
+    router.push(href);
   }
 
   return (
     <>
       <article
         className={cn(
-          "group flex h-full flex-col overflow-hidden rounded-[12px] border border-primary/8 bg-white shadow-[0_10px_35px_rgba(0,11,29,0.05)] transition duration-300 hover:-translate-y-1.5 hover:border-secondary/25 hover:shadow-[0_22px_50px_rgba(0,11,29,0.12)]",
+          "group flex h-full cursor-pointer flex-col overflow-hidden rounded-[12px] border border-primary/8 bg-white shadow-[0_10px_35px_rgba(0,11,29,0.05)] transition duration-300 hover:-translate-y-1.5 hover:border-secondary/25 hover:shadow-[0_22px_50px_rgba(0,11,29,0.12)]",
           className,
         )}
+        onClick={goToCar}
       >
         <div
-          className="relative aspect-[16/10] cursor-pointer overflow-hidden bg-background"
+          className="relative aspect-[16/10] overflow-hidden bg-background"
           onMouseEnter={() => hasAlt && setShowAlt(true)}
           onMouseLeave={() => setShowAlt(false)}
-          onClick={toggleAltImage}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              toggleAltImage();
-            }
-          }}
-          role={hasAlt ? "button" : undefined}
-          tabIndex={hasAlt ? 0 : undefined}
-          aria-label={hasAlt ? `View alternate image of ${car.name}` : undefined}
         >
           <Image
             src={car.image}
@@ -85,7 +79,7 @@ export function CarCard({ car, className }: CarCardProps) {
           {hasAlt ? (
             <Image
               src={car.imageAlt!}
-              alt={`${car.name} alternate color`}
+              alt={`${car.name} black color`}
               fill
               className={cn(
                 "object-cover transition duration-500",
@@ -102,7 +96,7 @@ export function CarCard({ car, className }: CarCardProps) {
           ) : null}
           {hasAlt ? (
             <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary/70 backdrop-blur">
-              {showAlt ? "2 / 2" : "1 / 2"}
+              {showAlt ? "Black" : "White"}
             </span>
           ) : null}
           <div className="absolute bottom-3 left-3">
@@ -115,8 +109,8 @@ export function CarCard({ car, className }: CarCardProps) {
 
         <div className="flex flex-1 flex-col p-4 sm:p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-secondary">{car.brand}</p>
-          <h3 className="mt-1 text-lg font-semibold text-primary">
-            <Link href={`/cars/${car.slug}`} className="transition-colors hover:text-secondary">
+          <h3 className="mt-1 text-lg font-semibold text-primary transition-colors group-hover:text-secondary">
+            <Link href={href} onClick={(e) => e.stopPropagation()}>
               {car.name}
             </Link>
           </h3>
@@ -134,11 +128,11 @@ export function CarCard({ car, className }: CarCardProps) {
             {formatPrice(car.priceDay)}
             <span className="font-normal text-primary/55"> / day</span>
           </p>
-          <p className="mt-1 text-xs text-primary/50">
-            From <span className="font-medium text-primary">{formatPrice(car.priceMonth)}</span> / month
-          </p>
 
-          <div className="mt-auto grid grid-cols-3 gap-1.5 pt-4 xs:gap-2">
+          <div
+            className="mt-auto grid grid-cols-3 gap-1.5 pt-4 xs:gap-2"
+            onClick={(e) => e.stopPropagation()}
+          >
             <a
               href={whatsappHref}
               target="_blank"
@@ -151,6 +145,7 @@ export function CarCard({ car, className }: CarCardProps) {
             <a
               href={`tel:${brand.phone}`}
               className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-secondary px-1.5 text-[10px] font-semibold !text-white transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
+              aria-label={`Call ${formatPhoneDisplay()}`}
             >
               <PhoneIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">Call Us</span>

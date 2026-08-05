@@ -280,7 +280,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-navy text-white backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-navy pt-3 text-white backdrop-blur-xl sm:pt-4">
         <Container className="flex h-14 items-center justify-between gap-3 sm:h-16 lg:h-[72px]">
           <div className="min-w-0 flex-1 lg:flex-none">
             <Logo priority className="h-9 max-w-[160px] sm:h-11 sm:max-w-[200px] lg:h-[60px] lg:max-w-none" />

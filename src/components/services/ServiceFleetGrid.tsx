@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import type { CarModel, ServiceFleetItem } from "@/types";
 import { InquireModal } from "@/components/cars/InquireModal";
+import { Reveal } from "@/components/ui/Reveal";
 import { brand, formatPrice } from "@/lib/brand";
 
 type ServiceFleetGridProps = {
@@ -147,8 +148,10 @@ function FleetCard({ item }: { item: ServiceFleetItem }) {
 export function ServiceFleetGrid({ items }: ServiceFleetGridProps) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((item) => (
-        <FleetCard key={item.name} item={item} />
+      {items.map((item, index) => (
+        <Reveal key={item.name} delay={Math.min(index, 5) * 80}>
+          <FleetCard item={item} />
+        </Reveal>
       ))}
     </div>
   );

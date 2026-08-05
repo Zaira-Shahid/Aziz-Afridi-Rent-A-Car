@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/ui/Reveal";
 
 const FEATURES = [
   {
@@ -22,7 +23,7 @@ export function WhyChooseUs() {
   return (
     <section className="bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
       <Container className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-5">
+        <Reveal className="lg:col-span-5">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             The Signature Edge
           </span>
@@ -52,9 +53,9 @@ export function WhyChooseUs() {
           >
             Learn more about us <span className="material-symbols-outlined text-[18px]">chevron_right</span>
           </Link>
-        </div>
+        </Reveal>
 
-        <div className="relative lg:col-span-7">
+        <Reveal delay={120} className="relative lg:col-span-7">
           <div className="relative aspect-video overflow-hidden rounded-2xl shadow-2xl">
             <Image src={IMAGE} alt="Premium key handover service" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 55vw" />
             <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
@@ -63,7 +64,7 @@ export function WhyChooseUs() {
             <div className="font-heading text-3xl font-bold md:text-4xl">15+</div>
             <div className="text-xs font-semibold uppercase tracking-wide">Years of Excellence</div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

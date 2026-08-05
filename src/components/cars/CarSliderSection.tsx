@@ -85,6 +85,14 @@ export function CarSliderSection({
     setIndex((current) => (current >= maxIndex ? 0 : current + 1));
   }
 
+  const dotCount = Math.min(3, maxIndex + 1);
+  const activeDot =
+    maxIndex === 0 ? 0 : Math.min(dotCount - 1, Math.round((index / maxIndex) * (dotCount - 1)));
+
+  function goToDot(dot: number) {
+    setIndex(dotCount === 1 ? 0 : Math.round((dot / (dotCount - 1)) * maxIndex));
+  }
+
   return (
     <Section className={cn("bg-white", className)}>
       <Reveal>
@@ -137,15 +145,15 @@ export function CarSliderSection({
 
       {cars.length > visible ? (
         <div className="mt-6 flex items-center justify-center gap-2">
-          {Array.from({ length: maxIndex + 1 }).map((_, dot) => (
+          {Array.from({ length: dotCount }).map((_, dot) => (
             <button
               key={dot}
               type="button"
-              aria-label={`Go to slide ${dot + 1}`}
-              onClick={() => setIndex(dot)}
+              aria-label={`Go to slide group ${dot + 1}`}
+              onClick={() => goToDot(dot)}
               className={cn(
                 "h-2 rounded-full transition-all",
-                index === dot ? "w-7 bg-secondary" : "w-2 bg-primary/20 hover:bg-primary/40",
+                activeDot === dot ? "w-7 bg-secondary" : "w-2 bg-primary/20 hover:bg-primary/40",
               )}
             />
           ))}
