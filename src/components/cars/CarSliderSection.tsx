@@ -17,19 +17,19 @@ type CarSliderSectionProps = {
   viewAllHref?: string;
   viewAllLabel?: string;
   className?: string;
-  /** How many rows of cards to show (desktop columns stay 3). */
+  /** How many rows of cards to show. */
   rows?: number;
 };
 
 function useColumns() {
-  const [columns, setColumns] = useState(3);
+  const [columns, setColumns] = useState(5);
 
   useEffect(() => {
     function update() {
       const width = window.innerWidth;
       if (width < 640) setColumns(1);
       else if (width < 1024) setColumns(2);
-      else setColumns(3);
+      else setColumns(5);
     }
     update();
     window.addEventListener("resize", update);
@@ -147,7 +147,7 @@ export function CarSliderSection({
             </>
           ) : null}
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
             {Array.from({ length: pageSize }, (_, index) => {
               const car = visibleCars[index];
               return (

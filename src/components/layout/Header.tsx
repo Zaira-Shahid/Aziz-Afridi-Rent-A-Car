@@ -132,7 +132,7 @@ export function Header() {
       ? createPortal(
           <div className="fixed inset-0 z-[100] flex flex-col bg-[#000B1D] text-white lg:hidden" role="dialog" aria-modal="true">
             <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-[#000B1D] px-4 sm:h-16 sm:px-6">
-              <Logo className="h-7 max-w-[120px] sm:h-8 sm:max-w-[140px]" />
+              <Logo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px]" />
               <div className="flex shrink-0 items-center gap-2">
                 <a
                   href={`https://wa.me/${brand.whatsapp}`}
@@ -280,10 +280,10 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-navy pt-1.5 text-white backdrop-blur-xl sm:pt-2">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-navy text-white backdrop-blur-xl">
         <Container className="flex h-14 items-center justify-between gap-3 sm:h-16 lg:h-[72px]">
-          <div className="min-w-0 flex-1 lg:flex-none">
-            <Logo priority className="h-7 max-w-[120px] sm:h-8 sm:max-w-[140px] lg:h-10 lg:max-w-[160px]" />
+          <div className="flex min-w-0 flex-1 items-center lg:flex-none">
+            <Logo priority className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px] lg:h-7 lg:max-w-[130px]" />
           </div>
 
           <nav className="hidden items-center gap-1 lg:flex xl:gap-2">
