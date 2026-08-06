@@ -12,7 +12,7 @@ type CtaBannerProps = {
 
 export function CtaBanner({
   title = "Ready to book your ride?",
-  description = "Get a premium car with driver or self-drive options across Pakistan.",
+  description = "Get a premium car with professional driver across Pakistan.",
 }: CtaBannerProps) {
   return (
     <Section className="bg-primary">

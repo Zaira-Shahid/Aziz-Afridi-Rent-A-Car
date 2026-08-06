@@ -56,7 +56,7 @@ export default async function CategoryPage({ params }: Props) {
         secondaryCta={{ label: "WhatsApp", href: `https://wa.me/${brand.whatsapp}` }}
         stats={[
           { value: `${models.length}`, label: "Cars Available" },
-          { value: "Self-drive", label: "Or Chauffeur" },
+          { value: "Chauffeur", label: "With Every Hire" },
           { value: "Flexible", label: "Rental Plans" },
           { value: "Islamabad", label: "& Nationwide" },
         ]}

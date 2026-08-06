@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return pageMeta({
     title: `${car.name} Rental`,
-    description: `Rent a ${car.name} (${car.brand}) with Signature Rent A Car. From ${formatPrice(car.priceDay)}/day. Self-drive and chauffeur options available.`,
+    description: `Rent a ${car.name} (${car.brand}) with Signature Rent A Car. From ${formatPrice(car.priceDay)}/day. Professional chauffeur included.`,
     path: `/cars/${car.slug}`,
     keywords: [`${car.name} rental`, `${car.brand} rent a car`, `${car.category} car rental`],
     image: car.image,

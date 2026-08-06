@@ -11,8 +11,8 @@ export const defaultKeywords = [
   "SUV rental Pakistan",
   "luxury car rental",
   "airport car rental",
-  "self drive car rental",
   "chauffeur car rental",
+  "rent a car with driver",
 ] as const;
 
 type PageMetaInput = {

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 
 const brands = [
@@ -17,21 +16,17 @@ const brands = [
 
 function BrandItem({ name, image }: { name: string; image: string }) {
   return (
-    <Link
-      href="/cars"
-      className="brand-logo-card group relative mx-2 block h-[110px] w-[110px] shrink-0 sm:mx-3 sm:h-[140px] sm:w-[140px]"
-      aria-label={`${name} available`}
-    >
+    <div className="brand-logo-card relative mx-2 h-[110px] w-[110px] shrink-0 sm:mx-3 sm:h-[140px] sm:w-[140px]">
       <span className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[16px] bg-white p-3 sm:p-4">
         <Image
           src={image}
           alt={name}
           fill
-          className="object-contain p-3 transition duration-300 group-hover:scale-105 sm:p-4"
+          className="object-contain p-3 sm:p-4"
           sizes="140px"
         />
       </span>
-    </Link>
+    </div>
   );
 }
 

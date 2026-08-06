@@ -555,7 +555,7 @@ const dailyCarRental: ServiceDetail = {
     title: "Rent A Car For A Day With",
     accent: "Easy Booking",
     description:
-      "Experience the pinnacle of automotive engineering for a day. Whether it's a business meeting or a weekend escape, drive the extraordinary with Signature. Choose self-drive for full control or add a chauffeur for a stress-free ride, with doorstep delivery available across every major city.",
+      "Experience the pinnacle of automotive comfort for a day. Whether it's a business meeting or a weekend escape, travel with Signature and a professional chauffeur — with doorstep pickup available across every major city.",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB-dunIcvM038_EixrJ7bpLCmUGRjDv0r1ufOXWfY_ZhiL5bc_FWICTBOU3alwtKozX5I4bfq_pV0MXp-0G8DlVWQtIKebtt-vHlmE4X26uW21kPQA4EKQry8Lp3npT8q9ofVW1Oj_HWWSMgfwgl83vBIWWIK3B7lYsiw3Kwx17jx4AKrxR7_LP7VLZOvoPP5Qch56Y-m60z_cRhJl1sQGKZ1ARsQ-kA7tLgYyrYmje9mZc4Mx_UDK8",
     primaryCta: { label: "Search Available Cars", href: "#fleet" },
@@ -710,20 +710,20 @@ const dailyCarRental: ServiceDetail = {
           "Vehicles are provided on a Full-to-Full fuel policy: you receive a full tank and are expected to return it full. This keeps pricing transparent — you only ever pay for the fuel you actually use.",
       },
       {
-        question: "Can I add a chauffeur to a self-drive booking?",
+        question: "Is a chauffeur included with every booking?",
         answer:
-          "Yes. A professional chauffeur can be added to any package for a fixed daily supplement, or included automatically with the Grand Touring package. Simply mention this when confirming your reservation.",
+          "Yes. Every Signature rental includes a professional chauffeur. Mention any language preference or VIP requirements when confirming your reservation.",
       },
     ],
   },
   included: {
     title: "What's Included",
-    description: "Every daily rental, self-drive or chauffeured, comes with these standard inclusions.",
+    description: "Every daily chauffeured rental comes with these standard inclusions.",
     items: [
       { icon: "local_gas_station", text: "Full-to-Full fuel policy — pay only for what you use" },
       { icon: "sanitizer", text: "20-point sanitization completed before every handover" },
       { icon: "water_drop", text: "Complimentary bottled water in every vehicle" },
-      { icon: "support_agent", text: "Optional professional chauffeur available on all packages" },
+      { icon: "support_agent", text: "Professional chauffeur included with every booking" },
       { icon: "schedule", text: "15-minute grace period on both pickup and return" },
     ],
   },
@@ -739,7 +739,7 @@ const dailyCarRental: ServiceDetail = {
       {
         icon: "luggage",
         title: "Tourists & Weekend Explorers",
-        text: "Self-drive freedom to explore cities and getaways like Murree at your own pace.",
+        text: "Chauffeur-driven comfort to explore cities and getaways like Murree without the stress of driving.",
       },
       {
         icon: "home_repair_service",

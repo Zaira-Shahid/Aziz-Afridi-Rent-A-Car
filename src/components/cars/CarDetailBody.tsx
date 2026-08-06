@@ -43,7 +43,7 @@ export function CarDetailBody({ car, categoryName, related }: CarDetailBodyProps
               rides, airport transfers, and outstation trips.
             </p>
             <p>
-              Contact us to check availability, pricing, and chauffeur options for your dates. WhatsApp or
+              Contact us to check availability, pricing, and chauffeur booking for your dates. WhatsApp or
               call for a quick confirmation.
             </p>
           </div>

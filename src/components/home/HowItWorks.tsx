@@ -1,48 +1,52 @@
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { carImage } from "@/data";
 
 const steps = [
   {
     icon: "directions_car",
-    title: "Choose a vehicle",
-    text: "Browse our fleet and pick the car that fits your trip.",
+    title: "Choose Your Vehicle",
+    text: "Browse our fleet of economy cars, executive sedans, luxury vehicles, SUVs, Hiace, Coaster, and Grand Cabin rentals. Select the vehicle that best suits your travel needs.",
   },
   {
     icon: "chat",
-    title: "Request a car",
-    text: "Send your booking details through the form or WhatsApp.",
+    title: "Share Your Trip Details",
+    text: "Send us your pickup location, destination, travel date, time, and passenger requirements through our online booking form or WhatsApp.",
   },
   {
-    icon: "payments",
-    title: "Just send payment",
-    text: "Confirm your booking with a simple payment when ready.",
+    icon: "verified",
+    title: "Confirm Your Booking",
+    text: "Receive your quotation, confirm your reservation, and complete the booking. Our team will assign a professional chauffeur for your journey.",
   },
   {
-    icon: "local_shipping",
-    title: "Delivery ride",
-    text: "We deliver the car to your location and you hit the road.",
+    icon: "airline_seat_recline_extra",
+    title: "Enjoy a Comfortable Ride",
+    text: "Your driver will arrive at your pickup location on time. Sit back and enjoy a safe, comfortable, and reliable journey anywhere in Islamabad, Rawalpindi, or across Pakistan.",
   },
 ] as const;
+
+const END_CAR_IMAGE = carImage("green-audi-convertible.png");
 
 export function HowItWorks() {
   return (
     <section className="bg-white py-14 sm:py-20">
       <Container>
         <Reveal>
-          <div className="max-w-2xl">
+          <div className="mx-auto max-w-3xl text-center lg:mx-0 lg:max-w-2xl lg:text-left">
             <h2 className="font-heading text-2xl font-bold tracking-tight text-primary sm:text-3xl lg:text-4xl">
-              How to rent a car with Signature?
+              How to Book a Car with Signature Rent A Car?
             </h2>
             <p className="mt-3 text-sm text-muted sm:text-base">
-              Four simple steps from choosing your car to starting your ride.
+              Booking a chauffeur-driven car rental in Islamabad &amp; Rawalpindi is quick and hassle-free.
+              Follow these four simple steps to reserve your vehicle with Signature Rent A Car.
             </p>
           </div>
         </Reveal>
 
-        <div className="relative mt-10 pr-0 sm:mt-14 lg:pr-28">
+        <div className="relative mt-10 pr-0 sm:mt-14 lg:pr-40">
           <svg
-            className="pointer-events-none absolute left-0 right-28 top-[34px] hidden h-16 w-[calc(100%-7rem)] lg:block"
+            className="pointer-events-none absolute left-0 right-36 top-[34px] hidden h-16 w-[calc(100%-9rem)] lg:block"
             viewBox="0 0 1000 64"
             fill="none"
             preserveAspectRatio="none"
@@ -50,7 +54,7 @@ export function HowItWorks() {
           >
             <path
               d="M40 32 C 140 8, 220 56, 320 32 S 500 8, 600 32 S 760 56, 860 32 S 920 20, 960 28"
-              stroke="#c41e3a"
+              stroke="#04C4E3"
               strokeWidth="2.5"
               strokeDasharray="5 7"
               strokeLinecap="round"
@@ -66,7 +70,7 @@ export function HowItWorks() {
           >
             <path
               d="M4 36 C 28 10, 52 10, 78 28"
-              stroke="#c41e3a"
+              stroke="#04C4E3"
               strokeWidth="2.5"
               strokeDasharray="5 6"
               strokeLinecap="round"
@@ -74,7 +78,7 @@ export function HowItWorks() {
             />
             <path
               d="M70 22 L82 30 L68 36"
-              stroke="#c41e3a"
+              stroke="#04C4E3"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -86,25 +90,25 @@ export function HowItWorks() {
             {steps.map((step, index) => (
               <Reveal key={step.title} delay={index * 80}>
                 <div className="relative flex flex-col items-center text-center">
-                  <div className="relative z-10 flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[#fde8e9] sm:h-[76px] sm:w-[76px]">
+                  <div className="relative z-10 flex h-[68px] w-[68px] items-center justify-center rounded-full bg-secondary/15 sm:h-[76px] sm:w-[76px]">
                     <span
-                      className="material-symbols-outlined text-[28px] text-[#c41e3a] sm:text-[32px]"
+                      className="material-symbols-outlined text-[28px] text-secondary sm:text-[32px]"
                       style={{ fontVariationSettings: "'FILL' 1" }}
                     >
                       {step.icon}
                     </span>
                   </div>
-                  <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c41e3a]">
+                  <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-secondary">
                     Step {index + 1}
                   </p>
                   <h3 className="mt-1 font-heading text-base font-bold text-primary sm:text-lg">
                     {step.title}
                   </h3>
-                  <p className="mt-2 max-w-[220px] text-sm leading-relaxed text-muted">{step.text}</p>
+                  <p className="mt-2 max-w-[260px] text-sm leading-relaxed text-muted">{step.text}</p>
 
                   {index < steps.length - 1 ? (
                     <div
-                      className="my-1 h-8 w-px border-l-2 border-dashed border-[#c41e3a] lg:hidden"
+                      className="my-1 h-8 w-px border-l-2 border-dashed border-secondary/50 lg:hidden"
                       aria-hidden="true"
                     />
                   ) : null}
@@ -113,17 +117,32 @@ export function HowItWorks() {
             ))}
           </div>
 
-          <div className="pointer-events-none absolute right-0 top-2 hidden lg:block" aria-hidden="true">
-            <div className="relative h-14 w-24 overflow-hidden rounded-lg shadow-md">
+          <div className="pointer-events-none absolute -right-2 top-0 z-10 hidden lg:block" aria-hidden="true">
+            <div className="how-it-works-car relative h-20 w-40">
               <Image
-                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=300&q=80"
-                alt=""
+                src={END_CAR_IMAGE}
+                alt="Signature luxury convertible"
                 fill
-                className="object-cover"
-                sizes="96px"
+                className="object-contain object-center drop-shadow-md"
+                sizes="160px"
+                priority
               />
             </div>
           </div>
+
+          <Reveal delay={350}>
+            <div className="mt-8 flex justify-center lg:hidden">
+              <div className="how-it-works-car relative h-36 w-60">
+                <Image
+                  src={END_CAR_IMAGE}
+                  alt="Signature luxury convertible"
+                  fill
+                  className="object-contain object-center drop-shadow-md"
+                  sizes="240px"
+                />
+              </div>
+            </div>
+          </Reveal>
         </div>
       </Container>
     </section>

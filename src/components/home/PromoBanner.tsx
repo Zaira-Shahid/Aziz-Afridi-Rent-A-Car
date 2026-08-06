@@ -3,19 +3,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
-type PromoBannerProps = {
-  title?: string;
-  description?: string;
-  href?: string;
-  ctaLabel?: string;
-};
-
-export function PromoBanner({
-  title = "Flash Sale",
-  description = "Limited-time deals on economy and SUV rentals. Book now before slots fill up.",
-  href = "/cars",
-  ctaLabel = "Explore Deals",
-}: PromoBannerProps) {
+export function PromoBanner() {
   return (
     <section className="relative overflow-hidden bg-primary py-16 sm:py-20">
       <Image
@@ -30,15 +18,20 @@ export function PromoBanner({
         <Reveal>
           <div className="max-w-2xl">
             <p className="font-heading text-sm font-medium uppercase tracking-[0.2em] text-accent">
-              Limited Offer
+              Serving Islamabad &amp; Rawalpindi
             </p>
             <h2 className="mt-3 font-heading text-3xl font-semibold text-white sm:text-4xl lg:text-5xl">
-              {title}
+              Best Rent a Car with Driver in Islamabad
             </h2>
-            <p className="mt-4 max-w-lg text-sm text-white/70 sm:text-base lg:text-lg">{description}</p>
+            <p className="mt-4 max-w-xl text-sm text-white/70 sm:text-base lg:text-lg">
+              Signature Rent A Car specializes in car rental with driver in Islamabad and Rawalpindi for
+              airport transfers, corporate travel, official visits, weddings, city tours, and family trips.
+              Choose from a wide range of clean, insured, and professionally maintained vehicles driven by
+              experienced chauffeurs, available 24/7 at competitive rates.
+            </p>
             <div className="mt-8">
-              <ButtonLink href={href} variant="accent" size="lg" className="hover:-translate-y-0.5">
-                {ctaLabel}
+              <ButtonLink href="/contact" variant="accent" size="lg" className="hover:-translate-y-0.5">
+                Reserve Your Car
               </ButtonLink>
             </div>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CarModel } from "@/types";
 import { CarCard } from "@/components/cars/CarCard";
 import { FleetAnimatedHeading } from "@/components/cars/FleetAnimatedHeading";
@@ -17,24 +17,26 @@ type CarSliderSectionProps = {
   viewAllHref?: string;
   viewAllLabel?: string;
   className?: string;
+  /** How many rows of cards to show (desktop columns stay 3). */
+  rows?: number;
 };
 
-function useVisibleCount() {
-  const [count, setCount] = useState(3);
+function useColumns() {
+  const [columns, setColumns] = useState(3);
 
   useEffect(() => {
     function update() {
       const width = window.innerWidth;
-      if (width < 640) setCount(1);
-      else if (width < 1024) setCount(2);
-      else setCount(3);
+      if (width < 640) setColumns(1);
+      else if (width < 1024) setColumns(2);
+      else setColumns(3);
     }
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  return count;
+  return columns;
 }
 
 function categoryLabel(slug: string) {
@@ -46,132 +48,151 @@ export function CarSliderSection({
   viewAllHref = "/cars",
   viewAllLabel = "View All Cars",
   className,
+  rows = 2,
 }: CarSliderSectionProps) {
-  const visible = useVisibleCount();
-  const maxIndex = Math.max(0, cars.length - visible);
-  const [index, setIndex] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const columns = useColumns();
+  const pageSize = columns * rows;
+  const pageCount = Math.max(1, Math.ceil(cars.length / pageSize));
+  const [page, setPage] = useState(0);
   const [headingKey, setHeadingKey] = useState(0);
+  const [inView, setInView] = useState(false);
 
-  const visibleCars = cars.slice(index, index + visible);
+  const start = page * pageSize;
+  const visibleCars = cars.slice(start, start + pageSize);
   const leadCar = visibleCars[0];
   const headingTitle = leadCar ? categoryLabel(leadCar.category) : "Featured rental cars";
   const headingDescription = visibleCars.length
     ? visibleCars.map((car) => car.name).join(" · ")
-    : "Slide through our full fleet for daily, weekly, and monthly rental.";
+    : "Browse our chauffeur-driven fleet for daily, weekly, and monthly rental.";
 
   useEffect(() => {
-    setIndex((prev) => Math.min(prev, maxIndex));
-  }, [maxIndex]);
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.2, rootMargin: "0px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    setPage((prev) => Math.min(prev, pageCount - 1));
+  }, [pageCount]);
+
+  useEffect(() => {
+    if (!inView) return;
     setHeadingKey((key) => key + 1);
-  }, [index, visible]);
+  }, [page, pageSize, inView]);
 
   useEffect(() => {
-    if (cars.length <= visible) return;
+    if (!inView || pageCount <= 1) return;
     const timer = window.setInterval(() => {
-      setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+      setPage((prev) => (prev >= pageCount - 1 ? 0 : prev + 1));
     }, 4500);
     return () => window.clearInterval(timer);
-  }, [cars.length, maxIndex, visible]);
+  }, [pageCount, inView]);
 
   if (cars.length === 0) return null;
 
   function prev() {
-    setIndex((current) => (current <= 0 ? maxIndex : current - 1));
+    setPage((current) => (current <= 0 ? pageCount - 1 : current - 1));
   }
 
   function next() {
-    setIndex((current) => (current >= maxIndex ? 0 : current + 1));
+    setPage((current) => (current >= pageCount - 1 ? 0 : current + 1));
   }
 
-  const dotCount = Math.min(3, maxIndex + 1);
+  const dotCount = Math.min(3, pageCount);
   const activeDot =
-    maxIndex === 0 ? 0 : Math.min(dotCount - 1, Math.round((index / maxIndex) * (dotCount - 1)));
+    pageCount <= 1 ? 0 : Math.min(dotCount - 1, Math.round((page / (pageCount - 1)) * (dotCount - 1)));
 
   function goToDot(dot: number) {
-    setIndex(dotCount === 1 ? 0 : Math.round((dot / (dotCount - 1)) * maxIndex));
+    setPage(dotCount === 1 ? 0 : Math.round((dot / (dotCount - 1)) * (pageCount - 1)));
   }
 
   return (
-    <Section className={cn("bg-white", className)}>
-      <Reveal>
-        <FleetAnimatedHeading
-          eyebrow="Our Fleet"
-          title={headingTitle}
-          description={headingDescription}
-          headingKey={headingKey}
-        />
-      </Reveal>
+    <div ref={sectionRef} className="overflow-anchor-none">
+      <Section className={cn("bg-white", className)}>
+        <Reveal>
+          <FleetAnimatedHeading
+            eyebrow="Our Fleet"
+            title={headingTitle}
+            description={headingDescription}
+            headingKey={headingKey}
+          />
+        </Reveal>
 
-      <div className="relative">
-        {cars.length > visible ? (
-          <>
-            <button
-              type="button"
-              aria-label="Previous cars"
-              onClick={prev}
-              className="absolute left-0 top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:-translate-x-3"
-            >
-              <span className="material-symbols-outlined text-[22px]">chevron_left</span>
-            </button>
-            <button
-              type="button"
-              aria-label="Next cars"
-              onClick={next}
-              className="absolute right-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:translate-x-3"
-            >
-              <span className="material-symbols-outlined text-[22px]">chevron_right</span>
-            </button>
-          </>
-        ) : null}
+        <div className="relative">
+          {pageCount > 1 ? (
+            <>
+              <button
+                type="button"
+                aria-label="Previous cars"
+                onClick={prev}
+                className="absolute left-0 top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:-translate-x-3"
+              >
+                <span className="material-symbols-outlined text-[22px]">chevron_left</span>
+              </button>
+              <button
+                type="button"
+                aria-label="Next cars"
+                onClick={next}
+                className="absolute right-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:translate-x-3"
+              >
+                <span className="material-symbols-outlined text-[22px]">chevron_right</span>
+              </button>
+            </>
+          ) : null}
 
-        <div className="overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{
-              width: `${(cars.length / visible) * 100}%`,
-              transform: `translateX(-${(index / cars.length) * 100}%)`,
-            }}
-          >
-            {cars.map((car) => (
-              <div key={car.slug} className="px-2.5 sm:px-3" style={{ width: `${100 / cars.length}%` }}>
-                <CarCard car={car} />
-              </div>
-            ))}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: pageSize }, (_, index) => {
+              const car = visibleCars[index];
+              return (
+                <div
+                  key={car?.slug ?? `placeholder-${index}`}
+                  className={cn("px-0.5", !car && "invisible")}
+                  aria-hidden={!car}
+                >
+                  {car ? <CarCard car={car} /> : <div className="min-h-[360px]" />}
+                </div>
+              );
+            })}
           </div>
         </div>
-      </div>
 
-      {cars.length > visible ? (
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {Array.from({ length: dotCount }).map((_, dot) => (
-            <button
-              key={dot}
-              type="button"
-              aria-label={`Go to slide group ${dot + 1}`}
-              onClick={() => goToDot(dot)}
-              className={cn(
-                "h-2 rounded-full transition-all",
-                activeDot === dot ? "w-7 bg-secondary" : "w-2 bg-primary/20 hover:bg-primary/40",
-              )}
-            />
-          ))}
-        </div>
-      ) : null}
+        {pageCount > 1 ? (
+          <div className="mt-6 flex items-center justify-center gap-2">
+            {Array.from({ length: dotCount }).map((_, dot) => (
+              <button
+                key={dot}
+                type="button"
+                aria-label={`Go to slide group ${dot + 1}`}
+                onClick={() => goToDot(dot)}
+                className={cn(
+                  "h-2 rounded-full transition-all",
+                  activeDot === dot ? "w-7 bg-secondary" : "w-2 bg-primary/20 hover:bg-primary/40",
+                )}
+              />
+            ))}
+          </div>
+        ) : null}
 
-      <Reveal delay={150}>
-        <div className="mt-10 flex justify-center">
-          <ButtonLink
-            href={viewAllHref}
-            variant="secondary"
-            size="lg"
-            className="hover:-translate-y-0.5 !text-white"
-          >
-            {viewAllLabel}
-          </ButtonLink>
-        </div>
-      </Reveal>
-    </Section>
+        <Reveal delay={150}>
+          <div className="mt-10 flex justify-center">
+            <ButtonLink
+              href={viewAllHref}
+              variant="secondary"
+              size="lg"
+              className="hover:-translate-y-0.5 !text-white"
+            >
+              {viewAllLabel}
+            </ButtonLink>
+          </div>
+        </Reveal>
+      </Section>
+    </div>
   );
 }

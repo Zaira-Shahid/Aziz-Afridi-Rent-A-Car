@@ -48,7 +48,7 @@ const WHATSAPP_TIPS = [
   "Share your city and pickup location (home, hotel, or airport).",
   "Mention your travel dates and approximate rental duration.",
   "Tell us the vehicle type or occasion — daily, corporate, wedding, or a northern trip.",
-  "Let us know if you need a chauffeur or prefer self-drive.",
+  "Let us know if you need a chauffeur-driven car for your trip.",
 ];
 
 const INFO_CARDS = [

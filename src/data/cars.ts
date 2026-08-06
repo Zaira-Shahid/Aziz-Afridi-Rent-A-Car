@@ -523,9 +523,9 @@ export function getCarsForCategory(slug: string): CarModel[] {
 
 export const homeFaqs: FaqItem[] = [
   {
-    question: "Do you offer self-drive and with-driver options?",
+    question: "Do you offer car rental with a driver?",
     answer:
-      "Yes. You can book self-drive or chauffeur-driven cars depending on your trip, city, and preferred vehicle.",
+      "Yes. Signature Rent A Car provides chauffeur-driven vehicles for city travel, airport transfers, corporate trips, weddings, and outstation journeys.",
   },
   {
     question: "Which cities do you cover?",
@@ -543,9 +543,9 @@ export const homeFaqs: FaqItem[] = [
       "Yes. Airport pick & drop is available for Islamabad Airport and other major routes on request.",
   },
   {
-    question: "What documents do I need for self-drive?",
+    question: "What do I need to book a chauffeured car?",
     answer:
-      "A valid CNIC and a driving license are required. For tourists, a passport and international driving permit may be needed.",
+      "Share passenger names, pickup details, and a valid CNIC or passport for records. Our professional driver handles the rest.",
   },
   {
     question: "Is fuel included in the rental price?",
@@ -560,6 +560,6 @@ export const homeFaqs: FaqItem[] = [
   {
     question: "Do you deliver cars to hotels or homes?",
     answer:
-      "Yes. Doorstep delivery is available in major cities subject to location and timing. Share your address when you inquire.",
+      "Yes. Doorstep pickup and drop is available in major cities subject to location and timing. Share your address when you inquire.",
   },
 ];

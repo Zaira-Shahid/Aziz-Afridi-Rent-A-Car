@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     template: `%s | ${brand.name}`,
   },
   description:
-    "Rent economy, sedan, SUV, and luxury cars across Pakistan. Self-drive and chauffeur options in Islamabad, Rawalpindi, Lahore, Karachi, and tourist destinations.",
+    "Rent economy, sedan, SUV, and luxury cars with professional drivers across Pakistan. Chauffeur car rental in Islamabad, Rawalpindi, Lahore, Karachi, and tourist destinations.",
   applicationName: brand.name,
   authors: [{ name: brand.name }],
   creator: brand.name,

@@ -47,14 +47,14 @@ const FAQS = [
   },
   {
     category: "general",
-    question: "Can I add an additional driver to my booking?",
-    answer: "Yes, additional drivers can be added at the time of booking with a valid license and identification.",
+    question: "Can I add additional passengers to my booking?",
+    answer: "Yes, additional passengers can be added at booking. Our chauffeur remains the designated driver for the trip.",
   },
   {
     category: "general",
     question: "Do you rent cars to tourists visiting Pakistan?",
     answer:
-      "Yes. Tourists can rent self-drive or chauffeur-driven vehicles with a valid passport and an international driving permit or license from their home country.",
+      "Yes. Tourists can book chauffeur-driven vehicles with a valid passport. Share passenger details when you reserve.",
   },
   {
     category: "general",
@@ -72,7 +72,7 @@ const FAQS = [
     category: "booking",
     question: "What documents are required to book a car?",
     answer:
-      "A valid CNIC or Passport, along with a locally or internationally recognized driving license, is required for all bookings.",
+      "A valid CNIC or Passport for passenger records is required for all chauffeur-driven bookings.",
   },
   {
     category: "booking",
@@ -90,12 +90,12 @@ const FAQS = [
     category: "booking",
     question: "Can I book on behalf of someone else?",
     answer:
-      "Yes. You can arrange and pay for a rental for a family member or guest — just ensure the actual driver's documents are shared before pickup.",
+      "Yes. You can arrange and pay for a rental for a family member or guest — just ensure passenger details are shared before pickup.",
   },
   {
     category: "rental",
-    question: "Do you offer self-drive and with-driver options?",
-    answer: "Yes. You can book self-drive or chauffeur-driven cars depending on your trip, city, and preferred vehicle.",
+    question: "Do you offer car rental with a driver?",
+    answer: "Yes. All our rentals include a professional chauffeur for city travel, airport transfers, corporate trips, and outstation journeys.",
   },
   {
     category: "rental",

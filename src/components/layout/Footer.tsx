@@ -114,10 +114,19 @@ export function Footer() {
           <FooterColumn title="Legal" links={policyLinks} />
         </div>
 
-        <div className="mt-14 border-t border-white/10 pt-6">
+        <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-white/45">
             © {new Date().getFullYear()} {brand.name}. All rights reserved.
           </p>
+          <a
+            href="https://www.developerx.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex w-fit flex-col text-xs text-white/45 transition hover:text-accent"
+          >
+            Website By DeveloperX
+            <span className="developerx-line" aria-hidden="true" />
+          </a>
         </div>
       </Container>
     </footer>

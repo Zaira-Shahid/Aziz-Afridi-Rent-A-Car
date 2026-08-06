@@ -4,7 +4,6 @@ import {
   HomeBlog,
   HomeCta,
   HomeDestinations,
-  HomeFaq,
   HomeFleet,
   HomeHero,
   HomeReviews,
@@ -16,11 +15,11 @@ import {
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
-  title: "Premium Car Rental in Pakistan",
+  title: "Premium Car Rental with Driver in Pakistan",
   description:
-    "Book self-drive and chauffeur cars with Signature Rent A Car. Economy, sedan, SUV, and luxury fleet across Islamabad, Rawalpindi, Lahore, Karachi, and northern destinations.",
+    "Book chauffeur-driven cars with Signature Rent A Car. Economy, sedan, SUV, and luxury fleet across Islamabad, Rawalpindi, Lahore, Karachi, and northern destinations.",
   path: "/",
-  keywords: ["car hire Pakistan", "rent a car Islamabad", "monthly car rental"],
+  keywords: ["car hire Pakistan", "rent a car Islamabad with driver", "monthly car rental"],
 });
 
 export default function HomePage() {
@@ -35,7 +34,6 @@ export default function HomePage() {
       <HomeServices />
       <HomeDestinations />
       <HomeReviews />
-      <HomeFaq />
       <HomeBlog />
       <HomeCta />
     </>

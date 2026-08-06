@@ -9,7 +9,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   title: "About Us",
   description:
-    "Learn about Signature Rent A Car — premium self-drive and chauffeur car rental across Pakistan since 2010.",
+    "Learn about Signature Rent A Car — premium chauffeur-driven car rental across Pakistan since 2010.",
   path: "/about",
   keywords: ["about Signature Rent A Car", "car rental company Pakistan"],
 });
@@ -94,7 +94,7 @@ const OFFERINGS = [
   {
     icon: "today",
     title: "Daily Rentals",
-    text: "Flexible self-drive or chauffeur-driven bookings for everyday city travel.",
+    text: "Flexible chauffeur-driven bookings for everyday city travel.",
     href: "/services/daily-car-rental",
   },
   {
