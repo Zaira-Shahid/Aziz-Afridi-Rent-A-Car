@@ -32,10 +32,10 @@ export function HomeServices() {
             Services Tailored to Your Lifestyle
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((item, index) => (
             <Reveal key={item.title} delay={index * 100}>
-              <div className="group h-full rounded-2xl border border-primary/10 bg-white p-8 transition hover:border-secondary hover:shadow-xl sm:p-10">
+              <div className="group h-full rounded-2xl border border-primary/10 bg-white p-6 transition hover:border-secondary hover:shadow-xl sm:p-8 lg:p-10">
                 <span className="material-symbols-outlined mb-6 block text-[48px] text-primary transition group-hover:text-secondary">
                   {item.icon}
                 </span>

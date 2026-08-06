@@ -3,11 +3,27 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
-export function PromoBanner() {
+type PromoBannerProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  href?: string;
+  ctaLabel?: string;
+  imageSrc?: string;
+};
+
+export function PromoBanner({
+  eyebrow = "Serving Islamabad",
+  title = "Best Rent a Car with Driver in Islamabad",
+  description = "Signature Rent A Car specializes in car rental with driver in Islamabad for airport transfers, corporate travel, official visits, weddings, city tours, and family trips. Choose from a wide range of clean, insured, and professionally maintained vehicles driven by experienced chauffeurs, available 24/7 at competitive rates.",
+  href = "/contact",
+  ctaLabel = "Reserve Your Car",
+  imageSrc = "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80",
+}: PromoBannerProps) {
   return (
     <section className="relative overflow-hidden bg-primary py-16 sm:py-20">
       <Image
-        src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=80"
+        src={imageSrc}
         alt=""
         fill
         className="object-cover opacity-35 transition duration-[4000ms] hover:scale-105"
@@ -18,20 +34,15 @@ export function PromoBanner() {
         <Reveal>
           <div className="max-w-2xl">
             <p className="font-heading text-sm font-medium uppercase tracking-[0.2em] text-accent">
-              Serving Islamabad &amp; Rawalpindi
+              {eyebrow}
             </p>
             <h2 className="mt-3 font-heading text-3xl font-semibold text-white sm:text-4xl lg:text-5xl">
-              Best Rent a Car with Driver in Islamabad
+              {title}
             </h2>
-            <p className="mt-4 max-w-xl text-sm text-white/70 sm:text-base lg:text-lg">
-              Signature Rent A Car specializes in car rental with driver in Islamabad and Rawalpindi for
-              airport transfers, corporate travel, official visits, weddings, city tours, and family trips.
-              Choose from a wide range of clean, insured, and professionally maintained vehicles driven by
-              experienced chauffeurs, available 24/7 at competitive rates.
-            </p>
+            <p className="mt-4 max-w-xl text-sm text-white/70 sm:text-base lg:text-lg">{description}</p>
             <div className="mt-8">
-              <ButtonLink href="/contact" variant="accent" size="lg" className="hover:-translate-y-0.5">
-                Reserve Your Car
+              <ButtonLink href={href} variant="accent" size="lg" className="hover:-translate-y-0.5">
+                {ctaLabel}
               </ButtonLink>
             </div>
           </div>

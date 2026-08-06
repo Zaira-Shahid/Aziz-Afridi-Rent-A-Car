@@ -22,13 +22,15 @@ type CarSliderSectionProps = {
 };
 
 function useColumns() {
-  const [columns, setColumns] = useState(5);
+  const [columns, setColumns] = useState(3);
 
   useEffect(() => {
     function update() {
       const width = window.innerWidth;
       if (width < 640) setColumns(1);
       else if (width < 1024) setColumns(2);
+      else if (width < 1280) setColumns(3);
+      else if (width < 1536) setColumns(4);
       else setColumns(5);
     }
     update();
@@ -132,7 +134,7 @@ export function CarSliderSection({
                 type="button"
                 aria-label="Previous cars"
                 onClick={prev}
-                className="absolute left-0 top-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:-translate-x-3"
+                className="absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:left-0 sm:-translate-x-3"
               >
                 <span className="material-symbols-outlined text-[22px]">chevron_left</span>
               </button>
@@ -140,14 +142,14 @@ export function CarSliderSection({
                 type="button"
                 aria-label="Next cars"
                 onClick={next}
-                className="absolute right-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:translate-x-3"
+                className="absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-primary/10 bg-white text-primary shadow-md transition hover:bg-accent sm:right-0 sm:translate-x-3"
               >
                 <span className="material-symbols-outlined text-[22px]">chevron_right</span>
               </button>
             </>
           ) : null}
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4 2xl:grid-cols-5 2xl:gap-3">
             {Array.from({ length: pageSize }, (_, index) => {
               const car = visibleCars[index];
               return (

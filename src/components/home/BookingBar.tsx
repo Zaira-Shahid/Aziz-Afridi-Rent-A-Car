@@ -158,8 +158,8 @@ export function BookingBar({ className }: BookingBarProps) {
           required
         />
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <label className="block">
+        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+          <label className="block min-w-0">
             <span className="mb-1 ml-1 block text-xs font-semibold uppercase tracking-wider text-white/70">
               Start date
             </span>
@@ -167,10 +167,10 @@ export function BookingBar({ className }: BookingBarProps) {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full rounded-lg border border-white/15 bg-white/95 px-4 py-3 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
+              className="w-full min-w-0 max-w-full rounded-lg border border-white/15 bg-white/95 px-4 py-3 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
             />
           </label>
-          <label className="block">
+          <label className="block min-w-0">
             <span className="mb-1 ml-1 block text-xs font-semibold uppercase tracking-wider text-white/70">
               End date
             </span>
@@ -178,7 +178,7 @@ export function BookingBar({ className }: BookingBarProps) {
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="w-full rounded-lg border border-white/15 bg-white/95 px-4 py-3 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
+              className="w-full min-w-0 max-w-full rounded-lg border border-white/15 bg-white/95 px-4 py-3 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
             />
           </label>
         </div>

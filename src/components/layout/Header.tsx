@@ -130,7 +130,7 @@ export function Header() {
   const mobileMenu =
     open && mounted
       ? createPortal(
-          <div className="fixed inset-0 z-[100] flex flex-col bg-[#000B1D] text-white lg:hidden" role="dialog" aria-modal="true">
+          <div className="fixed inset-0 z-[100] flex flex-col bg-[#000B1D] text-white xl:hidden" role="dialog" aria-modal="true">
             <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-[#000B1D] px-4 sm:h-16 sm:px-6">
               <Logo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px]" />
               <div className="flex shrink-0 items-center gap-2">
@@ -281,12 +281,12 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-white/10 bg-navy text-white backdrop-blur-xl">
-        <Container className="flex h-14 items-center justify-between gap-3 sm:h-16 lg:h-[72px]">
-          <div className="flex min-w-0 flex-1 items-center lg:flex-none">
-            <Logo priority className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px] lg:h-7 lg:max-w-[130px]" />
+        <Container className="flex h-14 items-center justify-between gap-3 sm:h-16 xl:h-[72px]">
+          <div className="flex min-w-0 flex-1 items-center xl:flex-none">
+            <Logo priority className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px] xl:h-7 xl:max-w-[130px]" />
           </div>
 
-          <nav className="hidden items-center gap-1 lg:flex xl:gap-2">
+          <nav className="hidden items-center gap-1 xl:flex xl:gap-2">
             {mainNav.map((item) => {
               const active = isActive(pathname, item);
               const menu = hasMenu(item);
@@ -386,7 +386,7 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 xl:flex">
             <a
               href={`https://wa.me/${brand.whatsapp}`}
               target="_blank"
@@ -403,7 +403,7 @@ export function Header() {
             </Link>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          <div className="flex shrink-0 items-center gap-2 xl:hidden">
             <a
               href={`https://wa.me/${brand.whatsapp}`}
               target="_blank"

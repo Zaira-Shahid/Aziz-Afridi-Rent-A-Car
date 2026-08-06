@@ -32,6 +32,12 @@ export default function HomePage() {
       <HowItWorks />
       <WhyChooseUs />
       <HomeServices />
+      <PromoBanner
+        eyebrow="Serving Rawalpindi"
+        title="Best Rent a Car with Driver in Rawalpindi"
+        description="Signature Rent A Car specializes in car rental with driver in Rawalpindi for airport transfers, corporate travel, official visits, weddings, city tours, and family trips. Choose from a wide range of clean, insured, and professionally maintained vehicles driven by experienced chauffeurs, available 24/7 at competitive rates."
+        imageSrc="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1800&q=80"
+      />
       <HomeDestinations />
       <HomeReviews />
       <HomeBlog />

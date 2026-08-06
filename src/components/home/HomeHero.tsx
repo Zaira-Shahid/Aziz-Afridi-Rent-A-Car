@@ -58,7 +58,7 @@ export function HomeHero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[78vh] items-center overflow-hidden py-16 sm:min-h-[85vh] sm:py-20 lg:min-h-[90vh] lg:py-24">
+    <section className="relative flex min-h-0 items-center overflow-hidden py-12 sm:min-h-[85vh] sm:py-20 lg:min-h-[90vh] lg:py-24">
       {HERO_SLIDES.map((item, index) => (
         <Image
           key={item.src}
@@ -75,8 +75,8 @@ export function HomeHero() {
       ))}
       <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/30" />
 
-      <Container className="relative z-10 grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
-        <div className="text-white lg:col-span-7">
+      <Container className="relative z-10 grid min-w-0 items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
+        <div className="min-w-0 text-white lg:col-span-7">
           <h1
             key={`heading-${active}`}
             className="hero-shadow animate-fade-up font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl xl:text-[52px] xl:leading-[1.15]"
@@ -85,7 +85,7 @@ export function HomeHero() {
           </h1>
           <p
             key={`desc-${active}`}
-            className="animate-fade-up-delay mt-4 max-w-xl text-sm text-white/90 sm:mt-6 sm:text-base lg:text-lg"
+            className="animate-fade-up-delay mt-4 line-clamp-3 max-w-xl text-sm text-white/90 sm:mt-6 sm:line-clamp-none sm:text-base lg:text-lg"
           >
             {slide.description}
           </p>
