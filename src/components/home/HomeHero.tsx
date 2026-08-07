@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils";
 
 const HERO_SLIDES = [
   {
-    src: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80",
-    alt: "Premium rental car in Islamabad",
+    src: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1920&q=80",
+    alt: "Premium black luxury sedan for rent in Islamabad",
     heading: "Best Rent a Car in Islamabad & Rawalpindi",
     description:
       "Need a reliable rent a car in Islamabad or Rawalpindi? Signature Rent A Car provides affordable daily, weekly, and monthly car rentals with professional chauffeurs. Choose from economy cars, executive sedans, luxury vehicles, SUVs, Hiace, Coaster, and Grand Cabin rentals for business, family, and travel needs.",
@@ -18,8 +18,8 @@ const HERO_SLIDES = [
     ctaHref: "/contact",
   },
   {
-    src: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=80",
-    alt: "Luxury executive car rental",
+    src: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1920&q=80",
+    alt: "Luxury executive BMW sedan rental",
     heading: "Luxury Car Rental in Islamabad for Every Occasion",
     description:
       "Experience premium travel with the best luxury car rental in Islamabad. Rent Mercedes, Audi, Prado, Fortuner, Civic, Corolla, Land Cruiser, and executive vehicles with professional drivers for weddings, corporate meetings, VIP guests, airport transfers, and business travel throughout Islamabad and Rawalpindi.",
@@ -27,8 +27,8 @@ const HERO_SLIDES = [
     ctaHref: "/cars",
   },
   {
-    src: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1920&q=80",
-    alt: "Airport transfer and corporate car",
+    src: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1920&q=80",
+    alt: "Airport transfer luxury vehicle with chauffeur",
     heading: "Airport Transfer & Corporate Car Rental Services",
     description:
       "Book trusted airport transfer services in Islamabad and professional corporate car rental solutions. We offer punctual pick-up and drop-off, executive chauffeur services, monthly company rentals, staff transportation, and VIP travel with clean, insured, and well-maintained vehicles.",
@@ -36,13 +36,31 @@ const HERO_SLIDES = [
     ctaHref: "/services/airport-pick-drop",
   },
   {
-    src: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1920&q=80",
-    alt: "Northern areas and long-term rental",
+    src: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1920&q=80",
+    alt: "SUV ready for northern areas road trip",
     heading: "Daily, Monthly & Northern Areas Car Rental",
     description:
       "Planning a trip? Rent cars for Murree, Naran, Kaghan, Hunza, Skardu, Swat, and destinations across Pakistan. We provide daily and monthly rentals, SUVs, 4x4 vehicles, Hiace, Coaster, and Grand Cabin with experienced drivers for family tours, corporate events, and group travel.",
     ctaLabel: "Get Instant Quote",
     ctaHref: "/contact",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1920&q=80",
+    alt: "Wedding and VIP luxury car convoy",
+    heading: "Wedding & VIP Chauffeur Car Rental",
+    description:
+      "Make every occasion unforgettable with Signature’s decorated wedding fleets and VIP chauffeur service. From baraat convoys to executive guest transfers, we deliver spotless luxury vehicles with professional drivers on time.",
+    ctaLabel: "Book Wedding Fleet",
+    ctaHref: "/services/wedding-car-rental",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1920&q=80",
+    alt: "Premium rental car on open highway",
+    heading: "Intercity & Monthly Car Rental Plans",
+    description:
+      "Travel between cities or keep a dedicated car for the month. Signature offers flexible intercity packages and corporate monthly plans with reliable chauffeurs, transparent pricing, and 24/7 agent support across Pakistan.",
+    ctaLabel: "View Monthly Plans",
+    ctaHref: "/services/monthly-car-rental",
   },
 ] as const;
 

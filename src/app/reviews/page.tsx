@@ -1,24 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { GoogleReviewsSection } from "@/components/reviews/GoogleReviewsSection";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { brand } from "@/lib/brand";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
   title: "Reviews",
   description: "Customer reviews and testimonials for Signature Rent A Car across Pakistan.",
   path: "/reviews",
-  keywords: ["car rental reviews", "Signature Rent A Car testimonials"],
+  keywords: ["car rental reviews", "Signature Rent A Car testimonials", "Google reviews"],
 });
-
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuD0KMKhRNrVTWjs6lo2c5IpQiTRMm4yN05WhPyEApAC8nEZH_q-Xki_olgfUckmoavNUnXYFxnIpnhl_U15wSjcpsjixHrbxZMT2JI9skG4qoQOqbNavHQBNGr34B4OtJuKMRFwUgj7FV-T9uHItfApXOYv57c_f6LILs-v5KvfcqETwMgtok1RXunj_QYj8tpmVm781mZeFaDy_PvDAM5hoa3PRts2nfsmN3Th-t1_0y1Aza-JdutX";
-
-const FEATURED_IMAGE =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBCiCdpmNPgWu1RLbTSrtTecjjP7BZFxMt2wDWnClnja6XQW0-7ec0ihnUHota9y6PLfcEfsxrAMriNZ-TFrHZwkaPUY541-CUIOjEMFToDY2M7eaENE0M7Cp_KegBT3UkuT-DMvqlQaL9NHJpB1K86vXpjZOlqDnjw0DwTJWcOqyPF2_Q7yalBQkqZg2_B3bQFyTIOo1eib0GCJFmyDk5UL_LpZ1g_1EaiFDOZvcCARNur6YHTok-o";
 
 const STATS = [
   { icon: "stars", value: "4.9/5", label: "Average Rating" },
@@ -27,100 +25,95 @@ const STATS = [
   { icon: "location_city", value: "12+", label: "Cities Served" },
 ];
 
-const REVIEWS = [
-  {
-    name: "Sarah Jenkins",
-    location: "London, UK",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD-jH65fFHbwxazcRaJoXnjpigOC5mkNfdl-JCt4-yEaLUcT2NoiKAoZ3EWR3PKQ1qdDMlDFCBcPHT0xAFVhlc8BC0vvtBHBMwZFDah2cqsS8a32r6koYMrb-jsKeXWvmU2Wf06CcF3K71eRXBwOn6e6UayvzMvleBVHvmqQC0KWPchrAHhsc-mOPv4yhGzfGT5vRF4q8XiCGAOkWjqmMOut7IN01DH6s16bvXhtUPZsUV8VEqkDzCb",
-    quote:
-      "Incredible attention to detail. I needed a chauffeur-driven Rolls Royce for a gala, and the service was impeccable. Professional and punctual.",
-    rented: "Rented: Rolls Royce Ghost",
-  },
-  {
-    name: "Marcus Chen",
-    location: "Singapore",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBBD54XqtGHkbo4g4zNUrmodU-6YdgmYlyKUVgq7TyMfo6KlFeydq-nYKTeZg2wamx_hehkH0jy7T6jdtUCpA2gESjFJOzB2qv67sDlS0I4nMtPyEQv8M5W5gdHaC4NG_vvpyMgk81A_omTl_xRLM_1u0cctkK61mlVsiXRv7nWPsKOJ_rPUiYKR85lI3r0S7LhpveEKIbXIcM3L-zvQGa-gHnUVkFtL_2pHc-swyxffdTKlRhDDQVr",
-    quote:
-      "The Porsche 911 GT3 was in mint condition. The delivery was right on time at my hotel. Truly a premium experience for car enthusiasts.",
-    rented: "Rented: Porsche 911 GT3",
-  },
-  {
-    name: "Elena Rodriguez",
-    location: "Madrid, Spain",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBn0DsNeEZCHYmAmI82noo3Zh7NUkEiBW_6eCigHvgvykOvlTkfyliZkAHmxg5hUglA5JO1vD5kUClDEBvmNBcJkUhRtROFCLsFzM_diRKSRv6TR_9IDR9Q6NWNoRHguI3oiLrK7oo9qHH9KUNDl3A36ejimt-D7LvJU-JTTuTralOjJ6OANsqG5Q0AXJUmalIUIM5UxLCeWnJwxbWa-t_yFMpGwZTgI-h6xX4d9sMpzM8kqwUDSeMj",
-    quote:
-      "Best car rental service in the city. The Range Rover was perfect for our family mountain retreat. Luxurious, clean, and powerful.",
-    rented: "Rented: Range Rover Autobiography",
-  },
-  {
-    name: "Bilal Aslam",
-    location: "Islamabad, Pakistan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC7JEVuwNoVXmUgTPjzQ6AlK4p2DSLM9JmzzzLCOYK2qECyGQp_lfzuByd7St9d-SpaOhWC6bXWPLykbjFGi7-_z9jiRce3k50XGTtbm1r_jgCyrcEaGPiPy8j4sC-x9ifhD7rbdKxEkFFQJ_71H0b83oh2S8reeXn6XieGR70lMO7j1HUzbYo67SUD3rs-4OMMFVd0LrrJUPPW-dHbxXjNV7uv_T5KOW0X-gbULQDZAczUN31wAVGr",
-    quote:
-      "Booked a monthly corporate lease for our sales team. Invoicing was simple, the fleet was reliable, and support was always a WhatsApp message away.",
-    rented: "Rented: Corporate Sedan Fleet",
-  },
-  {
-    name: "Ayesha Malik",
-    location: "Lahore, Pakistan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDkhJ8xVigWRxdITDWuF9wO4gF-nEWyT0_A1Ae0P3S_p5vySH_HUItr5yCnZFMDgEA63U49wbUzop4CqsestBI9sH9qL2CiXsLCJfl_fyAw6BhSjL9sawAdh5gTlwCIu57jN_jhRyqdlr7uytlAy83-yyhpdrK_SUvIna3vpY95T0SEBtmsWgLhcFMrPvI3hjavwyO3cg1Au58O0LKaWHhtf-zVrPp1WD_H4-_lhliO2HJs8v7rMwgk",
-    quote:
-      "Our wedding convoy was flawless — three decorated cars arrived on time, spotless, and the drivers were incredibly courteous all day.",
-    rented: "Rented: Wedding Car Package",
-  },
-  {
-    name: "Usman Tariq",
-    location: "Hunza, Pakistan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD3yi3-6EYniRfyW6rYApkWKB49Sfy_R3CMb8OOyrQMsHKMjBVaiIxMUJ_XID05A48V5wtvs53OcaUOc57yQvz5oetAO7Od1pFQNeybIrM2MdSBrvfh5mjpLKEgaFNIGyykXQ7x85zUxikcZcjEyFrnrG3-tNUjYdjqLcRMuArYHRpw6vhuDjOk9kg5EXEx8HJVnOtWjDGaTDxUnSECUd7BM7RL4ww3KBQL5677sMw00unpuP_3EJX4",
-    quote:
-      "Rented a 4x4 for our Hunza and Skardu circuit. The vehicle handled the mountain passes with ease and the driver knew every rest stop along the way.",
-    rented: "Rented: 4x4 SUV",
-  },
-];
-
 const PLATFORM_RATINGS = [
   { icon: "reviews", value: "4.9/5", label: "Google Reviews" },
   { icon: "share", value: "62%", label: "WhatsApp Referrals" },
   { icon: "repeat", value: "78%", label: "Repeat Clients" },
 ];
 
-const VIDEO_TESTIMONIALS = [
+const WHY_CLIENTS = [
   {
-    name: "David's Weekend Escape",
-    car: "Bentley Continental GT",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAlWOlOtXqryy0vSVM80bM_LdZsIsHLILjtSe-SE8JHlaaU7R-bpaKUfvK4DGZbSMEuoxQX31IvSAxgqUKk6iOQJsYE2AegRUgHvYJhlBHjJlJ_2gUlcycISAhoijc82AK9bC3tP1b3onlAXmXP4OZAN2dUfC4YaRWDhPXh3nprimOMJg6ez-FRuy0wciIcl37WerZMPbQn7JNlMpT4twGUya5ZjO6y2RvKPfNXFvDbmCNz7yNaIZdx",
+    icon: "verified_user",
+    title: "Verified Trips Only",
+    text: "Every review comes from a confirmed Signature booking — no anonymous fluff.",
   },
   {
-    name: "Sophia's Business Trip",
-    car: "Mercedes-Benz S-Class",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCwOeLUXZOq9qJf7hVierud0NcQiT2VHU_FPCcpGgXQ9BV-z3LvBWeOtcBT91TI8zSGZ7sG1Xg-ZH_HMYfTgrasTHkvYNcpzlXakjBkI7KajxPAPQBuiOgGcA7w0oHS54uNAAs3rYVH4TMh8HRAvKqsaqHEGzZ8pWBJ0Y2JkG6on3kVyXqijbu7OngaB5UqCUnJcY0kacaqLpsVl7xF-m3FDGpb-Ux1NiYy1Lw-vExmtQwx3SHUujCq",
+    icon: "support_agent",
+    title: "24/7 Agent Support",
+    text: "Clients praise fast WhatsApp replies and live agent help before, during, and after the trip.",
   },
   {
-    name: "The Executive Experience",
-    car: "BMW 7 Series",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAiMjtlqzuhkeZVPwq55VAosnhsnMYaZoJ50IAFTU9-VmsKVoh3ZkJqsbZsXg0ksytcbHFUgyUwF0SBT3xYskNsvsTyzIU-7hJ4zzWhj6mxpKviGcIvpBcsrK3TwO0W0wS2dPga73fKW7X9FGrROpL-aB3qQim2CiSWk9QAQekkQPgyPUh_7lh2Rlke0sxcKKTJCtX1LXcLfhvF_VGeBofDKgUrbf2ggpGyzpttG004YUuy792XX6TZ",
+    icon: "directions_car",
+    title: "Clean, Inspected Fleet",
+    text: "From Corolla to luxury SUVs, vehicles arrive spotless and road-ready.",
+  },
+  {
+    icon: "schedule",
+    title: "On-Time Chauffeurs",
+    text: "Punctual pickups for airports, weddings, corporate meetings, and outstation travel.",
   },
 ];
 
-function Stars({ className = "text-secondary" }: { className?: string }) {
+const POPULAR_TRIPS = [
+  {
+    title: "Islamabad Airport Transfers",
+    text: "Meet-and-greet pickups with flight tracking and luggage help.",
+    href: "/services/airport-pick-drop",
+    icon: "flight_land",
+  },
+  {
+    title: "Wedding & Event Fleets",
+    text: "Decorated convoys for baraat, walima, and VIP guest transport.",
+    href: "/services/wedding-car-rental",
+    icon: "celebration",
+  },
+  {
+    title: "Northern Area SUVs",
+    text: "4x4 rentals for Murree, Naran, Hunza, and Skardu routes.",
+    href: "/cars",
+    icon: "terrain",
+  },
+  {
+    title: "Corporate Monthly Plans",
+    text: "Reliable staff cars with invoicing and preferred chauffeurs.",
+    href: "/services/corporate-car-rental",
+    icon: "business_center",
+  },
+];
+
+function GoogleMark({ className = "h-5 w-5" }: { className?: string }) {
   return (
-    <div className="flex gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+      />
+    </svg>
+  );
+}
+
+function Stars({ count = 5 }: { count?: number }) {
+  return (
+    <div className="flex shrink-0 items-center gap-0.5">
+      {Array.from({ length: 5 }).map((_, index) => (
         <span
-          key={i}
-          className={`material-symbols-outlined text-sm ${className}`}
+          key={index}
+          className="material-symbols-outlined text-[16px] text-[#FBBC04] sm:text-[18px]"
           style={{ fontVariationSettings: "'FILL' 1" }}
         >
-          star
+          {index < count ? "star" : "star_border"}
         </span>
       ))}
     </div>
@@ -129,12 +122,12 @@ function Stars({ className = "text-secondary" }: { className?: string }) {
 
 export default function ReviewsPage() {
   return (
-    <>
-      <header className="relative flex min-h-[320px] items-center justify-center overflow-hidden py-16 sm:min-h-[420px] sm:py-20 lg:min-h-[520px]">
+    <div className="overflow-x-hidden">
+      <header className="relative flex min-h-[280px] items-center justify-center overflow-hidden py-12 sm:min-h-[400px] sm:py-20 lg:min-h-[520px]">
         <Image src={HERO} alt="Luxury sedan on a city street at twilight" fill priority className="object-cover" sizes="100vw" />
         <div className="absolute inset-0 bg-primary/50" />
-        <div className="relative z-10 px-4 text-center">
-          <nav className="mb-4 flex justify-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-white/80 sm:mb-6 sm:text-xs">
+        <div className="relative z-10 w-full px-4 text-center">
+          <nav className="mb-3 flex justify-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-white/80 sm:mb-6 sm:text-xs">
             <Link href="/" className="hover:text-white">
               Home
             </Link>
@@ -144,207 +137,212 @@ export default function ReviewsPage() {
           <h1 className="hero-shadow animate-fade-up mx-auto max-w-3xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             What Our Customers Say
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base lg:text-lg">
-            Experience the standard of excellence that keeps our elite clientele returning for every journey.
+          <p className="animate-fade-up-delay mx-auto mt-3 max-w-2xl text-sm text-white/80 sm:mt-4 sm:text-base lg:text-lg">
+            Real Google reviews from clients who booked Signature for airport transfers, weddings, corporate travel,
+            and northern trips.
           </p>
+          <div className="animate-fade-up-delay-2 mx-auto mt-5 flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full bg-white/15 px-3 py-2 backdrop-blur-md sm:mt-6 sm:inline-flex sm:gap-2 sm:px-4">
+            <GoogleMark className="h-4 w-4 sm:h-5 sm:w-5" />
+            <Stars count={5} />
+            <span className="text-xs font-semibold text-white sm:text-sm">4.9 · 895 reviews</span>
+          </div>
         </div>
       </header>
 
-      <Container className="relative z-20 -mt-16 sm:-mt-20">
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-          {STATS.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-2xl bg-white/90 p-5 text-center shadow-[0_10px_30px_rgba(14,28,46,0.08)] backdrop-blur transition hover:-translate-y-1 sm:p-8"
-            >
-              <span className="material-symbols-outlined mb-3 text-3xl text-secondary sm:mb-4 sm:text-4xl">{item.icon}</span>
-              <h3 className="font-heading text-2xl font-bold text-primary sm:text-3xl">{item.value}</h3>
-              <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-muted sm:text-xs">{item.label}</p>
-            </div>
-          ))}
-        </div>
-      </Container>
-
-      <Container className="mt-8 sm:mt-10">
-        <div className="flex flex-col items-center justify-center gap-6 rounded-2xl border border-primary/8 bg-white py-6 sm:flex-row sm:gap-12 sm:py-7">
-          {PLATFORM_RATINGS.map((item) => (
-            <div key={item.label} className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-2xl text-secondary">{item.icon}</span>
-              <div>
-                <span className="font-heading text-lg font-bold text-primary">{item.value}</span>
-                <span className="ml-2 text-xs font-semibold uppercase tracking-wide text-muted">{item.label}</span>
+      <Container className="relative z-20 -mt-12 sm:-mt-16 lg:-mt-20">
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+          {STATS.map((item, index) => (
+            <AnimateIn key={item.label} delay={index * 80}>
+              <div className="rounded-xl bg-white/95 p-4 text-center shadow-[0_10px_30px_rgba(14,28,46,0.08)] backdrop-blur transition hover:-translate-y-1 sm:rounded-2xl sm:p-6 lg:p-8">
+                <span className="material-symbols-outlined mb-2 text-2xl text-secondary sm:mb-3 sm:text-3xl lg:mb-4 lg:text-4xl">
+                  {item.icon}
+                </span>
+                <h3 className="font-heading text-xl font-bold text-primary sm:text-2xl lg:text-3xl">{item.value}</h3>
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-muted sm:text-xs">
+                  {item.label}
+                </p>
               </div>
-            </div>
+            </AnimateIn>
           ))}
         </div>
       </Container>
 
-      <section className="py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <div className="flex flex-col overflow-hidden rounded-2xl bg-navy text-white shadow-2xl lg:flex-row">
-            <div className="relative h-72 lg:h-auto lg:w-1/2">
-              <Image src={FEATURED_IMAGE} alt="Entrepreneur beside a luxury supercar" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-            </div>
-            <div className="flex flex-col justify-center p-8 sm:p-12 lg:w-1/2 lg:p-16">
-              <Stars className="text-accent" />
-              <blockquote className="mt-6 font-heading text-2xl italic leading-snug text-white sm:text-3xl">
-                &ldquo;The level of service provided by Signature is unparalleled. From the seamless booking process to
-                the pristine condition of the Lamborghini Urus, every detail was handled with absolute precision.&rdquo;
-              </blockquote>
-              <div className="mt-8 flex items-center gap-4">
-                <div className="h-1 w-12 bg-accent" />
-                <div>
-                  <p className="font-heading text-lg font-semibold">Alexander Thorne</p>
-                  <p className="text-sm text-white/60">CEO, Nexus Enterprises | Rented: Lamborghini Urus</p>
+      <Container className="mt-6 sm:mt-8 lg:mt-10">
+        <AnimateIn delay={120}>
+          <div className="grid grid-cols-1 gap-4 rounded-2xl border border-primary/8 bg-white px-4 py-5 sm:grid-cols-3 sm:gap-6 sm:px-6 sm:py-7">
+            {PLATFORM_RATINGS.map((item) => (
+              <div key={item.label} className="flex items-center justify-center gap-3 sm:justify-start">
+                <span className="material-symbols-outlined shrink-0 text-2xl text-secondary">{item.icon}</span>
+                <div className="min-w-0 text-left">
+                  <p className="font-heading text-base font-bold text-primary sm:text-lg">{item.value}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-muted sm:text-xs">
+                    {item.label}
+                  </p>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
+        </AnimateIn>
+      </Container>
+
+      <section className="bg-[#f7f8fa] py-12 sm:py-20 lg:py-[100px]">
+        <Container>
+          <GoogleReviewsSection />
         </Container>
       </section>
 
-      <section className="bg-[#f3f4f5] py-16 sm:py-24 lg:py-[100px]">
+      <section className="py-12 sm:py-20 lg:py-[100px]">
         <Container>
-          <div className="mb-12 flex flex-col justify-between gap-6 sm:mb-16 sm:flex-row sm:items-end">
-            <div>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">Real Journeys, Real Stories</h2>
-              <p className="mt-4 max-w-xl text-muted sm:text-lg">
-                Join the thousands of satisfied clients who trust us with their most important travel needs.
-              </p>
+          <AnimateIn>
+            <div className="mb-8 text-center sm:mb-12">
+              <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary sm:mb-3 sm:text-xs">
+                Why Clients Return
+              </span>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+                What Reviewers Mention Most
+              </h2>
             </div>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 self-start rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95 sm:self-auto"
-            >
-              Share Your Experience
-              <span className="material-symbols-outlined">rate_review</span>
-            </Link>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {REVIEWS.map((review, index) => (
-              <AnimateIn key={review.name} delay={Math.min(index, 5) * 70}>
-              <div
-                className="group h-full rounded-2xl border border-primary/8 bg-white p-8 shadow-sm transition hover:border-secondary/40"
-              >
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-md">
-                    <Image src={review.image} alt={review.name} fill className="object-cover" sizes="64px" />
-                  </div>
-                  <div>
-                    <h4 className="font-heading text-lg font-bold">{review.name}</h4>
-                    <p className="text-xs text-muted">{review.location}</p>
-                  </div>
+          </AnimateIn>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+            {WHY_CLIENTS.map((item, index) => (
+              <AnimateIn key={item.title} delay={index * 90}>
+                <div className="h-full rounded-2xl border border-primary/8 bg-white p-5 transition hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(0,31,38,0.08)] sm:p-6">
+                  <span className="material-symbols-outlined text-[26px] text-secondary sm:text-[28px]">
+                    {item.icon}
+                  </span>
+                  <h3 className="mt-3 font-heading text-base font-semibold text-primary sm:mt-4 sm:text-lg">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{item.text}</p>
                 </div>
-                <div className="mb-4">
-                  <Stars />
-                </div>
-                <p className="mb-6 leading-relaxed text-primary/80">&ldquo;{review.quote}&rdquo;</p>
-                <div className="flex items-center justify-between border-t border-primary/8 pt-6">
-                  <span className="text-xs font-semibold text-muted">{review.rented}</span>
-                  <span className="material-symbols-outlined text-primary/30">verified_user</span>
-                </div>
-              </div>
               </AnimateIn>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="py-16 sm:py-24 lg:py-[100px]">
+      <section className="bg-[#f3f4f5] py-12 sm:py-20 lg:py-[100px]">
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-                Transparency
+          <AnimateIn>
+            <div className="mb-8 text-center sm:mb-12">
+              <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary sm:mb-3 sm:text-xs">
+                Popular With Reviewers
               </span>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                How We Collect Feedback
+              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+                Trips Clients Recommend
               </h2>
-              <p className="mt-5 text-base text-muted sm:text-lg">
-                Every review on this page comes from a verified booking. After each trip, our concierge team
-                follows up by WhatsApp or phone to ask a few short questions, and we invite clients to leave a
-                public rating on Google. We don&apos;t edit or filter quotes — only lightly trim them for
-                length — so what you read here reflects real experiences with our fleet and drivers.
-              </p>
             </div>
-            <div className="grid gap-6 sm:grid-cols-3">
-              <div className="rounded-2xl border border-primary/8 bg-[#f3f4f5] p-6 text-center">
-                <span className="material-symbols-outlined mb-3 text-3xl text-secondary">task_alt</span>
-                <p className="text-sm font-semibold text-primary">Verified Bookings Only</p>
-              </div>
-              <div className="rounded-2xl border border-primary/8 bg-[#f3f4f5] p-6 text-center">
-                <span className="material-symbols-outlined mb-3 text-3xl text-secondary">forum</span>
-                <p className="text-sm font-semibold text-primary">Post-Trip Follow-Up</p>
-              </div>
-              <div className="rounded-2xl border border-primary/8 bg-[#f3f4f5] p-6 text-center">
-                <span className="material-symbols-outlined mb-3 text-3xl text-secondary">edit_off</span>
-                <p className="text-sm font-semibold text-primary">Unedited Quotes</p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-[#f3f4f5] py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <h2 className="mb-12 text-center font-heading text-3xl font-semibold tracking-tight sm:mb-16 sm:text-4xl">
-            Video Testimonials
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {VIDEO_TESTIMONIALS.map((video) => (
-              <div key={video.name} className="group relative aspect-video overflow-hidden rounded-2xl bg-primary">
-                <Image
-                  src={video.image}
-                  alt={video.name}
-                  fill
-                  className="object-cover opacity-60 transition duration-700 group-hover:scale-110"
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md transition group-hover:bg-accent group-hover:text-primary sm:h-20 sm:w-20">
-                    <span className="material-symbols-outlined text-3xl text-white group-hover:text-primary sm:text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      play_arrow
+          </AnimateIn>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+            {POPULAR_TRIPS.map((item, index) => (
+              <AnimateIn key={item.title} delay={index * 90}>
+                <Link
+                  href={item.href}
+                  className="group flex h-full flex-col rounded-2xl border border-primary/8 bg-white p-5 transition hover:-translate-y-1 hover:border-secondary/30 hover:shadow-[0_12px_30px_rgba(0,31,38,0.08)] sm:p-6"
+                >
+                  <span className="material-symbols-outlined text-[26px] text-secondary transition group-hover:scale-110 sm:text-[28px]">
+                    {item.icon}
+                  </span>
+                  <h3 className="mt-3 font-heading text-base font-semibold text-primary sm:mt-4 sm:text-lg">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.text}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-secondary">
+                    Explore
+                    <span className="material-symbols-outlined text-[16px] transition group-hover:translate-x-1">
+                      arrow_forward
                     </span>
-                  </div>
-                </div>
-                <div className="absolute bottom-5 left-5 text-white">
-                  <p className="text-sm font-semibold">{video.name}</p>
-                  <p className="text-xs text-white/70">{video.car}</p>
-                </div>
-              </div>
+                  </span>
+                </Link>
+              </AnimateIn>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+      <section className="py-12 sm:py-20 lg:py-[100px]">
         <Container>
-          <div className="relative overflow-hidden rounded-[28px] bg-primary px-6 py-14 text-center sm:rounded-[40px] sm:px-12 sm:py-20 md:px-24">
-            <div className="relative z-10">
-              <h2 className="font-heading text-3xl font-semibold text-white sm:text-4xl">Ready for a Signature Experience?</h2>
-              <p className="mx-auto mt-6 max-w-2xl text-base text-white/70 sm:text-lg">
-                Don&apos;t just take their word for it. Book your premium vehicle today and discover why we are the
-                preferred choice for luxury rentals.
-              </p>
-              <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-                <ButtonLink href="/contact" variant="accent" size="lg">
-                  Book Your Premium Ride Today
-                </ButtonLink>
-                <ButtonLink
-                  href="/cars"
-                  variant="outline"
-                  size="lg"
-                  className="border-white/30 !text-white hover:border-secondary hover:!text-secondary"
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <AnimateIn>
+              <div>
+                <span className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary sm:mb-4 sm:text-xs">
+                  Transparency
+                </span>
+                <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+                  How We Collect Feedback
+                </h2>
+                <p className="mt-4 text-sm text-muted sm:mt-5 sm:text-base lg:text-lg">
+                  Every review on this page comes from a verified booking. After each trip, our agent team follows up
+                  by WhatsApp or phone and invites clients to leave a public rating on Google. We don&apos;t edit or
+                  filter quotes — only lightly trim them for length — so what you read reflects real experiences with
+                  our fleet and chauffeurs.
+                </p>
+                <a
+                  href={`https://wa.me/${brand.whatsapp}?text=${encodeURIComponent("Hi Signature, I'd like to share feedback about my recent booking.")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95 sm:mt-6 sm:w-auto"
                 >
-                  View Fleet
-                </ButtonLink>
+                  <span className="material-symbols-outlined text-[18px]">rate_review</span>
+                  Share Your Experience
+                </a>
               </div>
+            </AnimateIn>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
+              {[
+                { icon: "task_alt", title: "Verified Bookings Only" },
+                { icon: "forum", title: "Post-Trip Follow-Up" },
+                { icon: "edit_off", title: "Unedited Quotes" },
+              ].map((item, index) => (
+                <AnimateIn key={item.title} delay={index * 100}>
+                  <div className="rounded-2xl border border-primary/8 bg-[#f3f4f5] p-5 text-center transition hover:-translate-y-1 sm:p-6">
+                    <span className="material-symbols-outlined mb-2 text-3xl text-secondary sm:mb-3">{item.icon}</span>
+                    <p className="text-sm font-semibold text-primary">{item.title}</p>
+                  </div>
+                </AnimateIn>
+              ))}
             </div>
-            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-secondary/10 blur-3xl" />
-            <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
           </div>
         </Container>
       </section>
-    </>
+
+      <section className="px-4 pb-12 pt-4 sm:px-6 sm:pb-20 sm:pt-6 lg:px-8 lg:pb-24">
+        <Container>
+          <AnimateIn>
+            <div className="relative overflow-hidden rounded-[24px] bg-primary px-5 py-12 text-center sm:rounded-[40px] sm:px-12 sm:py-20 md:px-24">
+              <div className="relative z-10">
+                <div className="mb-4 inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full bg-white/10 px-3 py-2 sm:mb-5 sm:px-4">
+                  <GoogleMark className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Stars count={5} />
+                  <span className="text-xs font-semibold text-white sm:text-sm">4.9 on Google</span>
+                </div>
+                <h2 className="font-heading text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">
+                  Ready for a Signature Experience?
+                </h2>
+                <p className="mx-auto mt-4 max-w-2xl text-sm text-white/70 sm:mt-6 sm:text-base lg:text-lg">
+                  Don&apos;t just take their word for it. Book your premium vehicle today and discover why clients
+                  rate us 4.9 on Google.
+                </p>
+                <div className="mt-8 flex flex-col justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
+                  <ButtonLink href="/contact" variant="accent" size="lg" className="w-full sm:w-auto">
+                    Book Your Premium Ride Today
+                  </ButtonLink>
+                  <ButtonLink
+                    href="/cars"
+                    variant="outline"
+                    size="lg"
+                    className="w-full border-white/30 !text-white hover:border-secondary hover:!text-secondary sm:w-auto"
+                  >
+                    View Fleet
+                  </ButtonLink>
+                </div>
+              </div>
+              <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-secondary/10 blur-3xl" />
+              <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+            </div>
+          </AnimateIn>
+        </Container>
+      </section>
+    </div>
   );
 }

@@ -180,6 +180,9 @@ export default function AboutPage() {
           <h1 className="hero-shadow animate-fade-up mx-auto max-w-4xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Crafting Journeys with Elegance
           </h1>
+          <p className="animate-fade-up-delay mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base lg:text-lg">
+            Premium chauffeur-driven car rental across Pakistan since 2010.
+          </p>
         </div>
       </header>
 
@@ -278,23 +281,30 @@ export default function AboutPage() {
 
       <section className="border-b border-primary/8 bg-white py-10 sm:py-12">
         <Container>
-          <p className="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted">
-            Proudly Serving
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {PRIMARY_CITIES.map((city) => (
-              <span key={city.slug} className="text-sm font-semibold text-primary/70 sm:text-base">
-                {city.name}
-              </span>
-            ))}
-          </div>
+          <AnimateIn>
+            <p className="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+              Proudly Serving
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-8">
+              {PRIMARY_CITIES.map((city, index) => (
+                <AnimateIn key={city.slug} delay={index * 40}>
+                  <Link
+                    href={`/rent-a-car/${city.slug}`}
+                    className="text-sm font-semibold text-primary/70 transition hover:text-secondary hover:underline hover:underline-offset-4 sm:text-base"
+                  >
+                    {city.name}
+                  </Link>
+                </AnimateIn>
+              ))}
+            </div>
+          </AnimateIn>
         </Container>
       </section>
 
       <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
         <Container>
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="rounded-3xl border border-primary/10 bg-white/70 p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)] backdrop-blur md:col-span-2 sm:p-12">
+            <AnimateIn className="rounded-3xl border border-primary/10 bg-white/70 p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)] backdrop-blur md:col-span-2 sm:p-12">
               <span
                 className="material-symbols-outlined mb-6 text-4xl text-secondary"
                 style={{ fontVariationSettings: "'FILL' 1" }}
@@ -312,8 +322,8 @@ export default function AboutPage() {
                   Excellence in Motion
                 </span>
               </div>
-            </div>
-            <div className="flex flex-col justify-center rounded-3xl bg-navy p-8 text-white sm:p-12">
+            </AnimateIn>
+            <AnimateIn delay={120} className="flex flex-col justify-center rounded-3xl bg-navy p-8 text-white sm:p-12">
               <span
                 className="material-symbols-outlined mb-6 text-4xl text-accent"
                 style={{ fontVariationSettings: "'FILL' 1" }}
@@ -325,31 +335,32 @@ export default function AboutPage() {
                 To be the benchmark for luxury mobility in Pakistan, where innovation meets heritage, and
                 every client journey is a masterpiece of comfort and prestige.
               </p>
-            </div>
+            </AnimateIn>
           </div>
         </Container>
       </section>
 
       <section className="py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-12 text-center sm:mb-16">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              The Pillars of Our Success
-            </h2>
-            <div className="mx-auto mt-4 h-1 w-12 bg-secondary" />
-          </div>
+          <AnimateIn>
+            <div className="mb-12 text-center sm:mb-16">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                The Pillars of Our Success
+              </h2>
+              <div className="mx-auto mt-4 h-1 w-12 bg-secondary" />
+            </div>
+          </AnimateIn>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {VALUES.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition hover:-translate-y-1 sm:p-8"
-              >
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-[#f3f4f5]">
-                  <span className="material-symbols-outlined text-primary">{item.icon}</span>
+            {VALUES.map((item, index) => (
+              <AnimateIn key={item.title} delay={index * 80}>
+                <div className="h-full rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition hover:-translate-y-1 sm:p-8">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-[#f3f4f5]">
+                    <span className="material-symbols-outlined text-primary">{item.icon}</span>
+                  </div>
+                  <h4 className="font-heading text-lg font-semibold sm:text-xl">{item.title}</h4>
+                  <p className="mt-3 text-sm text-muted">{item.text}</p>
                 </div>
-                <h4 className="font-heading text-lg font-semibold sm:text-xl">{item.title}</h4>
-                <p className="mt-3 text-sm text-muted">{item.text}</p>
-              </div>
+              </AnimateIn>
             ))}
           </div>
         </Container>
@@ -357,26 +368,30 @@ export default function AboutPage() {
 
       <section className="bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-12 text-center sm:mb-16">
-            <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              Our Promise
-            </span>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Guarantees You Can Count On
-            </h2>
-          </div>
+          <AnimateIn>
+            <div className="mb-12 text-center sm:mb-16">
+              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                Our Promise
+              </span>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Guarantees You Can Count On
+              </h2>
+            </div>
+          </AnimateIn>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {GUARANTEES.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center sm:p-8">
-                <span
-                  className="material-symbols-outlined mb-4 inline-flex text-4xl text-accent"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  {item.icon}
-                </span>
-                <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
-                <p className="mt-2 text-sm text-white/55">{item.text}</p>
-              </div>
+            {GUARANTEES.map((item, index) => (
+              <AnimateIn key={item.title} delay={index * 80}>
+                <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 text-center transition hover:-translate-y-1 sm:p-8">
+                  <span
+                    className="material-symbols-outlined mb-4 inline-flex text-4xl text-accent"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    {item.icon}
+                  </span>
+                  <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
+                  <p className="mt-2 text-sm text-white/55">{item.text}</p>
+                </div>
+              </AnimateIn>
             ))}
           </div>
         </Container>
@@ -384,55 +399,65 @@ export default function AboutPage() {
 
       <section className="bg-primary py-16 text-white sm:py-24 lg:py-[100px]">
         <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          <div>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              The Signature Experience
-            </h2>
-            <div className="mt-10 space-y-10 sm:mt-12 sm:space-y-12">
-              {STEPS.map((step) => (
-                <div key={step.n} className="group flex gap-5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-secondary font-heading text-lg font-semibold text-secondary transition group-hover:bg-secondary group-hover:text-white">
-                    {step.n}
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold sm:text-xl">{step.title}</h5>
-                    <p className="mt-2 text-sm text-white/55 sm:text-base">{step.text}</p>
-                  </div>
-                </div>
-              ))}
+          <AnimateIn>
+            <div>
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                The Signature Experience
+              </h2>
+              <div className="mt-10 space-y-10 sm:mt-12 sm:space-y-12">
+                {STEPS.map((step, index) => (
+                  <AnimateIn key={step.n} delay={index * 100}>
+                    <div className="group flex gap-5">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-secondary font-heading text-lg font-semibold text-secondary transition group-hover:bg-secondary group-hover:text-white">
+                        {step.n}
+                      </div>
+                      <div>
+                        <h5 className="text-lg font-semibold sm:text-xl">{step.title}</h5>
+                        <p className="mt-2 text-sm text-white/55 sm:text-base">{step.text}</p>
+                      </div>
+                    </div>
+                  </AnimateIn>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="relative h-[400px] overflow-hidden rounded-3xl shadow-2xl sm:h-[520px] lg:h-[600px]">
-            <Image src={PROCESS} alt="Luxury key fob handover" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-          </div>
+          </AnimateIn>
+          <AnimateIn delay={150}>
+            <div className="relative h-[400px] overflow-hidden rounded-3xl shadow-2xl sm:h-[520px] lg:h-[600px]">
+              <Image src={PROCESS} alt="Luxury key fob handover" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+            </div>
+          </AnimateIn>
         </Container>
       </section>
 
       <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">
         <Container>
-          <div className="mb-12 text-center sm:mb-16">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Meet the Visionaries
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">
-              The experts driving our commitment to excellence and innovation.
-            </p>
-          </div>
+          <AnimateIn>
+            <div className="mb-12 text-center sm:mb-16">
+              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+                Meet the Visionaries
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">
+                The experts driving our commitment to excellence and innovation.
+              </p>
+            </div>
+          </AnimateIn>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM.map((member) => (
-              <div key={member.name} className="group">
-                <div className="relative mb-5 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                    sizes="(max-width: 640px) 100vw, 25vw"
-                  />
+            {TEAM.map((member, index) => (
+              <AnimateIn key={member.name} delay={index * 90}>
+                <div className="group">
+                  <div className="relative mb-5 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                    />
+                  </div>
+                  <h5 className="font-heading text-lg font-semibold sm:text-xl">{member.name}</h5>
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-secondary">{member.role}</p>
                 </div>
-                <h5 className="font-heading text-lg font-semibold sm:text-xl">{member.name}</h5>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-secondary">{member.role}</p>
-              </div>
+              </AnimateIn>
             ))}
           </div>
         </Container>
@@ -440,33 +465,35 @@ export default function AboutPage() {
 
       <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <Container>
-          <div className="relative overflow-hidden rounded-[28px] bg-accent px-6 py-14 text-center sm:rounded-[40px] sm:px-12 sm:py-20 md:px-24">
-            <div className="relative z-10">
-              <h2 className="font-heading text-3xl font-semibold text-primary sm:text-4xl">
-                Ready to Experience True Distinction?
-              </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-base text-[#394d00] sm:text-lg">
-                Your journey deserves a signature touch. Explore our fleet today and redefine your standards
-                of travel.
-              </p>
-              <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/cars"
-                  className="rounded-xl bg-primary px-10 py-4 text-sm font-semibold !text-white transition hover:scale-105"
-                >
-                  Browse Collection
-                </Link>
-                <Link
-                  href="/contact"
-                  className="rounded-xl border-2 border-primary px-10 py-4 text-sm font-semibold text-primary transition hover:bg-primary hover:!text-white"
-                >
-                  Contact Concierge
-                </Link>
+          <AnimateIn>
+            <div className="relative overflow-hidden rounded-[28px] bg-accent px-6 py-14 text-center sm:rounded-[40px] sm:px-12 sm:py-20 md:px-24">
+              <div className="relative z-10">
+                <h2 className="animate-fade-up font-heading text-3xl font-semibold text-primary sm:text-4xl">
+                  Ready to Experience True Distinction?
+                </h2>
+                <p className="animate-fade-up-delay mx-auto mt-6 max-w-2xl text-base text-[#394d00] sm:text-lg">
+                  Your journey deserves a signature touch. Explore our fleet today and redefine your standards
+                  of travel.
+                </p>
+                <div className="animate-fade-up-delay-2 mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+                  <Link
+                    href="/cars"
+                    className="rounded-xl bg-primary px-10 py-4 text-sm font-semibold !text-white transition hover:scale-105"
+                  >
+                    Browse Collection
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="rounded-xl border-2 border-primary px-10 py-4 text-sm font-semibold text-primary transition hover:bg-primary hover:!text-white"
+                  >
+                    Contact Concierge
+                  </Link>
+                </div>
               </div>
+              <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
+              <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-white/40 blur-3xl" />
             </div>
-            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-            <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-white/40 blur-3xl" />
-          </div>
+          </AnimateIn>
         </Container>
       </section>
     </>

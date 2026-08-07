@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -24,7 +25,7 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
 
   return (
     <div>
-      <div className="flex gap-6 overflow-x-auto border-b border-primary/10 pb-1 sm:gap-8">
+      <div className="-mx-1 flex gap-5 overflow-x-auto border-b border-primary/10 px-1 pb-1 [scrollbar-width:none] sm:gap-8 [&::-webkit-scrollbar]:hidden">
         {categories.map((category) => {
           const active = category.slug === activeCategory;
           return (
@@ -33,7 +34,7 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
               type="button"
               onClick={() => selectCategory(category.slug)}
               className={cn(
-                "whitespace-nowrap border-b-2 pb-4 text-sm font-semibold transition",
+                "whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition sm:pb-4 sm:text-sm",
                 active ? "border-secondary text-secondary" : "border-transparent text-muted hover:text-secondary",
               )}
             >
@@ -43,47 +44,59 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
         })}
       </div>
 
-      <div className="mt-8 space-y-4">
-        {filtered.map((item, index) => {
-          const open = openIndex === index;
-          return (
-            <div
-              key={item.question}
-              className={cn(
-                "overflow-hidden rounded-xl border border-primary/8 bg-white transition",
-                open && "shadow-[0_10px_30px_rgba(0,31,38,0.06)]",
-              )}
-            >
-              <button
-                type="button"
-                onClick={() => setOpenIndex(open ? -1 : index)}
-                className="flex w-full items-center justify-between gap-4 p-6 text-left"
-                aria-expanded={open}
-              >
-                <span className="font-heading text-base text-primary sm:text-lg">{item.question}</span>
-                <span
-                  className={cn(
-                    "material-symbols-outlined shrink-0 text-secondary transition-transform duration-300",
-                    open && "rotate-180",
-                  )}
-                >
-                  expand_more
-                </span>
-              </button>
-              <div
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+          className="mt-6 space-y-3 sm:mt-8 sm:space-y-4"
+        >
+          {filtered.map((item, index) => {
+            const open = openIndex === index;
+            return (
+              <motion.div
+                key={item.question}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.045, ease: "easeOut" }}
                 className={cn(
-                  "grid transition-all duration-300",
-                  open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+                  "overflow-hidden rounded-xl border border-primary/8 bg-white transition duration-300",
+                  open && "shadow-[0_10px_30px_rgba(0,31,38,0.06)]",
                 )}
               >
-                <div className="overflow-hidden">
-                  <p className="px-6 pb-6 text-sm leading-relaxed text-muted">{item.answer}</p>
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(open ? -1 : index)}
+                  className="flex w-full items-center justify-between gap-3 p-4 text-left sm:gap-4 sm:p-6"
+                  aria-expanded={open}
+                >
+                  <span className="font-heading text-sm text-primary sm:text-base lg:text-lg">{item.question}</span>
+                  <span
+                    className={cn(
+                      "material-symbols-outlined shrink-0 text-secondary transition-transform duration-300",
+                      open && "rotate-180",
+                    )}
+                  >
+                    expand_more
+                  </span>
+                </button>
+                <div
+                  className={cn(
+                    "grid transition-all duration-300 ease-out",
+                    open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+                  )}
+                >
+                  <div className="overflow-hidden">
+                    <p className="px-4 pb-4 text-sm leading-relaxed text-muted sm:px-6 sm:pb-6">{item.answer}</p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
