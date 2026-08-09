@@ -8,7 +8,7 @@ import { BlogFilters } from "@/components/blog/BlogFilters";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { Container } from "@/components/ui/Container";
 import { blogCategories } from "@/data";
-import { getStoredBlogPosts } from "@/lib/blog-storage";
+import { fetchFirebaseBlogPosts } from "@/lib/blog-firestore";
 import type { BlogPost } from "@/types";
 
 type BlogPageContentProps = {
@@ -31,7 +31,17 @@ export function BlogPageContent({ initialPosts }: BlogPageContentProps) {
   const [formOpen, setFormOpen] = useState(false);
 
   useEffect(() => {
-    setCustomPosts(getStoredBlogPosts());
+    let cancelled = false;
+    fetchFirebaseBlogPosts()
+      .then((items) => {
+        if (!cancelled) setCustomPosts(items);
+      })
+      .catch(() => {
+        if (!cancelled) setCustomPosts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const posts = useMemo(() => {

@@ -4,7 +4,7 @@ export const brand = {
   tagline: "Premium car rental across Pakistan",
   phone: "03299499996",
   whatsapp: "923299499996",
-  email: "info@signaturerentacar.com",
+  email: "info@signaturesrentacar.com",
   currency: "PKR",
   social: {
     facebook: "https://www.facebook.com/signaturesrentacar/",

@@ -1,6 +1,3 @@
-import type { BlogPost } from "@/types";
-
-const STORAGE_KEY = "signature-blog-posts";
 const AUTH_KEY = "signature-blog-admin";
 
 export const BLOG_ADMIN_EMAIL = "admin123@gmail.com";
@@ -14,49 +11,6 @@ export function slugify(title: string) {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .slice(0, 80);
-}
-
-export function getStoredBlogPosts(): BlogPost[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as BlogPost[];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
-export function saveStoredBlogPosts(posts: BlogPost[]) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-}
-
-/** Newest posts first. */
-export function addStoredBlogPost(post: BlogPost) {
-  const existing = getStoredBlogPosts();
-  const next = [post, ...existing.filter((item) => item.slug !== post.slug)];
-  saveStoredBlogPosts(next);
-  return next;
-}
-
-export function updateStoredBlogPost(slug: string, patch: Omit<BlogPost, "slug"> & { slug?: string }) {
-  const existing = getStoredBlogPosts();
-  const next = existing.map((item) =>
-    item.slug === slug ? { ...item, ...patch, slug: item.slug } : item,
-  );
-  saveStoredBlogPosts(next);
-  return next;
-}
-
-export function deleteStoredBlogPost(slug: string) {
-  const next = getStoredBlogPosts().filter((item) => item.slug !== slug);
-  saveStoredBlogPosts(next);
-  return next;
-}
-
-export function getStoredBlogPost(slug: string) {
-  return getStoredBlogPosts().find((post) => post.slug === slug);
 }
 
 export function formatBlogDate(date = new Date()) {

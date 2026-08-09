@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BlogPostContent } from "@/components/blog/BlogPostContent";
-import { getStoredBlogPost } from "@/lib/blog-storage";
+import { fetchFirebaseBlogPost } from "@/lib/blog-firestore";
 import type { BlogPost } from "@/types";
 
 type BlogPostClientFallbackProps = {
@@ -14,7 +14,17 @@ export function BlogPostClientFallback({ slug }: BlogPostClientFallbackProps) {
   const [post, setPost] = useState<BlogPost | null | undefined>(undefined);
 
   useEffect(() => {
-    setPost(getStoredBlogPost(slug) ?? null);
+    let cancelled = false;
+    fetchFirebaseBlogPost(slug)
+      .then((item) => {
+        if (!cancelled) setPost(item);
+      })
+      .catch(() => {
+        if (!cancelled) setPost(null);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [slug]);
 
   if (post === undefined) {
@@ -29,7 +39,7 @@ export function BlogPostClientFallback({ slug }: BlogPostClientFallbackProps) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4 bg-[#f8f9fa] px-4 text-center">
         <h1 className="font-heading text-2xl font-semibold text-primary">Article not found</h1>
-        <p className="max-w-md text-sm text-muted">This post may have been removed or was only saved in another browser.</p>
+        <p className="max-w-md text-sm text-muted">This post may have been removed from Firebase.</p>
         <Link href="/blog" className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-primary">
           Back to Blog
         </Link>

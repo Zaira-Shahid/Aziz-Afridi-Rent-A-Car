@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Sora } from "next/font/google";
+import { FirebaseAnalytics } from "@/components/FirebaseAnalytics";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { brand } from "@/lib/brand";
 import { absoluteUrl, defaultKeywords, siteUrl } from "@/lib/seo";
@@ -113,6 +114,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body className={`${sora.variable} ${inter.variable}`}>
+        <FirebaseAnalytics />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

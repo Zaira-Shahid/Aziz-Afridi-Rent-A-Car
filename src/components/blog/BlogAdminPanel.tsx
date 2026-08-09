@@ -6,16 +6,18 @@ import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { blogCategories } from "@/data";
 import {
-  addStoredBlogPost,
-  deleteStoredBlogPost,
   formatBlogDate,
-  getStoredBlogPosts,
   isBlogAdminLoggedIn,
   setBlogAdminLoggedIn,
   slugify,
-  updateStoredBlogPost,
   validateBlogAdminLogin,
 } from "@/lib/blog-storage";
+import {
+  createFirebaseBlogPost,
+  deleteFirebaseBlogPost,
+  fetchFirebaseBlogPosts,
+  updateFirebaseBlogPost,
+} from "@/lib/blog-firestore";
 import { getFirebaseAuth, getGoogleProvider, isFirebaseConfigured } from "@/lib/firebase";
 import type { BlogPost } from "@/types";
 
@@ -60,6 +62,8 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
   const [formError, setFormError] = useState("");
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [viewPost, setViewPost] = useState<BlogPost | null>(null);
+  const [postsLoading, setPostsLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -68,7 +72,6 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
   useEffect(() => {
     if (!open) return;
     setLoggedIn(isBlogAdminLoggedIn());
-    setPosts(getStoredBlogPosts());
     setForm(emptyForm);
     setEditingSlug(null);
     setFormError("");
@@ -78,6 +81,34 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     setViewPost(null);
     setGoogleLoading(false);
   }, [open]);
+
+  useEffect(() => {
+    if (!open || !loggedIn) return;
+
+    let cancelled = false;
+    setPostsLoading(true);
+    setFormError("");
+
+    fetchFirebaseBlogPosts()
+      .then((items) => {
+        if (cancelled) return;
+        setPosts(items);
+        onPostsChange(items);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setPosts([]);
+        setFormError("Could not load blogs from Firebase. Enable Firestore and allow read/write on blogs.");
+      })
+      .finally(() => {
+        if (!cancelled) setPostsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- reload when panel opens or login changes
+  }, [open, loggedIn]);
 
   useEffect(() => {
     if (!open) return;
@@ -191,17 +222,24 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     };
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setFormError("");
 
     if (editingSlug) {
       const post = buildPostFromForm(editingSlug);
       if (!post) return;
-      const next = updateStoredBlogPost(editingSlug, post);
-      refreshPosts(next);
-      setForm(emptyForm);
-      setEditingSlug(null);
+      setSaving(true);
+      try {
+        const next = await updateFirebaseBlogPost(post);
+        refreshPosts(next);
+        setForm(emptyForm);
+        setEditingSlug(null);
+      } catch {
+        setFormError("Failed to update blog in Firebase. Check Firestore rules.");
+      } finally {
+        setSaving(false);
+      }
       return;
     }
 
@@ -210,9 +248,16 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     const post = buildPostFromForm(slug);
     if (!post) return;
 
-    const next = addStoredBlogPost(post);
-    refreshPosts(next);
-    setForm(emptyForm);
+    setSaving(true);
+    try {
+      const next = await createFirebaseBlogPost(post);
+      refreshPosts(next);
+      setForm(emptyForm);
+    } catch {
+      setFormError("Failed to save blog in Firebase. Check Firestore rules.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   function startEdit(post: BlogPost) {
@@ -228,12 +273,19 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     setFormError("");
   }
 
-  function handleDelete(slug: string) {
+  async function handleDelete(slug: string) {
     if (!window.confirm("Delete this blog post?")) return;
-    const next = deleteStoredBlogPost(slug);
-    refreshPosts(next);
-    if (editingSlug === slug) cancelEdit();
-    if (viewPost?.slug === slug) setViewPost(null);
+    setSaving(true);
+    try {
+      const next = await deleteFirebaseBlogPost(slug);
+      refreshPosts(next);
+      if (editingSlug === slug) cancelEdit();
+      if (viewPost?.slug === slug) setViewPost(null);
+    } catch {
+      setFormError("Failed to delete blog in Firebase.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   return createPortal(
@@ -449,10 +501,11 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
                 <button
                   type="submit"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:brightness-95"
+                  disabled={saving}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <span className="material-symbols-outlined text-[18px]">{editingSlug ? "save" : "add"}</span>
-                  {editingSlug ? "Update Blog" : "Publish Blog"}
+                  {saving ? "Saving..." : editingSlug ? "Update Blog" : "Publish Blog"}
                 </button>
               </form>
             </div>
@@ -460,7 +513,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
             <div className="flex min-h-0 flex-col overflow-hidden bg-[#f8f9fa]">
               <div className="border-b border-primary/8 bg-white px-5 py-4 sm:px-6">
                 <h3 className="font-heading text-lg font-semibold text-primary">All Added Blogs</h3>
-                <p className="mt-1 text-xs text-muted">Newest posts appear first. Edit or view details below.</p>
+                <p className="mt-1 text-xs text-muted">Saved in Firebase. Newest posts appear first.</p>
               </div>
 
               {viewPost ? (
@@ -504,8 +557,10 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
                 </div>
               ) : (
                 <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4 sm:px-6">
-                  {posts.length === 0 ? (
-                    <p className="py-10 text-center text-sm text-muted">No custom blogs yet. Add one from the left form.</p>
+                  {postsLoading ? (
+                    <p className="py-10 text-center text-sm text-muted">Loading blogs from Firebase...</p>
+                  ) : posts.length === 0 ? (
+                    <p className="py-10 text-center text-sm text-muted">No blogs in Firebase yet. Add one from the left form.</p>
                   ) : (
                     <ul className="space-y-3">
                       {posts.map((post) => {
