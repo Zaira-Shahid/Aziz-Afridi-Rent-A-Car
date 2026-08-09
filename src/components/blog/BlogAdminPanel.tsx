@@ -1,21 +1,17 @@
 "use client";
 
-import { signInWithPopup, signOut } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
-import { blogCategories } from "@/data";
-import {
-  formatBlogDate,
-  isBlogAdminLoggedIn,
-  setBlogAdminLoggedIn,
-  slugify,
-  validateBlogAdminLogin,
-} from "@/lib/blog-storage";
+import { blogCategories, blogPosts } from "@/data";
+import { isAllowedBlogAdminEmail } from "@/lib/blog-admin";
+import { formatBlogDate, slugify } from "@/lib/blog-storage";
 import {
   createFirebaseBlogPost,
   deleteFirebaseBlogPost,
   fetchFirebaseBlogPosts,
+  seedStaticBlogsToFirebase,
   updateFirebaseBlogPost,
 } from "@/lib/blog-firestore";
 import { getFirebaseAuth, getGoogleProvider, isFirebaseConfigured } from "@/lib/firebase";
@@ -53,8 +49,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
   const titleId = useId();
   const [mounted, setMounted] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [loginError, setLoginError] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
   const [form, setForm] = useState(emptyForm);
@@ -64,20 +59,47 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
   const [viewPost, setViewPost] = useState<BlogPost | null>(null);
   const [postsLoading, setPostsLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [seeding, setSeeding] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
+    if (!open || !isFirebaseConfigured()) {
+      setLoggedIn(false);
+      setUserEmail("");
+      return;
+    }
+
+    const unsub = onAuthStateChanged(getFirebaseAuth(), async (user) => {
+      if (!user) {
+        setLoggedIn(false);
+        setUserEmail("");
+        return;
+      }
+
+      if (!isAllowedBlogAdminEmail(user.email)) {
+        await signOut(getFirebaseAuth());
+        setLoggedIn(false);
+        setUserEmail("");
+        setLoginError("This Google account is not allowed. Only the admin account can manage blogs.");
+        return;
+      }
+
+      setLoggedIn(true);
+      setUserEmail(user.email ?? "");
+      setLoginError("");
+    });
+    return () => unsub();
+  }, [open]);
+
+  useEffect(() => {
     if (!open) return;
-    setLoggedIn(isBlogAdminLoggedIn());
     setForm(emptyForm);
     setEditingSlug(null);
     setFormError("");
     setLoginError("");
-    setEmail("");
-    setPassword("");
     setViewPost(null);
     setGoogleLoading(false);
   }, [open]);
@@ -89,26 +111,51 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     setPostsLoading(true);
     setFormError("");
 
-    fetchFirebaseBlogPosts()
-      .then((items) => {
+    (async () => {
+      try {
+        let items = await fetchFirebaseBlogPosts();
+        if (!cancelled && items.length === 0) {
+          items = await seedStaticBlogsToFirebase(blogPosts);
+        }
         if (cancelled) return;
         setPosts(items);
         onPostsChange(items);
-      })
-      .catch(() => {
+      } catch (error) {
         if (cancelled) return;
         setPosts([]);
-        setFormError("Could not load blogs from Firebase. Enable Firestore and allow read/write on blogs.");
-      })
-      .finally(() => {
+        const code =
+          typeof error === "object" && error !== null && "code" in error
+            ? String((error as { code: string }).code)
+            : "";
+        setFormError(
+          code === "permission-denied"
+            ? "Firestore permission denied. Publish blogs rules in Firebase Console → Firestore → Rules."
+            : "Could not load blogs from Firebase. Create Firestore Database and publish rules.",
+        );
+      } finally {
         if (!cancelled) setPostsLoading(false);
-      });
+      }
+    })();
 
     return () => {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- reload when panel opens or login changes
   }, [open, loggedIn]);
+
+  async function handleSeedBlogs() {
+    setSeeding(true);
+    setFormError("");
+    try {
+      const items = await seedStaticBlogsToFirebase(blogPosts);
+      setPosts(items);
+      onPostsChange(items);
+    } catch {
+      setFormError("Failed to sync site blogs to Firebase. Check Firestore rules.");
+    } finally {
+      setSeeding(false);
+    }
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -130,29 +177,20 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  function handleLogin(event: React.FormEvent) {
-    event.preventDefault();
-    setLoginError("");
-    if (!validateBlogAdminLogin(email, password)) {
-      setLoginError("Invalid email or password.");
-      return;
-    }
-    setBlogAdminLoggedIn(true);
-    setLoggedIn(true);
-  }
-
   async function handleGoogleLogin() {
     setLoginError("");
     if (!isFirebaseConfigured()) {
-      setLoginError("Firebase is not configured. Add Firebase keys in .env.local.");
+      setLoginError("Firebase is not configured.");
       return;
     }
 
     setGoogleLoading(true);
     try {
-      await signInWithPopup(getFirebaseAuth(), getGoogleProvider());
-      setBlogAdminLoggedIn(true);
-      setLoggedIn(true);
+      const result = await signInWithPopup(getFirebaseAuth(), getGoogleProvider());
+      if (!isAllowedBlogAdminEmail(result.user.email)) {
+        await signOut(getFirebaseAuth());
+        setLoginError("This Google account is not allowed. Only the admin account can manage blogs.");
+      }
     } catch (error) {
       const code =
         typeof error === "object" && error !== null && "code" in error
@@ -177,10 +215,10 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
         await signOut(getFirebaseAuth());
       }
     } catch {
-      // ignore firebase logout errors for local admin session
+      // ignore
     }
-    setBlogAdminLoggedIn(false);
     setLoggedIn(false);
+    setUserEmail("");
     setForm(emptyForm);
     setEditingSlug(null);
     setViewPost(null);
@@ -297,7 +335,11 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     >
       <button type="button" className="absolute inset-0 bg-primary/70 backdrop-blur-sm" aria-label="Close" onClick={onClose} />
 
-      <div className="relative z-10 flex max-h-[94vh] w-full max-w-6xl flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl">
+      <div
+        className={`relative z-10 flex max-h-[94vh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl ${
+          loggedIn ? "max-w-6xl" : "max-w-md"
+        }`}
+      >
         <div className="flex items-center justify-between border-b border-primary/8 px-5 py-4 sm:px-6">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">Admin</p>
@@ -307,13 +349,18 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
           </div>
           <div className="flex items-center gap-2">
             {loggedIn ? (
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded-xl border border-primary/10 px-3 py-2 text-xs font-semibold text-primary transition hover:bg-[#f8f9fa]"
-              >
-                Logout
-              </button>
+              <div className="flex items-center gap-2">
+                {userEmail ? (
+                  <span className="hidden max-w-[160px] truncate text-[11px] text-muted sm:inline">{userEmail}</span>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="rounded-xl border border-primary/10 px-3 py-2 text-xs font-semibold text-primary transition hover:bg-[#f8f9fa]"
+                >
+                  Logout
+                </button>
+              </div>
             ) : null}
             <button
               type="button"
@@ -328,7 +375,9 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
         {!loggedIn ? (
           <div className="mx-auto w-full max-w-md px-5 py-10 sm:px-6 sm:py-14">
-            <p className="mb-6 text-sm text-muted">Sign in to add and manage blog articles.</p>
+            <p className="mb-6 text-sm text-muted">
+              Admin access is limited to one Google account. Sign in with the authorized account only.
+            </p>
 
             <button
               type="button"
@@ -345,46 +394,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
               {googleLoading ? "Connecting..." : "Continue with Google"}
             </button>
 
-            <div className="my-6 flex items-center gap-3">
-              <span className="h-px flex-1 bg-primary/10" />
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-muted">or email</span>
-              <span className="h-px flex-1 bg-primary/10" />
-            </div>
-
-            <form onSubmit={handleLogin}>
-              <label className="mb-4 block">
-                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Email</span>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
-                  placeholder="admin123@gmail.com"
-                  required
-                  autoComplete="username"
-                />
-              </label>
-              <label className="mb-4 block">
-                <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Password</span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
-                  placeholder="••••••"
-                  required
-                  autoComplete="current-password"
-                />
-              </label>
-              {loginError ? <p className="mb-4 text-sm font-medium text-red-600">{loginError}</p> : null}
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:brightness-95"
-              >
-                <span className="material-symbols-outlined text-[18px]">login</span>
-                Login
-              </button>
-            </form>
+            {loginError ? <p className="mt-4 text-sm font-medium text-red-600">{loginError}</p> : null}
           </div>
         ) : (
           <div className="grid min-h-0 flex-1 lg:grid-cols-2">
@@ -512,8 +522,22 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
             <div className="flex min-h-0 flex-col overflow-hidden bg-[#f8f9fa]">
               <div className="border-b border-primary/8 bg-white px-5 py-4 sm:px-6">
-                <h3 className="font-heading text-lg font-semibold text-primary">All Added Blogs</h3>
-                <p className="mt-1 text-xs text-muted">Saved in Firebase. Newest posts appear first.</p>
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-heading text-lg font-semibold text-primary">All Added Blogs</h3>
+                    <p className="mt-1 text-xs text-muted">
+                      Saved in Firebase. Newest posts appear first. ({posts.length})
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleSeedBlogs}
+                    disabled={seeding || postsLoading}
+                    className="rounded-xl border border-primary/15 px-3 py-2 text-[11px] font-semibold text-primary transition hover:bg-[#f8f9fa] disabled:opacity-60"
+                  >
+                    {seeding ? "Syncing..." : "Sync site blogs"}
+                  </button>
+                </div>
               </div>
 
               {viewPost ? (
@@ -557,10 +581,13 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
                 </div>
               ) : (
                 <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4 sm:px-6">
+                  {formError ? <p className="mb-4 text-sm font-medium text-red-600">{formError}</p> : null}
                   {postsLoading ? (
                     <p className="py-10 text-center text-sm text-muted">Loading blogs from Firebase...</p>
                   ) : posts.length === 0 ? (
-                    <p className="py-10 text-center text-sm text-muted">No blogs in Firebase yet. Add one from the left form.</p>
+                    <p className="py-10 text-center text-sm text-muted">
+                      No blogs in Firebase yet. Click &quot;Sync site blogs&quot; or add one from the left form.
+                    </p>
                   ) : (
                     <ul className="space-y-3">
                       {posts.map((post) => {
