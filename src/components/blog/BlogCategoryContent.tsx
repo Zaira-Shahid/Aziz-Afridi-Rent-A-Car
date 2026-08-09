@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BlogFilters } from "@/components/blog/BlogFilters";
 import { CtaBanner } from "@/components/shared";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
@@ -34,52 +35,20 @@ export function BlogCategoryContent({ category, posts }: BlogCategoryContentProp
         </Container>
       </section>
 
-      <section className="border-b border-primary/8 bg-[#f3f4f5] py-6">
-        <Container>
-          <nav className="mb-6 flex flex-wrap items-center gap-2 text-xs text-muted">
-            <Link href="/" className="hover:text-primary">
-              Home
-            </Link>
-            <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-            <Link href="/blog" className="hover:text-primary">
-              Blog
-            </Link>
-            <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-            <span className="font-medium text-primary">{category.name}</span>
-          </nav>
-          <div className="flex gap-3 overflow-x-auto pb-1">
-            <Link
-              href="/blog"
-              className="shrink-0 rounded-xl border border-primary/12 bg-white px-5 py-2.5 text-sm font-semibold text-muted transition hover:border-secondary hover:text-secondary"
-            >
-              All Stories
-            </Link>
-            {blogCategories.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/blog/${item.slug}`}
-                className={`shrink-0 rounded-xl px-5 py-2.5 text-sm font-semibold transition ${
-                  item.slug === category.slug
-                    ? "bg-primary text-white"
-                    : "border border-primary/12 bg-white text-muted hover:border-secondary hover:text-secondary"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <BlogFilters
+        activeSlug={category.slug}
+        intro={`${posts.length} curated ${posts.length === 1 ? "article" : "articles"} in ${category.name} — tips and guides from Signature.`}
+      />
 
-      <section className="py-14 sm:py-20">
+      <section className="bg-[#f8f9fa] py-14 sm:py-20">
         <Container>
           {posts.length === 0 ? (
             <p className="text-center text-muted">No articles in this category yet.</p>
           ) : (
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
               {posts.map((post, index) => (
                 <Reveal key={post.slug} delay={Math.min(index, 5) * 70}>
-                  <article className="luxury-card-shadow group flex h-full flex-col overflow-hidden rounded-xl border border-primary/8 bg-white transition hover:-translate-y-1">
+                  <article className="luxury-card-shadow group flex h-full flex-col overflow-hidden rounded-2xl border border-primary/8 bg-white transition hover:-translate-y-1">
                     <div className="relative h-52 overflow-hidden">
                       <Image
                         src={post.image}
@@ -113,17 +82,25 @@ export function BlogCategoryContent({ category, posts }: BlogCategoryContentProp
             </div>
           )}
 
-          <div className="mt-12 rounded-xl border border-primary/8 bg-[#f3f4f5] p-6 sm:p-8">
+          <div className="mt-12 rounded-2xl border border-primary/8 bg-white p-6 sm:p-8">
             <h3 className="font-heading text-lg font-semibold text-primary">Browse all categories</h3>
-            <ul className="mt-4 flex flex-wrap gap-3">
+            <ul className="mt-4 flex flex-wrap gap-2.5">
               {blogCategories.map((item) => (
                 <li key={item.slug}>
                   <Link
                     href={`/blog/${item.slug}`}
-                    className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm text-muted transition hover:text-secondary"
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition sm:text-sm ${
+                      item.slug === category.slug
+                        ? "bg-primary text-white"
+                        : "border border-primary/10 bg-[#f8f9fa] text-muted hover:border-secondary/40 hover:text-secondary"
+                    }`}
                   >
                     {item.name}
-                    <span className="rounded-full bg-primary/5 px-2 py-0.5 text-xs font-semibold text-primary">
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                        item.slug === category.slug ? "bg-white/20 text-white" : "bg-primary/5 text-primary"
+                      }`}
+                    >
                       {blogPosts.filter((post) => post.category === item.slug).length}
                     </span>
                   </Link>

@@ -24,8 +24,9 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
   }
 
   return (
-    <div>
-      <div className="-mx-1 flex gap-5 overflow-x-auto border-b border-primary/10 px-1 pb-1 [scrollbar-width:none] sm:gap-8 [&::-webkit-scrollbar]:hidden">
+    <div className="min-w-0">
+      {/* Mobile: wrap pills · Desktop: underline tabs */}
+      <div className="grid grid-cols-2 gap-2 sm:hidden">
         {categories.map((category) => {
           const active = category.slug === activeCategory;
           return (
@@ -34,7 +35,28 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
               type="button"
               onClick={() => selectCategory(category.slug)}
               className={cn(
-                "whitespace-nowrap border-b-2 pb-3 text-xs font-semibold transition sm:pb-4 sm:text-sm",
+                "rounded-xl border px-3 py-2.5 text-center text-xs font-semibold transition",
+                active
+                  ? "border-secondary bg-secondary/10 text-secondary"
+                  : "border-primary/10 bg-white text-muted hover:border-secondary/40 hover:text-secondary",
+              )}
+            >
+              {category.label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="hidden gap-6 overflow-x-auto border-b border-primary/10 pb-1 [scrollbar-width:none] sm:flex sm:gap-8 [&::-webkit-scrollbar]:hidden">
+        {categories.map((category) => {
+          const active = category.slug === activeCategory;
+          return (
+            <button
+              key={category.slug}
+              type="button"
+              onClick={() => selectCategory(category.slug)}
+              className={cn(
+                "shrink-0 whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition sm:pb-4",
                 active ? "border-secondary text-secondary" : "border-transparent text-muted hover:text-secondary",
               )}
             >
@@ -51,7 +73,7 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.28, ease: "easeOut" }}
-          className="mt-6 space-y-3 sm:mt-8 sm:space-y-4"
+          className="mt-5 space-y-3 sm:mt-8 sm:space-y-4"
         >
           {filtered.map((item, index) => {
             const open = openIndex === index;
@@ -72,7 +94,9 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
                   className="flex w-full items-center justify-between gap-3 p-4 text-left sm:gap-4 sm:p-6"
                   aria-expanded={open}
                 >
-                  <span className="font-heading text-sm text-primary sm:text-base lg:text-lg">{item.question}</span>
+                  <span className="min-w-0 font-heading text-sm text-primary sm:text-base lg:text-lg">
+                    {item.question}
+                  </span>
                   <span
                     className={cn(
                       "material-symbols-outlined shrink-0 text-secondary transition-transform duration-300",

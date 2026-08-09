@@ -10,9 +10,8 @@ import { brand } from "@/lib/brand";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
-/** Islamabad Stitch hero — Faisal Mosque / capital landmark */
-const ISLAMABAD_HERO =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuC-iG-Pj3zQ-yrfe8uERRoi7UsVo51mZkyBZ7F3sBjvCkIXvaW0hjun7FDeivvbZYb_0GpJsXKVNubB-VVJgC-UYotA5_htpVhl6M1l3h6x8MPLytKMnft1sFu-erhB_3bwZ5ZQuWv0tQwM_wREbKK_T24JFDyGDGv4VuRBkotZ7pns1NBO0cqAW--CyV9tYIz3vlJKLMShYrLERGcsjKRx3BFdQZVdSHzzbzpOYMgLC6ImlwbnAt8B";
+/** Islamabad hero — local landmark image */
+const ISLAMABAD_HERO = "/services/islambad.jpeg";
 
 const FLEET_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuA1A79IDJIW_aFnBsQj1JQWPCi85fII9bVRg7OP6lB_FM1HQdJCKMuU8ogEgCN8BaR7e98m8vMSjxppY1ZnkiXVlqgYQeoOtmXBwsSEKC6ly7j83OJLZ_6f9NhpEJ-j9LAl-aLND1WWTUIvkGca0VXOQRKgPACwengq_1yXUh927w_jT_ARf7iovL-okVs1HPNIcnET-cmAft3oJ3orvTPjKoSSB7pDaUy8WPoJAhlk61FaopWNyHxv";

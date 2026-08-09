@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { BlogCategoryContent } from "@/components/blog/BlogCategoryContent";
+import { BlogPostClientFallback } from "@/components/blog/BlogPostClientFallback";
 import { BlogPostContent } from "@/components/blog/BlogPostContent";
 import {
   blogCategories,
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
   }
 
-  return { title: "Not Found" };
+  return { title: "Blog" };
 }
 
 export default async function BlogSlugPage({ params }: Props) {
@@ -59,5 +59,5 @@ export default async function BlogSlugPage({ params }: Props) {
     return <BlogCategoryContent category={category} posts={getPostsByCategory(category.slug)} />;
   }
 
-  notFound();
+  return <BlogPostClientFallback slug={slug} />;
 }

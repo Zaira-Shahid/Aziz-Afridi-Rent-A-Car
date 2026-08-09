@@ -126,8 +126,9 @@ export const carModels: CarModel[] = [
     fuel: "Petrol",
     priceDay: 5000,
     priceMonth: 110000,
-    image: carImage("Alto white.png"),
-    colors: ["White"],
+    image: carImage("Wagon R white.jpeg"),
+    imageAlt: carImage("Wagon R black.jpeg"),
+    colors: ["White", "Black"],
     sale: true,
   },
   {
@@ -203,8 +204,8 @@ export const carModels: CarModel[] = [
     fuel: "Petrol",
     priceDay: 7000,
     priceMonth: 154000,
-    image: carImage("Civic white.png"),
-    imageAlt: carImage("Civic Black.png"),
+    image: carImage("Civic 2022 white.jpeg"),
+    imageAlt: carImage("Civic 2022 black.jpeg"),
     colors: ["White", "Black"],
   },
   {

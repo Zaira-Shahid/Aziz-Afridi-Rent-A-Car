@@ -19,14 +19,12 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
   return (
     <>
       <section className="relative min-h-[360px] w-full overflow-hidden sm:min-h-[440px] lg:min-h-[520px]">
-        <Image
-          src={post.image}
-          alt={post.title}
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
+        {post.image.startsWith("/") ? (
+          <Image src={post.image} alt={post.title} fill priority className="object-cover" sizes="100vw" />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={post.image} alt={post.title} className="absolute inset-0 h-full w-full object-cover" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-primary/10" />
         <Container className="relative z-10 flex min-h-[360px] flex-col justify-end py-12 sm:min-h-[440px] sm:py-16 lg:min-h-[520px] lg:pb-20">
           <Reveal>
