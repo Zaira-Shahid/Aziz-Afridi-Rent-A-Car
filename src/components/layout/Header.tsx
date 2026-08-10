@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
@@ -106,8 +106,10 @@ function DropdownLink({
 export function Header() {
   const [open, setOpen] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
+  const [desktopMenu, setDesktopMenu] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const closeMenuTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -116,7 +118,30 @@ export function Header() {
   useEffect(() => {
     setOpen(false);
     setMobileSection(null);
+    setDesktopMenu(null);
   }, [pathname]);
+
+  useEffect(() => {
+    return () => {
+      if (closeMenuTimer.current) clearTimeout(closeMenuTimer.current);
+    };
+  }, []);
+
+  const openDesktopMenu = (href: string) => {
+    if (closeMenuTimer.current) {
+      clearTimeout(closeMenuTimer.current);
+      closeMenuTimer.current = null;
+    }
+    setDesktopMenu(href);
+  };
+
+  const scheduleCloseDesktopMenu = (href: string) => {
+    if (closeMenuTimer.current) clearTimeout(closeMenuTimer.current);
+    closeMenuTimer.current = setTimeout(() => {
+      setDesktopMenu((current) => (current === href ? null : current));
+      closeMenuTimer.current = null;
+    }, 120);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -286,7 +311,7 @@ export function Header() {
             <Logo priority className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px] xl:h-7 xl:max-w-[130px]" />
           </div>
 
-          <nav className="hidden items-center gap-1 xl:flex xl:gap-2">
+          <nav className="hidden h-full items-stretch gap-1 xl:flex xl:gap-2">
             {mainNav.map((item) => {
               const active = isActive(pathname, item);
               const menu = hasMenu(item);
@@ -297,7 +322,7 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "whitespace-nowrap px-2 py-2 text-sm transition-colors xl:px-3",
+                      "inline-flex items-center whitespace-nowrap px-2 py-2 text-sm transition-colors xl:px-3",
                       active
                         ? "border-b-2 border-accent pb-[6px] font-semibold text-white"
                         : "text-white/70 hover:text-accent",
@@ -309,7 +334,12 @@ export function Header() {
               }
 
               return (
-                <div key={item.href} className="group relative">
+                <div
+                  key={item.href}
+                  className="relative flex items-center"
+                  onMouseEnter={() => openDesktopMenu(item.href)}
+                  onMouseLeave={() => scheduleCloseDesktopMenu(item.href)}
+                >
                   <Link
                     href={item.href}
                     className={cn(
@@ -318,26 +348,35 @@ export function Header() {
                         ? "border-b-2 border-accent pb-[6px] font-semibold text-white"
                         : "text-white/70 hover:text-accent",
                     )}
+                    aria-expanded={desktopMenu === item.href}
                   >
                     {item.label}
-                    <span className="material-symbols-outlined text-[16px] opacity-70 transition group-hover:rotate-180">
+                    <span
+                      className={cn(
+                        "material-symbols-outlined text-[16px] opacity-70 transition",
+                        desktopMenu === item.href && "rotate-180",
+                      )}
+                    >
                       expand_more
                     </span>
                   </Link>
 
                   <div
                     className={cn(
-                      "invisible z-50 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100",
+                      "z-50 pt-3 transition",
+                      desktopMenu === item.href
+                        ? "visible opacity-100 pointer-events-auto"
+                        : "invisible opacity-0 pointer-events-none",
                       item.groups?.length
-                        ? "fixed left-1/2 top-14 w-[min(72rem,calc(100vw-2rem))] -translate-x-1/2 sm:top-16 xl:top-[72px]"
+                        ? "fixed left-1/2 top-[52px] w-[min(72rem,calc(100vw-2rem))] -translate-x-1/2 sm:top-[60px] xl:top-[68px]"
                         : "absolute left-1/2 top-full -translate-x-1/2",
                     )}
                   >
                     <div
                       className={cn(
                         "rounded-[14px] border border-primary/10 bg-white p-5 text-primary shadow-[0_18px_50px_rgba(0,11,29,0.12)]",
-                        !item.groups?.length && "min-w-[280px]",
-                        item.groups?.length && "max-h-[min(70vh,560px)] overflow-y-auto p-6",
+                        !item.groups?.length ? "min-w-[280px]" : undefined,
+                        item.groups?.length ? "max-h-[min(70vh,560px)] overflow-y-auto p-6" : undefined,
                       )}
                     >
                       {item.children?.length ? (
