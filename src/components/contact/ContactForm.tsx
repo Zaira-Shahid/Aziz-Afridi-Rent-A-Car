@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { brand } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
 const PICKUP_OPTIONS = [
@@ -23,12 +24,38 @@ export function ContactForm() {
     event.preventDefault();
     if (status !== "idle") return;
 
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const pickup = String(data.get("pickup") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    const text = [
+      `Hello ${brand.name},`,
+      "",
+      "I would like to request a callback / booking.",
+      "",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Phone: ${phone}`,
+      `Pickup: ${pickup}`,
+      message ? `Message: ${message}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
     setStatus("submitting");
-    setTimeout(() => {
-      setStatus("sent");
-      formRef.current?.reset();
-      setTimeout(() => setStatus("idle"), 3000);
-    }, 1200);
+    window.open(
+      `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(text)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+
+    formRef.current?.reset();
+    setStatus("sent");
+    window.setTimeout(() => setStatus("idle"), 2500);
   }
 
   return (
@@ -81,10 +108,10 @@ export function ContactForm() {
         )}
       >
         {status === "sent"
-          ? "Message Sent — We'll Call You Soon"
+          ? "Opening WhatsApp..."
           : status === "submitting"
-            ? "Sending Request..."
-            : "Request a Call Back"}
+            ? "Preparing WhatsApp..."
+            : "Send on WhatsApp"}
       </button>
     </form>
   );

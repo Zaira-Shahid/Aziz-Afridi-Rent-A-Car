@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { blogCategories, blogPosts, carCategories, carModels, cities, services } from "@/data";
 
+export const dynamic = "force-static";
+
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://signaturerentacar.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {

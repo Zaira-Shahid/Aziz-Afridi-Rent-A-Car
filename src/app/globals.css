@@ -265,10 +265,13 @@ a.bg-navy,
 button.bg-navy,
 a.bg-secondary,
 button.bg-secondary,
-a.bg-accent,
-button.bg-accent,
 a.border-white {
   color: #ffffff !important;
+}
+
+a.bg-accent,
+button.bg-accent {
+  color: #000b1d !important;
 }
 
 img {

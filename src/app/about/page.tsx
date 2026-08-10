@@ -138,24 +138,8 @@ const GUARANTEES = [
 export default function AboutPage() {
   return (
     <>
-      <header className="relative flex h-[320px] items-center justify-center overflow-hidden sm:h-[420px] lg:h-[520px]">
+      <header className="relative h-[280px] overflow-hidden sm:h-[400px] lg:h-[520px]">
         <Image src={HERO} alt="Luxury showroom atmosphere" fill priority className="object-cover" sizes="100vw" />
-        <div className="absolute inset-0 bg-primary/40" />
-        <div className="relative z-10 px-4 text-center">
-          <nav className="mb-4 flex justify-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-white/80 sm:mb-6 sm:text-xs">
-            <Link href="/" className="hover:text-white">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="text-white">About Us</span>
-          </nav>
-          <h1 className="hero-shadow animate-fade-up mx-auto max-w-4xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-            Crafting Journeys with Elegance
-          </h1>
-          <p className="animate-fade-up-delay mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base lg:text-lg">
-            Premium chauffeur-driven car rental across Pakistan since 2010.
-          </p>
-        </div>
       </header>
 
       <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">

@@ -85,7 +85,7 @@ const INFO_CARDS = [
 export default function ContactPage() {
   return (
     <>
-      <header className="relative flex min-h-[320px] items-center overflow-hidden py-16 sm:min-h-[420px] sm:py-20 lg:min-h-[520px]">
+      <header className="relative h-[280px] overflow-hidden sm:h-[400px] lg:h-[520px]">
         <Image
           src={HERO}
           alt="Luxury sedan in a corporate district of Islamabad at twilight"
@@ -94,23 +94,6 @@ export default function ContactPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-primary/55" />
-        <Container className="relative z-10">
-          <nav className="mb-4 flex gap-2 text-[10px] font-semibold uppercase tracking-widest text-white/80 sm:mb-6 sm:text-xs">
-            <Link href="/" className="hover:text-white">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="text-white">Contact Us</span>
-          </nav>
-          <h1 className="hero-shadow animate-fade-up max-w-2xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-            Connect With <span className="text-accent">Excellence</span>
-          </h1>
-          <p className="animate-fade-up-delay mt-4 max-w-xl text-sm text-white/80 sm:text-base lg:text-lg">
-            Experience premium mobility with personalized support. Our concierge team is available 24/7 to
-            assist with your luxury transportation needs across Pakistan.
-          </p>
-        </Container>
       </header>
 
       <section className="py-16 sm:py-24 lg:py-[100px]">

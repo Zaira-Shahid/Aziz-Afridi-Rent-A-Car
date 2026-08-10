@@ -266,7 +266,7 @@ export function Header() {
                   <Link
                     href="/contact"
                     onClick={() => setOpen(false)}
-                    className="rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider !text-white"
+                    className="rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider !text-primary"
                   >
                     Book Now
                   </Link>
@@ -325,18 +325,19 @@ export function Header() {
                     </span>
                   </Link>
 
-                  <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <div
+                    className={cn(
+                      "invisible z-50 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100",
+                      item.groups?.length
+                        ? "fixed left-1/2 top-14 w-[min(72rem,calc(100vw-2rem))] -translate-x-1/2 sm:top-16 xl:top-[72px]"
+                        : "absolute left-1/2 top-full -translate-x-1/2",
+                    )}
+                  >
                     <div
                       className={cn(
-                        "max-h-[min(75vh,640px)] overflow-y-auto rounded-[14px] border border-primary/10 bg-white p-5 text-primary shadow-[0_18px_50px_rgba(0,11,29,0.12)]",
+                        "rounded-[14px] border border-primary/10 bg-white p-5 text-primary shadow-[0_18px_50px_rgba(0,11,29,0.12)]",
                         !item.groups?.length && "min-w-[280px]",
-                        (item.href === "/cars" || item.href === "/city-services") &&
-                          "w-[min(1180px,calc(100vw-2rem))] p-6",
-                        item.groups?.length === 2 &&
-                          item.href !== "/cars" &&
-                          item.href !== "/city-services" &&
-                          "w-[min(920px,calc(100vw-2rem))]",
-                        (item.groups?.length ?? 0) >= 3 && "w-[min(1100px,calc(100vw-2rem))]",
+                        item.groups?.length && "max-h-[min(70vh,560px)] overflow-y-auto p-6",
                       )}
                     >
                       {item.children?.length ? (
@@ -362,7 +363,7 @@ export function Header() {
                           className={cn(
                             "grid gap-6",
                             (item.href === "/cars" || item.href === "/city-services") &&
-                              "grid-cols-[280px_minmax(0,1fr)] gap-8",
+                              "grid-cols-[minmax(220px,260px)_minmax(0,1fr)] gap-8",
                             item.groups.length === 2 &&
                               item.href !== "/cars" &&
                               item.href !== "/city-services" &&
@@ -376,7 +377,7 @@ export function Header() {
                               <div
                                 key={group.label}
                                 className={cn(
-                                  isWideList ? "min-w-0" : "w-full shrink-0",
+                                  isWideList ? "min-w-0" : "min-w-[220px] shrink-0",
                                   !isWideList &&
                                     (item.href === "/cars" || item.href === "/city-services") &&
                                     "border-r border-primary/8 pr-6",
@@ -424,7 +425,7 @@ export function Header() {
             </a>
             <Link
               href="/contact"
-              className="rounded-full bg-accent px-6 py-2.5 text-xs font-semibold uppercase tracking-wider !text-white transition hover:brightness-110"
+              className="rounded-full bg-accent px-6 py-2.5 text-xs font-semibold uppercase tracking-wider !text-primary transition hover:brightness-110"
             >
               Book Now
             </Link>
