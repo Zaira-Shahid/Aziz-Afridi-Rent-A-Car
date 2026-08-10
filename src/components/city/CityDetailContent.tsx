@@ -130,14 +130,14 @@ export function CityDetailContent({ city }: CityDetailContentProps) {
 
   return (
     <>
-      <section className="relative flex min-h-[420px] items-center px-4 pb-12 pt-24 sm:min-h-[480px] sm:px-6 sm:pb-16 sm:pt-28 lg:min-h-[520px] lg:px-16 lg:pb-20 lg:pt-32">
+      <section className="relative flex min-h-[420px] items-center overflow-hidden px-4 pb-12 pt-24 sm:min-h-[480px] sm:px-6 sm:pb-16 sm:pt-28 lg:min-h-[520px] lg:px-16 lg:pb-20 lg:pt-32">
         <div className="absolute inset-0 z-0">
           <Image
             src={heroImage}
             alt={`Rent a car in ${city.name}`}
             fill
             priority
-            className="object-cover"
+            className="object-cover object-center"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-primary/40" />
@@ -154,7 +154,7 @@ export function CityDetailContent({ city }: CityDetailContentProps) {
 
           <form
             onSubmit={handleSearch}
-            className="animate-fade-up-delay-2 mt-6 w-full max-w-5xl rounded-xl border border-white/15 bg-white/10 p-4 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.2)] backdrop-blur-xl sm:mt-8 md:grid md:grid-cols-4 md:items-end md:gap-4"
+            className="animate-fade-up-delay-2 mt-6 w-full max-w-5xl rounded-xl border border-white/15 bg-white/10 p-3 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.2)] backdrop-blur-xl sm:mt-8 sm:p-4 md:grid md:grid-cols-4 md:items-end md:gap-4"
           >
             <label className="mb-4 flex flex-col gap-2 text-left md:mb-0">
               <span className="px-2 text-xs font-semibold uppercase tracking-wider text-white/80">
@@ -184,7 +184,7 @@ export function CityDetailContent({ city }: CityDetailContentProps) {
                   type="date"
                   value={pickupDate}
                   onChange={(e) => setPickupDate(e.target.value)}
-                  className="w-full cursor-pointer rounded-lg border-none bg-white py-3 pl-10 pr-4 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full min-w-0 max-w-full cursor-pointer rounded-lg border-none bg-white py-3 pl-10 pr-4 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
                 />
               </span>
             </label>

@@ -1,5 +1,10 @@
 /** Only these Google accounts can manage blogs. */
-export const BLOG_ADMIN_EMAILS = ["ulainnoor957@gmail.com"] as const;
+export const BLOG_ADMIN_EMAILS = [
+  "ulainnoor957@gmail.com",
+  "developerx.org@gmail.com",
+  "signaturesrentacar@gmail.com",
+  "xfirebasc@gmail.com",
+] as const;
 
 export function isAllowedBlogAdminEmail(email: string | null | undefined) {
   if (!email) return false;

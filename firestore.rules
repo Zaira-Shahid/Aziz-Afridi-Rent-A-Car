@@ -3,9 +3,13 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /blogs/{blogId} {
       allow read: if true;
-      // Only this Google account can add/edit/delete blogs
       allow write: if request.auth != null
-        && request.auth.token.email == 'ulainnoor957@gmail.com';
+        && request.auth.token.email in [
+          'ulainnoor957@gmail.com',
+          'developerx.org@gmail.com',
+          'signaturesrentacar@gmail.com',
+          'xfirebasc@gmail.com'
+        ];
     }
   }
 }

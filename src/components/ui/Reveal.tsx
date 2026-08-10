@@ -17,29 +17,33 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
     const node = ref.current;
     if (!node) return;
 
+    let fallback = 0;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
           observer.unobserve(node);
+          window.clearTimeout(fallback);
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.01, rootMargin: "0px 0px 80px 0px" },
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    // Ensure content never stays hidden on mobile if IO misses
+    fallback = window.setTimeout(() => setVisible(true), 1200);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   return (
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={cn(
-        "reveal-item",
-        visible && "is-visible",
-        className,
-      )}
+      className={cn("reveal-item", visible && "is-visible", className)}
     >
       {children}
     </div>

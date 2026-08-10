@@ -144,7 +144,7 @@ export function CarCard({ car, className }: CarCardProps) {
           </p>
 
           <div
-            className="mt-auto grid grid-cols-3 gap-1.5 pt-4"
+            className="mt-auto grid grid-cols-1 gap-2 pt-4 min-[400px]:grid-cols-3 min-[400px]:gap-1.5"
             onClick={(e) => e.stopPropagation()}
           >
             <a
@@ -152,23 +152,23 @@ export function CarCard({ car, className }: CarCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-accent px-1 text-[10px] font-semibold text-primary transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-xs font-semibold text-primary transition duration-200 hover:brightness-95"
             >
               <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden truncate min-[380px]:inline">WhatsApp</span>
+              <span className="truncate">WhatsApp</span>
             </a>
             <a
               href={`tel:${brand.phone}`}
-              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-secondary px-1 text-[10px] font-semibold !text-white transition duration-200 hover:brightness-95 sm:gap-1.5 sm:px-2 sm:text-xs"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-secondary px-2 text-xs font-semibold !text-white transition duration-200 hover:brightness-95"
               aria-label={`Call ${formatPhoneDisplay()}`}
             >
               <PhoneIcon className="h-3.5 w-3.5 shrink-0" />
-              <span className="hidden truncate min-[380px]:inline">Call</span>
+              <span className="truncate">Call</span>
             </a>
             <button
               type="button"
               onClick={() => setInquireOpen(true)}
-              className="inline-flex min-h-10 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-1 text-[10px] font-semibold !text-white transition duration-200 hover:bg-primary/90 sm:px-2 sm:text-xs"
+              className="inline-flex min-h-11 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-2 text-xs font-semibold !text-white transition duration-200 hover:bg-primary/90"
             >
               Inquiry
             </button>

@@ -361,7 +361,7 @@ export function CityServicesContent() {
 
       <section className="overflow-hidden bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
         <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal className="relative order-2 aspect-square overflow-hidden rounded-3xl shadow-2xl lg:order-1 lg:aspect-video">
+          <Reveal className="relative order-2 aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl sm:aspect-square lg:order-1 lg:aspect-video">
             <Image
               src={MAP}
               alt="Pakistan service coverage map"
@@ -506,7 +506,7 @@ export function CityServicesContent() {
       <section className="pb-16 sm:pb-24 lg:pb-[100px]">
         <Container>
           <Reveal>
-          <div className="relative overflow-hidden rounded-[28px] px-6 py-16 text-center sm:rounded-[40px] sm:px-12 sm:py-24 md:px-24">
+          <div className="relative overflow-hidden rounded-[28px] px-5 py-14 text-center sm:rounded-[40px] sm:px-10 sm:py-20 md:px-16 lg:px-24">
             <div className="absolute inset-0 bg-primary" />
             <Image src={CTA_BG} alt="" fill className="object-cover opacity-20 mix-blend-overlay" sizes="100vw" />
             <div className="relative z-10">

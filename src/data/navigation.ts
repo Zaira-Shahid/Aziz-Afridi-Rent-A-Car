@@ -1,8 +1,44 @@
 import type { NavItem, NavLink } from "@/types";
+import { carModels } from "@/data/cars";
+import { cities } from "@/data/cities";
 
 /** Project palette for nav icons */
 const C = "#04C4E3"; // secondary
 const A = "#BFF52C"; // accent
+
+const BRAND_LOGOS: Record<string, string> = {
+  Suzuki: "/brands/suzuki-logo.png",
+  Toyota: "/brands/toyota-logo.png",
+  Honda: "/brands/honda-logo.png",
+  Hyundai: "/brands/hyundai-logo.png",
+  Kia: "/brands/kia-logo.png",
+  Mercedes: "/brands/mercedes-logo.png",
+  Audi: "/brands/audi-logo.png",
+  Lexus: "/brands/lexus-logo.png",
+  Changan: "/brands/changan-logo.png",
+};
+
+const CITY_TYPE_ICONS: Record<string, { icon: string; iconColor: string }> = {
+  primary: { icon: "location_city", iconColor: C },
+  tourist: { icon: "landscape", iconColor: A },
+  local: { icon: "home_work", iconColor: C },
+};
+
+const allCarNavItems: NavLink[] = carModels.map((car) => ({
+  label: car.name,
+  href: `/cars/${car.slug}`,
+  logo: BRAND_LOGOS[car.brand],
+}));
+
+const allCityNavItems: NavLink[] = cities.map((city, index) => {
+  const meta = CITY_TYPE_ICONS[city.type] ?? CITY_TYPE_ICONS.primary;
+  return {
+    label: city.name,
+    href: `/rent-a-car/${city.slug}`,
+    icon: meta.icon,
+    iconColor: index % 2 === 0 ? meta.iconColor : A,
+  };
+});
 
 export const mainNav: NavItem[] = [
   { label: "Home", href: "/", icon: "home", iconColor: C },
@@ -40,15 +76,8 @@ export const mainNav: NavItem[] = [
         ],
       },
       {
-        label: "Popular Cars",
-        items: [
-          { label: "Toyota Corolla", href: "/cars/toyota-corolla", logo: "/brands/toyota-logo.png" },
-          { label: "Honda Civic 2025", href: "/cars/honda-civic-2025", logo: "/brands/honda-logo.png" },
-          { label: "Toyota Revo", href: "/cars/toyota-revo", logo: "/brands/toyota-logo.png" },
-          { label: "Toyota Prado", href: "/cars/toyota-prado", logo: "/brands/toyota-logo.png" },
-          { label: "Kia Sportage", href: "/cars/kia-sportage", logo: "/brands/kia-logo.png" },
-          { label: "Mercedes S500", href: "/cars/mercedes-s500", logo: "/brands/mercedes-logo.png" },
-        ],
+        label: "All Cars",
+        items: allCarNavItems,
       },
     ],
   },
@@ -57,40 +86,19 @@ export const mainNav: NavItem[] = [
     href: "/city-services",
     icon: "location_on",
     iconColor: C,
+    children: [{ label: "All Cities", href: "/city-services#all", icon: "map", iconColor: A }],
     groups: [
       {
-        label: "Popular Cities",
+        label: "City Categories",
         items: [
-          { label: "Islamabad", href: "/rent-a-car/islamabad", icon: "location_city", iconColor: C },
-          { label: "Rawalpindi", href: "/rent-a-car/rawalpindi", icon: "location_city", iconColor: A },
-          { label: "Lahore", href: "/rent-a-car/lahore", icon: "location_city", iconColor: C },
-          { label: "Karachi", href: "/rent-a-car/karachi", icon: "location_city", iconColor: A },
-          { label: "Peshawar", href: "/rent-a-car/peshawar", icon: "location_city", iconColor: C },
-          { label: "Abbottabad", href: "/rent-a-car/abbottabad", icon: "location_city", iconColor: A },
+          { label: "Popular Cities", href: "/city-services#popular", icon: "location_city", iconColor: C },
+          { label: "Tourist Areas", href: "/city-services#tourist", icon: "landscape", iconColor: A },
+          { label: "Islamabad Areas", href: "/city-services#local", icon: "home_work", iconColor: C },
         ],
       },
       {
-        label: "Tourist Areas",
-        items: [
-          { label: "Murree", href: "/rent-a-car/murree", icon: "landscape", iconColor: A },
-          { label: "Naran", href: "/rent-a-car/naran", icon: "landscape", iconColor: C },
-          { label: "Kaghan", href: "/rent-a-car/kaghan", icon: "landscape", iconColor: A },
-          { label: "Hunza", href: "/rent-a-car/hunza", icon: "terrain", iconColor: C },
-          { label: "Skardu", href: "/rent-a-car/skardu", icon: "terrain", iconColor: A },
-          { label: "Swat", href: "/rent-a-car/swat", icon: "landscape", iconColor: C },
-        ],
-      },
-      {
-        label: "Islamabad Areas",
-        items: [
-          { label: "Bahria Town", href: "/rent-a-car/bahria-town", icon: "home_work", iconColor: A },
-          { label: "DHA Islamabad", href: "/rent-a-car/dha-islamabad", icon: "home_work", iconColor: C },
-          { label: "Blue Area", href: "/rent-a-car/blue-area", icon: "apartment", iconColor: A },
-          { label: "Islamabad Airport", href: "/rent-a-car/islamabad-airport", icon: "flight", iconColor: C },
-          { label: "F-6", href: "/rent-a-car/f-6-islamabad", icon: "map", iconColor: A },
-          { label: "F-7", href: "/rent-a-car/f-7-islamabad", icon: "map", iconColor: C },
-          { label: "F-8", href: "/rent-a-car/f-8-islamabad", icon: "map", iconColor: A },
-        ],
+        label: "All Cities",
+        items: allCityNavItems,
       },
     ],
   },

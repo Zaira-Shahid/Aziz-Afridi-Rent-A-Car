@@ -80,10 +80,13 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
       }
 
       if (!isAllowedBlogAdminEmail(user.email)) {
+        const tried = user.email ?? "unknown";
         await signOut(getFirebaseAuth());
         setLoggedIn(false);
         setUserEmail("");
-        setLoginError("This Google account is not allowed. Only the admin account can manage blogs.");
+        setLoginError(
+          `Signed in as ${tried}, but this account is not allowed. Use an authorized admin Google account.`,
+        );
         return;
       }
 
@@ -188,8 +191,11 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     try {
       const result = await signInWithPopup(getFirebaseAuth(), getGoogleProvider());
       if (!isAllowedBlogAdminEmail(result.user.email)) {
+        const tried = result.user.email ?? "unknown";
         await signOut(getFirebaseAuth());
-        setLoginError("This Google account is not allowed. Only the admin account can manage blogs.");
+        setLoginError(
+          `Signed in as ${tried}, but this account is not allowed. Use an authorized admin Google account.`,
+        );
       }
     } catch (error) {
       const code =
@@ -376,7 +382,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
         {!loggedIn ? (
           <div className="mx-auto w-full max-w-md px-5 py-10 sm:px-6 sm:py-14">
             <p className="mb-6 text-sm text-muted">
-              Admin access is limited to one Google account. Sign in with the authorized account only.
+              Admin access is limited to authorized Google accounts. Sign in with an allowed account only.
             </p>
 
             <button

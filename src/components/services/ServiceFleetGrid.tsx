@@ -112,19 +112,19 @@ function FleetCard({ item }: { item: ServiceFleetItem }) {
             <span className="font-normal text-muted"> / day</span>
           </p>
 
-          <div className="mt-auto grid grid-cols-3 gap-1.5 pt-4">
+          <div className="mt-auto grid grid-cols-1 gap-2 pt-4 min-[400px]:grid-cols-3 min-[400px]:gap-1.5">
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-accent px-1.5 text-[10px] font-semibold text-primary transition hover:brightness-95 sm:gap-1.5 sm:text-xs"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-xs font-semibold text-primary transition hover:brightness-95"
             >
               <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">WhatsApp</span>
             </a>
             <a
               href={`tel:${brand.phone}`}
-              className="inline-flex min-h-10 items-center justify-center gap-1 rounded-[10px] bg-secondary px-1.5 text-[10px] font-semibold !text-white transition hover:brightness-95 sm:gap-1.5 sm:text-xs"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-secondary px-2 text-xs font-semibold !text-white transition hover:brightness-95"
             >
               <PhoneIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">Call Us</span>
@@ -132,7 +132,7 @@ function FleetCard({ item }: { item: ServiceFleetItem }) {
             <button
               type="button"
               onClick={() => setInquireOpen(true)}
-              className="inline-flex min-h-10 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-1.5 text-[10px] font-semibold !text-white transition hover:bg-primary/90 sm:text-xs"
+              className="inline-flex min-h-11 items-center justify-center rounded-[10px] border border-white/20 bg-primary px-2 text-xs font-semibold !text-white transition hover:bg-primary/90"
             >
               Inquiry
             </button>

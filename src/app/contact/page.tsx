@@ -17,8 +17,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 
-const HERO =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuDf4FIkMIy2ygFija_w8x1BOPggeofsUj15Y87MxzaEmVsbAB1zLNG_xPItUmkcFdCGRFNpkUtOnv-PHnHeOkzAJeXA0xRhZOedoRr5-PgNRNgiJGDdot132XIh9-CvBZDiYu75KFvPUWhLmWgZFJFmVfNAFCNtSjyPp6y0_kRtcrn8PNO6uboQ6KwvVtD5pKr9UZdpC8OIgMoEkpy8oryqz6Q47e1xQqEYXKw0PZN9GY4SrkGJd73e";
+const HERO = "/images/contact-hero.png";
 
 const OFFICE_MAP =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCOLcLgvntMjN0RKlanOO3hzDIQbvZuKjd4WntHKjUnZINDAaS9oMupBV4tr0QvZSUnrCLDh6tGRuvkQnZ8w3GVhqSF4tf1QC6JnvxsPjRAGW7OJeO778wbBrI6B_m4jNmMJnEp8lvJJDkl_FTybKegol1Euq7BMp9acaAM6slsr5q0aYI8QWhQnokHcEn0yIsxiK1KLCd9JvVAp71oLrA2kEBUGa3F9Gxn_pgQ0YWQqFbtDEbmdOGi";
@@ -131,7 +130,7 @@ export default function ContactPage() {
                 {card.hours ? (
                   <div className="mt-4 space-y-1">
                     {card.hours.map((row) => (
-                      <p key={row.label} className="flex justify-between text-sm text-muted">
+                      <p key={row.label} className="flex flex-col gap-0.5 text-sm text-muted sm:flex-row sm:justify-between">
                         <span>{row.label}:</span>
                         <span>{row.value}</span>
                       </p>
@@ -144,7 +143,7 @@ export default function ContactPage() {
                       href={card.href}
                       target={card.href?.startsWith("http") ? "_blank" : undefined}
                       rel={card.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="mt-4 block text-sm font-semibold text-secondary hover:underline"
+                      className="mt-4 block break-all text-sm font-semibold text-secondary hover:underline"
                     >
                       {card.linkLabel}
                     </a>

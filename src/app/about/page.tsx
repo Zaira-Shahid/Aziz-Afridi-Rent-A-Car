@@ -15,8 +15,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 
-const HERO =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuBopJHdXDuZuIBjX5OwbmNweeQU-cLtnE1cZFbKtZgNnrP51n68VEEi0VPoE4r6ldymkYlUJSq2G7zWrFf8bp0pi-4yQ5mroP8Y-T5klhTTZgrQkDRgrZNz1LSLaax9S3QwyynCOBlcV8lMe0cH0a_bFnCqZAzw2Q7eIv_Zue4QeUlnUGR1WEAGOcyClW5JLI3KWj7_dYNcZ5PCiniNNQyVvbUtq8JhumFtxGrPIQ0KKp76Dib_le3g";
+const HERO = "/images/about-hero.png";
 
 const STORY =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuA_0DvMgtwmvaqx9Ri-RF_X5h36PhzSZEy3QOy3_mIOctfV29MYedB-lytMPbgF6KfGb0CTLBso4efmlWt-tgjviDre4b7Zps_zEo-EnLGTBfUqdptA_tGtr7DjeTGqJ3ACcyhIhsvxwTp4RyoDZJYifoRZsb-QBU3lR01ZZO9lMMWaSWPaWy2IER5DyxTGDLThHulB8tOQb0uf7LmJv425G8do_dV_Xs7zB-O8_gXlzZJfcSFt4FIy";
@@ -133,33 +132,6 @@ const GUARANTEES = [
     icon: "local_shipping",
     title: "On-Time Delivery",
     text: "Punctual doorstep delivery and pickup, tracked and confirmed in advance.",
-  },
-];
-
-const TEAM = [
-  {
-    name: "Alexander Thorne",
-    role: "Founder & CEO",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCFOOlSRB_HEkZgTY_nVS4f3QUFC78fahPL9ZjV0ArtmfDE_QY0khl1wHTEYX7mfmZuJnunVjEAXYP1JPBh92jWNCPQSbvpHTIKf5CcVI9ZaArjJUbi76CauSCwHzYaK46qBBSvEj6Hq8G3YxocypZQ46rpBsDwc1IXdV9WsKgdUY0LjeZI2A0xs0Hqhq6_Z9e6DHbw5yi8C1wyfi1EST2gEgUMF5vHH-_MKnkrLvOqRy4aL8_kArgX",
-  },
-  {
-    name: "Elena Rodriguez",
-    role: "Director of Operations",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDmLBO_GnQpPOaK8bViv9VzUAkCv5yUkTK_UIFGhowjaMqVcTH2ZZDTNPmEkVmwWERW01Px3-FUaoQmXNeQ6FZZXGJAjJzdjq_q3uDRuDhls0G_jhSpcrilyM8pm6xVOGnN1LNNnuRH_nrIA7x0SpwMxWFl2Gs5ge6b_2TBMHTnzBYD40gx-NuTVVB2rnM1Haz2rVG0-hpDcrZ7nX7NB9Nv3Z8xYTPgsHXE9EK4OR4dlhddMHagyNNz",
-  },
-  {
-    name: "Marcus Vane",
-    role: "Fleet Strategist",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC9Nq03Q_AoUWC8CjVz68R9RbkvnBG-I-JNqwqJjigyg1V54_74Set2xPU4ll8Ccdjvc9nm9gfog7RzgXSVwqHMD0dqseQUroC6I-qHaNtDSDwXYa3tDure6I-4jPvF0q99KXAVaiC0iCRrRG7QKf48mXAQXajUk7kc51TxqI0SHbu4QhHHsLiddp4aVex7-wH7HL5aGq8STjk5souqc-qcsilzBoMhDUZ1z_wbenfbRC5exKHf-OWl",
-  },
-  {
-    name: "Sophia Chen",
-    role: "Client Relations Head",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC7JEVuwNoVXmUgTPjzQ6AlK4p2DSLM9JmzzzLCOYK2qECyGQp_lfzuByd7St9d-SpaOhWC6bXWPLykbjFGi7-_z9jiRce3k50XGTtbm1r_jgCyrcEaGPiPy8j4sC-x9ifhD7rbdKxEkFFQJ_71H0b83oh2S8reeXn6XieGR70lMO7j1HUzbYo67SUD3rs-4OMMFVd0LrrJUPPW-dHbxXjNV7uv_T5KOW0X-gbULQDZAczUN31wAVGr",
   },
 ];
 
@@ -426,40 +398,6 @@ export default function AboutPage() {
               <Image src={PROCESS} alt="Luxury key fob handover" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
             </div>
           </AnimateIn>
-        </Container>
-      </section>
-
-      <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <AnimateIn>
-            <div className="mb-12 text-center sm:mb-16">
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Meet the Visionaries
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-muted sm:text-lg">
-                The experts driving our commitment to excellence and innovation.
-              </p>
-            </div>
-          </AnimateIn>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {TEAM.map((member, index) => (
-              <AnimateIn key={member.name} delay={index * 90}>
-                <div className="group">
-                  <div className="relative mb-5 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                      sizes="(max-width: 640px) 100vw, 25vw"
-                    />
-                  </div>
-                  <h5 className="font-heading text-lg font-semibold sm:text-xl">{member.name}</h5>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-secondary">{member.role}</p>
-                </div>
-              </AnimateIn>
-            ))}
-          </div>
         </Container>
       </section>
 

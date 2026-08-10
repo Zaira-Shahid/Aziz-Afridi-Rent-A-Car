@@ -76,22 +76,24 @@ export function HomeHero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-0 items-center overflow-hidden py-12 sm:min-h-[85vh] sm:py-20 lg:min-h-[90vh] lg:py-24">
-      {HERO_SLIDES.map((item, index) => (
-        <Image
-          key={item.src}
-          src={item.src}
-          alt={item.alt}
-          fill
-          priority={index === 0}
-          className={cn(
-            "object-cover transition-opacity duration-700",
-            index === active ? "opacity-100" : "opacity-0",
-          )}
-          sizes="100vw"
-        />
-      ))}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/30" />
+    <section className="relative flex min-h-0 items-center overflow-x-clip py-12 sm:min-h-[85vh] sm:py-20 lg:min-h-[90vh] lg:py-24">
+      <div className="absolute inset-0 overflow-hidden">
+        {HERO_SLIDES.map((item, index) => (
+          <Image
+            key={item.src}
+            src={item.src}
+            alt={item.alt}
+            fill
+            priority={index === 0}
+            className={cn(
+              "object-cover transition-opacity duration-700",
+              index === active ? "opacity-100" : "opacity-0",
+            )}
+            sizes="100vw"
+          />
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/30" />
+      </div>
 
       <Container className="relative z-10 grid min-w-0 items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
         <div className="min-w-0 text-white lg:col-span-7">
@@ -133,7 +135,7 @@ export function HomeHero() {
           </div>
         </div>
 
-        <div className="animate-fade-up-delay-2 w-full lg:col-span-5">
+        <div className="animate-fade-up-delay-2 relative z-20 w-full min-w-0 lg:col-span-5">
           <BookingBar />
         </div>
       </Container>

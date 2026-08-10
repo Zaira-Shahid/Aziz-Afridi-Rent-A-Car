@@ -41,7 +41,7 @@ export function PromoBanner({
             </h2>
             <p className="mt-4 max-w-xl text-sm text-white/70 sm:text-base lg:text-lg">{description}</p>
             <div className="mt-8">
-              <ButtonLink href={href} variant="accent" size="lg" className="hover:-translate-y-0.5">
+              <ButtonLink href={href} variant="accent" size="lg" className="w-full hover:-translate-y-0.5 sm:w-auto">
                 {ctaLabel}
               </ButtonLink>
             </div>
