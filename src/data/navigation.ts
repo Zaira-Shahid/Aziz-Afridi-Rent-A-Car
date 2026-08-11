@@ -35,21 +35,6 @@ const allCarNavItems: NavLink[] = carModels.map((car) => ({
   logo: brandLogo(car.brand),
 }));
 
-const carsByBrand = carModels.reduce<Record<string, typeof carModels>>((acc, car) => {
-  const key = car.brand.startsWith("Mercedes") ? "Mercedes" : car.brand;
-  (acc[key] ??= []).push(car);
-  return acc;
-}, {});
-
-const carBrandNavGroups = Object.entries(carsByBrand).map(([brand, cars]) => ({
-  label: brand,
-  items: cars.map((car) => ({
-    label: car.name,
-    href: `/cars/${car.slug}`,
-    logo: brandLogo(car.brand),
-  })),
-}));
-
 const allCityNavItems: NavLink[] = cities.map((city, index) => {
   const meta = CITY_TYPE_ICONS[city.type] ?? CITY_TYPE_ICONS.primary;
   return {
@@ -78,16 +63,7 @@ export const mainNav: NavItem[] = [
     href: "/cars",
     icon: "directions_car",
     iconColor: A,
-    children: [
-      { label: "All Cars", href: "/cars", icon: "garage", iconColor: C },
-      { label: "Mercedes S500", href: "/cars/mercedes-s500", logo: "/brands/mercedes-logo.png" },
-      { label: "Mercedes S400", href: "/cars/mercedes-s400", logo: "/brands/mercedes-logo.png" },
-      { label: "Mercedes E250", href: "/cars/mercedes-e250", logo: "/brands/mercedes-logo.png" },
-      { label: "Mercedes C180", href: "/cars/mercedes-c180", logo: "/brands/mercedes-logo.png" },
-      { label: "Audi A6", href: "/cars/audi-a6", logo: "/brands/audi-logo.png" },
-      { label: "Toyota Prado", href: "/cars/toyota-prado", logo: "/brands/toyota-logo.png" },
-      { label: "Toyota Fortuner", href: "/cars/toyota-fortuner", logo: "/brands/toyota-logo.png" },
-    ],
+    children: [],
     groups: [
       {
         label: "Car Categories",
@@ -104,7 +80,6 @@ export const mainNav: NavItem[] = [
           { label: "Tourism Fleet", href: "/categories/tourism", icon: "landscape", iconColor: A },
         ],
       },
-      ...carBrandNavGroups,
       {
         label: "All Cars",
         items: allCarNavItems,

@@ -42,9 +42,14 @@ function NavIcon({
 }) {
   if (item.logo) {
     return (
-      <span className="relative flex h-7 w-7 shrink-0 overflow-hidden rounded-lg border border-black/5 bg-white shadow-sm">
+      <span
+        className={cn(
+          "relative isolate flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-white",
+          tone === "dark" ? "border-white/15" : "border-primary/10",
+        )}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={item.logo} alt="" className="h-full w-full object-contain p-0.5" />
+        <img src={item.logo} alt="" className="h-[18px] w-[18px] object-contain" />
       </span>
     );
   }
@@ -56,7 +61,7 @@ function NavIcon({
   return (
     <span
       className={cn(
-        "inline-flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-lg",
+        "inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md",
         tone === "dark" && "ring-1 ring-white/10",
       )}
       style={{
@@ -66,12 +71,12 @@ function NavIcon({
       aria-hidden="true"
     >
       <span
-        className="material-symbols-outlined block overflow-hidden text-[16px] leading-none"
+        className="material-symbols-outlined block overflow-hidden text-[18px] leading-none"
         style={{
           fontFamily: '"Material Symbols Outlined", sans-serif',
           fontVariationSettings: "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24",
-          width: 16,
-          height: 16,
+          width: 18,
+          height: 18,
         }}
       >
         {item.icon}
@@ -95,10 +100,10 @@ function DropdownLink({
     <Link
       href={item.href}
       onClick={onClick}
-      className={cn("inline-flex min-w-0 items-center gap-2.5 transition", className)}
+      className={cn("inline-flex min-w-0 items-center gap-3 transition", className)}
     >
       <NavIcon item={item} tone={tone} />
-      <span className="min-w-0 flex-1 break-words leading-snug">{item.label}</span>
+      <span className="min-w-0 flex-1 truncate leading-snug">{item.label}</span>
     </Link>
   );
 }
@@ -255,24 +260,57 @@ export function Header() {
                             </div>
                           ) : null}
 
-                          {item.groups?.map((group) => (
-                            <div key={group.label}>
-                              <p className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
-                                {group.label}
-                              </p>
-                              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                                {group.items.map((child) => (
-                                  <DropdownLink
-                                    key={`${child.href}-${child.label}`}
-                                    item={child}
-                                    onClick={() => setOpen(false)}
-                                    tone="dark"
-                                    className="w-full rounded-[10px] border border-white/10 bg-white/5 px-2.5 py-2.5 text-xs font-medium text-white hover:bg-white/10 sm:text-sm"
-                                  />
-                                ))}
-                              </div>
+                          {item.groups?.length && (item.href === "/cars" || item.href === "/city-services") ? (
+                            <div className="flex flex-col gap-4 sm:flex-row sm:gap-0">
+                              {item.groups.map((group) => {
+                                const isWideList = group.label === "All Cars" || group.label === "All Cities";
+                                return (
+                                  <div
+                                    key={group.label}
+                                    className={cn(
+                                      isWideList
+                                        ? "min-w-0 flex-1 sm:pl-4"
+                                        : "w-full shrink-0 sm:w-[200px] sm:border-r sm:border-white/10 sm:pr-4",
+                                    )}
+                                  >
+                                    <p className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
+                                      {group.label}
+                                    </p>
+                                    <div className={cn(isWideList ? "grid grid-cols-1 gap-2 sm:grid-cols-2" : "space-y-2")}>
+                                      {group.items.map((child) => (
+                                        <DropdownLink
+                                          key={`${child.href}-${child.label}`}
+                                          item={child}
+                                          onClick={() => setOpen(false)}
+                                          tone="dark"
+                                          className="w-full rounded-[10px] border border-white/10 bg-white/5 px-2.5 py-2.5 text-xs font-medium text-white hover:bg-white/10 sm:text-sm"
+                                        />
+                                      ))}
+                                    </div>
+                                  </div>
+                                );
+                              })}
                             </div>
-                          ))}
+                          ) : (
+                            item.groups?.map((group) => (
+                              <div key={group.label}>
+                                <p className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-wider text-accent">
+                                  {group.label}
+                                </p>
+                                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                  {group.items.map((child) => (
+                                    <DropdownLink
+                                      key={`${child.href}-${child.label}`}
+                                      item={child}
+                                      onClick={() => setOpen(false)}
+                                      tone="dark"
+                                      className="w-full rounded-[10px] border border-white/10 bg-white/5 px-2.5 py-2.5 text-xs font-medium text-white hover:bg-white/10 sm:text-sm"
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            ))
+                          )}
                         </div>
                       ) : null}
                     </div>
@@ -383,14 +421,14 @@ export function Header() {
                         <ul
                           className={cn(
                             "space-y-1",
-                            item.groups?.length ? "mb-4 border-b border-primary/8 pb-3" : undefined,
+                            item.groups?.length ? "mb-5 border-b border-primary/8 pb-4" : undefined,
                           )}
                         >
                           {item.children.map((child) => (
                             <li key={`${child.href}-${child.label}`}>
                               <DropdownLink
                                 item={child}
-                                className="w-full rounded-[10px] px-3 py-2 text-sm text-primary/80 hover:bg-background hover:text-primary"
+                                className="w-full rounded-lg px-3 py-2.5 text-sm text-primary/80 hover:bg-background hover:text-primary"
                               />
                             </li>
                           ))}
@@ -398,53 +436,79 @@ export function Header() {
                       ) : null}
 
                       {item.groups?.length ? (
-                        <div
-                          className={cn(
-                            "grid gap-6",
-                            (item.href === "/cars" || item.href === "/city-services") &&
-                              "grid-cols-[minmax(220px,260px)_minmax(0,1fr)] gap-8",
-                            item.groups.length === 2 &&
-                              item.href !== "/cars" &&
-                              item.href !== "/city-services" &&
-                              "grid-cols-[240px_minmax(0,1fr)]",
-                            item.groups.length >= 3 ? "grid-cols-2 xl:grid-cols-3" : undefined,
-                          )}
-                        >
-                          {item.groups.map((group) => {
-                            const isWideList = group.label === "All Cars" || group.label === "All Cities";
-                            return (
-                              <div
-                                key={group.label}
-                                className={cn(
-                                  isWideList ? "min-w-0" : "min-w-[220px] shrink-0",
-                                  !isWideList &&
-                                    (item.href === "/cars" || item.href === "/city-services") &&
-                                    "border-r border-primary/8 pr-6",
-                                )}
-                              >
+                        item.href === "/cars" || item.href === "/city-services" ? (
+                          <div className="flex flex-col gap-8 xl:flex-row xl:gap-0">
+                            {item.groups.map((group) => {
+                              const isWideList = group.label === "All Cars" || group.label === "All Cities";
+                              return (
+                                <div
+                                  key={group.label}
+                                  className={cn(
+                                    isWideList
+                                      ? "min-w-0 flex-1 xl:pl-8"
+                                      : "w-full shrink-0 xl:w-[250px] xl:border-r xl:border-primary/10 xl:pr-8",
+                                  )}
+                                >
+                                  <div className="mb-3 flex items-center justify-between gap-3 px-1">
+                                    <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
+                                      {group.label}
+                                    </p>
+                                    {group.label === "All Cars" ? (
+                                      <Link
+                                        href="/cars"
+                                        className="text-[11px] font-semibold text-secondary hover:underline"
+                                      >
+                                        View all
+                                      </Link>
+                                    ) : null}
+                                  </div>
+                                  <ul
+                                    className={cn(
+                                      isWideList
+                                        ? "grid grid-cols-1 gap-1 sm:grid-cols-2 xl:grid-cols-3"
+                                        : "space-y-1",
+                                    )}
+                                  >
+                                    {group.items.map((child) => (
+                                      <li key={`${child.href}-${child.label}`} className="min-w-0">
+                                        <DropdownLink
+                                          item={child}
+                                          className="w-full min-w-0 rounded-lg px-3 py-2.5 text-sm text-primary/80 hover:bg-background hover:text-primary"
+                                        />
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div
+                            className={cn(
+                              "grid gap-6",
+                              item.groups.length === 2 && "grid-cols-[240px_minmax(0,1fr)]",
+                              item.groups.length >= 3 ? "grid-cols-2 xl:grid-cols-3" : undefined,
+                            )}
+                          >
+                            {item.groups.map((group) => (
+                              <div key={group.label} className="min-w-0">
                                 <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-wider text-muted">
                                   {group.label}
                                 </p>
-                                <ul
-                                  className={cn(
-                                    isWideList
-                                      ? "grid grid-cols-2 gap-x-3 gap-y-1 lg:grid-cols-3 xl:grid-cols-4"
-                                      : "space-y-0.5",
-                                  )}
-                                >
+                                <ul className="space-y-1">
                                   {group.items.map((child) => (
                                     <li key={`${child.href}-${child.label}`} className="min-w-0">
                                       <DropdownLink
                                         item={child}
-                                        className="w-full min-w-0 whitespace-normal rounded-[10px] px-3 py-2.5 text-sm text-primary/80 hover:bg-background hover:text-primary"
+                                        className="w-full min-w-0 rounded-lg px-3 py-2.5 text-sm text-primary/80 hover:bg-background hover:text-primary"
                                       />
                                     </li>
                                   ))}
                                 </ul>
                               </div>
-                            );
-                          })}
-                        </div>
+                            ))}
+                          </div>
+                        )
                       ) : null}
                     </div>
                   </div>
