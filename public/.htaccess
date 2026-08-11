@@ -1,19 +1,23 @@
 DirectoryIndex index.html
 Options -Indexes
 
-# Serve clean URLs / folders with index.html (Apache / cPanel)
-RewriteEngine On
-RewriteBase /
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
 
-# If request is a file, serve it
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
+  # Never rewrite Next.js RSC / flight payload paths
+  RewriteRule __next - [L]
 
-# If request is a directory with index.html, let Apache serve it
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteRule ^ - [L]
+  # If the request is an existing file, serve it
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
 
-# Fallback for any leftover .html files
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^(.*)$ $1.html [L]
+  # If the request is a directory with index.html, serve it
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^ - [L]
+
+  # Fallback for any leftover .html files (non-trailingSlash leftovers)
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
