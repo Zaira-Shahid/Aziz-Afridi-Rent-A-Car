@@ -122,7 +122,7 @@ const WHY_CITY = [
     text: "Your car arrives at your home, office, or hotel — no counter queues, no delays.",
   },
   {
-    icon: "4x4_mobility",
+    icon: "terrain",
     title: "4x4 for the North",
     text: "Purpose-built SUVs and off-roaders for Hunza, Skardu, and Naran terrain.",
   },
@@ -346,11 +346,11 @@ export function CityServicesContent() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {WHY_CITY.map((item, index) => (
               <Reveal key={item.title} delay={index * 80}>
-                <div className="h-full rounded-2xl border border-primary/8 bg-white p-6 text-center shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8">
-                  <span className="material-symbols-outlined mb-4 inline-flex text-4xl text-secondary">
+                <div className="h-full overflow-hidden rounded-2xl border border-primary/8 bg-white p-6 text-center shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8">
+                  <span className="material-symbols-outlined mb-4 inline-flex text-[2rem] text-secondary sm:text-4xl" aria-hidden>
                     {item.icon}
                   </span>
-                  <h4 className="font-heading text-lg font-semibold">{item.title}</h4>
+                  <h4 className="font-heading text-base font-semibold sm:text-lg">{item.title}</h4>
                   <p className="mt-2 text-sm text-muted">{item.text}</p>
                 </div>
               </Reveal>

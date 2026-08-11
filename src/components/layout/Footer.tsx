@@ -80,7 +80,7 @@ export function Footer() {
       <Container className="py-14 sm:py-20">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="space-y-5 sm:col-span-2 lg:col-span-1">
-            <Logo className="h-12 sm:h-14" />
+            <Logo className="h-6 w-auto max-w-[120px] sm:h-7 sm:max-w-[140px]" />
             <p className="max-w-xs text-sm leading-relaxed text-white/55">
               Redefining luxury travel standards across Pakistan. Your premium mobility partner.
             </p>

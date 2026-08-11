@@ -44,7 +44,7 @@ function NavIcon({
     return (
       <span className="relative flex h-7 w-7 shrink-0 overflow-hidden rounded-lg border border-black/5 bg-white shadow-sm">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={item.logo} alt="" className="h-full w-full object-cover" />
+        <img src={item.logo} alt="" className="h-full w-full object-contain p-0.5" />
       </span>
     );
   }

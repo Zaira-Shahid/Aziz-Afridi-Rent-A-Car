@@ -13,10 +13,15 @@ const BRAND_LOGOS: Record<string, string> = {
   Hyundai: "/brands/hyundai-logo.png",
   Kia: "/brands/kia-logo.png",
   Mercedes: "/brands/mercedes-logo.png",
+  "Mercedes-Benz": "/brands/mercedes-logo.png",
   Audi: "/brands/audi-logo.png",
   Lexus: "/brands/lexus-logo.png",
   Changan: "/brands/changan-logo.png",
 };
+
+function brandLogo(brand: string) {
+  return BRAND_LOGOS[brand] ?? BRAND_LOGOS[brand.replace(/-Benz$/i, "")] ?? undefined;
+}
 
 const CITY_TYPE_ICONS: Record<string, { icon: string; iconColor: string }> = {
   primary: { icon: "location_city", iconColor: C },
@@ -27,7 +32,22 @@ const CITY_TYPE_ICONS: Record<string, { icon: string; iconColor: string }> = {
 const allCarNavItems: NavLink[] = carModels.map((car) => ({
   label: car.name,
   href: `/cars/${car.slug}`,
-  logo: BRAND_LOGOS[car.brand],
+  logo: brandLogo(car.brand),
+}));
+
+const carsByBrand = carModels.reduce<Record<string, typeof carModels>>((acc, car) => {
+  const key = car.brand.startsWith("Mercedes") ? "Mercedes" : car.brand;
+  (acc[key] ??= []).push(car);
+  return acc;
+}, {});
+
+const carBrandNavGroups = Object.entries(carsByBrand).map(([brand, cars]) => ({
+  label: brand,
+  items: cars.map((car) => ({
+    label: car.name,
+    href: `/cars/${car.slug}`,
+    logo: brandLogo(car.brand),
+  })),
 }));
 
 const allCityNavItems: NavLink[] = cities.map((city, index) => {
@@ -58,7 +78,16 @@ export const mainNav: NavItem[] = [
     href: "/cars",
     icon: "directions_car",
     iconColor: A,
-    children: [{ label: "All Cars", href: "/cars", icon: "garage", iconColor: C }],
+    children: [
+      { label: "All Cars", href: "/cars", icon: "garage", iconColor: C },
+      { label: "Mercedes S500", href: "/cars/mercedes-s500", logo: "/brands/mercedes-logo.png" },
+      { label: "Mercedes S400", href: "/cars/mercedes-s400", logo: "/brands/mercedes-logo.png" },
+      { label: "Mercedes E250", href: "/cars/mercedes-e250", logo: "/brands/mercedes-logo.png" },
+      { label: "Mercedes C180", href: "/cars/mercedes-c180", logo: "/brands/mercedes-logo.png" },
+      { label: "Audi A6", href: "/cars/audi-a6", logo: "/brands/audi-logo.png" },
+      { label: "Toyota Prado", href: "/cars/toyota-prado", logo: "/brands/toyota-logo.png" },
+      { label: "Toyota Fortuner", href: "/cars/toyota-fortuner", logo: "/brands/toyota-logo.png" },
+    ],
     groups: [
       {
         label: "Car Categories",
@@ -75,6 +104,7 @@ export const mainNav: NavItem[] = [
           { label: "Tourism Fleet", href: "/categories/tourism", icon: "landscape", iconColor: A },
         ],
       },
+      ...carBrandNavGroups,
       {
         label: "All Cars",
         items: allCarNavItems,

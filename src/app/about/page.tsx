@@ -138,8 +138,33 @@ const GUARANTEES = [
 export default function AboutPage() {
   return (
     <>
-      <header className="relative h-[280px] overflow-hidden sm:h-[400px] lg:h-[520px]">
-        <Image src={HERO} alt="Luxury showroom atmosphere" fill priority className="object-cover" sizes="100vw" />
+      <header className="relative min-h-[320px] overflow-hidden sm:min-h-[440px] lg:min-h-[560px]">
+        <Image
+          src={HERO}
+          alt="Signature Rent A Car premium SUV fleet with Faisal Mosque at dusk"
+          fill
+          priority
+          className="object-cover object-[75%_center] sm:object-right"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/92 via-primary/60 to-transparent" />
+        <Container className="relative z-10 flex min-h-[320px] flex-col justify-center py-12 sm:min-h-[440px] sm:py-16 lg:min-h-[560px] lg:pb-24 lg:pt-20">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent sm:mb-4">Our Story</p>
+          <h1 className="hero-shadow max-w-xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            About Us
+          </h1>
+          <div className="mt-4 max-w-lg space-y-3 text-sm text-white/85 sm:text-base lg:text-lg">
+            <p>
+              Premium chauffeur-driven car rental across Pakistan — built on trust, punctuality, and a fleet you can count on.
+            </p>
+            <p>
+              From Islamabad and Rawalpindi to Lahore, Karachi, and the northern routes, we deliver polished vehicles with professional drivers.
+            </p>
+            <p>
+              Whether it is an airport transfer, corporate day, wedding, or a mountain weekend — Signature keeps every journey smooth and on time.
+            </p>
+          </div>
+        </Container>
       </header>
 
       <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">

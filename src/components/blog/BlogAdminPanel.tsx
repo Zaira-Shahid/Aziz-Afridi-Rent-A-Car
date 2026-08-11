@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { blogCategories, blogPosts } from "@/data";
-import { isAllowedBlogAdminEmail } from "@/lib/blog-admin";
+import { getAuthUserEmail, isAllowedBlogAdminEmail } from "@/lib/blog-admin";
 import { formatBlogDate, slugify } from "@/lib/blog-storage";
 import {
   createFirebaseBlogPost,
@@ -79,19 +79,27 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
         return;
       }
 
-      if (!isAllowedBlogAdminEmail(user.email)) {
-        const tried = user.email ?? "unknown";
+      const email = getAuthUserEmail(user);
+      if (!email) {
+        await signOut(getFirebaseAuth());
+        setLoggedIn(false);
+        setUserEmail("");
+        setLoginError("Google did not return an email. Allow email permission and try again.");
+        return;
+      }
+
+      if (!isAllowedBlogAdminEmail(email)) {
         await signOut(getFirebaseAuth());
         setLoggedIn(false);
         setUserEmail("");
         setLoginError(
-          `Signed in as ${tried}, but this account is not allowed. Use an authorized admin Google account.`,
+          `Signed in as ${email}, but this account is not allowed. Allowed: ${["ulainnoor957@gmail.com", "developerx.org@gmail.com", "signaturesrentacar@gmail.com", "xfirebasc@gmail.com"].join(", ")}`,
         );
         return;
       }
 
       setLoggedIn(true);
-      setUserEmail(user.email ?? "");
+      setUserEmail(email);
       setLoginError("");
     });
     return () => unsub();
@@ -102,7 +110,6 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     setForm(emptyForm);
     setEditingSlug(null);
     setFormError("");
-    setLoginError("");
     setViewPost(null);
     setGoogleLoading(false);
   }, [open]);
@@ -190,13 +197,25 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     setGoogleLoading(true);
     try {
       const result = await signInWithPopup(getFirebaseAuth(), getGoogleProvider());
-      if (!isAllowedBlogAdminEmail(result.user.email)) {
-        const tried = result.user.email ?? "unknown";
+      const email = getAuthUserEmail(result.user);
+
+      if (!email) {
+        await signOut(getFirebaseAuth());
+        setLoginError("Google did not return an email. Allow email permission and try again.");
+        return;
+      }
+
+      if (!isAllowedBlogAdminEmail(email)) {
         await signOut(getFirebaseAuth());
         setLoginError(
-          `Signed in as ${tried}, but this account is not allowed. Use an authorized admin Google account.`,
+          `Signed in as ${email}, but this account is not allowed. Choose developerx.org@gmail.com (or another authorized admin account).`,
         );
+        return;
       }
+
+      setLoggedIn(true);
+      setUserEmail(email);
+      setLoginError("");
     } catch (error) {
       const code =
         typeof error === "object" && error !== null && "code" in error

@@ -85,15 +85,33 @@ const INFO_CARDS = [
 export default function ContactPage() {
   return (
     <>
-      <header className="relative h-[280px] overflow-hidden sm:h-[400px] lg:h-[520px]">
+      <header className="relative min-h-[320px] overflow-hidden sm:min-h-[440px] lg:min-h-[560px]">
         <Image
           src={HERO}
-          alt="Luxury sedan in a corporate district of Islamabad at twilight"
+          alt="Signature Rent A Car luxury sedan overlooking Faisal Mosque, Islamabad"
           fill
           priority
-          className="object-cover"
+          className="object-cover object-[70%_center] sm:object-center"
           sizes="100vw"
         />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/15" />
+        <Container className="relative z-10 flex min-h-[320px] flex-col justify-center py-12 sm:min-h-[440px] sm:py-16 lg:min-h-[560px] lg:pb-24 lg:pt-20">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent sm:mb-4">Contact</p>
+          <h1 className="hero-shadow max-w-xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            Contact Us
+          </h1>
+          <div className="mt-4 max-w-lg space-y-3 text-sm text-white/85 sm:text-base lg:text-lg">
+            <p>
+              Call, WhatsApp, or send an inquiry — our team is ready to plan your next ride across Pakistan.
+            </p>
+            <p>
+              Share your dates, city, and vehicle preference for a fast quote on sedans, SUVs, and chauffeur packages.
+            </p>
+            <p>
+              Airport pickups, hotel transfers, and outstation trips — we respond quickly and confirm every detail before you travel.
+            </p>
+          </div>
+        </Container>
       </header>
 
       <section className="py-16 sm:py-24 lg:py-[100px]">
