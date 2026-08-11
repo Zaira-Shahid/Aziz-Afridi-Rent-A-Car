@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 
-const HERO = "/images/about-hero.png";
+const HERO = "/images/about-hero-v2.png";
 
 const STORY =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuA_0DvMgtwmvaqx9Ri-RF_X5h36PhzSZEy3QOy3_mIOctfV29MYedB-lytMPbgF6KfGb0CTLBso4efmlWt-tgjviDre4b7Zps_zEo-EnLGTBfUqdptA_tGtr7DjeTGqJ3ACcyhIhsvxwTp4RyoDZJYifoRZsb-QBU3lR01ZZO9lMMWaSWPaWy2IER5DyxTGDLThHulB8tOQb0uf7LmJv425G8do_dV_Xs7zB-O8_gXlzZJfcSFt4FIy";
@@ -147,7 +147,7 @@ export default function AboutPage() {
           className="object-cover object-[75%_center] sm:object-right"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/92 via-primary/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/75 via-primary/35 to-transparent" />
         <Container className="relative z-10 flex min-h-[320px] flex-col justify-center py-12 sm:min-h-[440px] sm:py-16 lg:min-h-[560px] lg:pb-24 lg:pt-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent sm:mb-4">Our Story</p>
           <h1 className="hero-shadow max-w-xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">

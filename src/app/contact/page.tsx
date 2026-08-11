@@ -17,7 +17,7 @@ export const metadata: Metadata = pageMeta({
 });
 
 
-const HERO = "/images/contact-hero.png";
+const HERO = "/images/contact-hero-v2.png";
 
 const OFFICE_MAP =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCOLcLgvntMjN0RKlanOO3hzDIQbvZuKjd4WntHKjUnZINDAaS9oMupBV4tr0QvZSUnrCLDh6tGRuvkQnZ8w3GVhqSF4tf1QC6JnvxsPjRAGW7OJeO778wbBrI6B_m4jNmMJnEp8lvJJDkl_FTybKegol1Euq7BMp9acaAM6slsr5q0aYI8QWhQnokHcEn0yIsxiK1KLCd9JvVAp71oLrA2kEBUGa3F9Gxn_pgQ0YWQqFbtDEbmdOGi";
@@ -94,7 +94,7 @@ export default function ContactPage() {
           className="object-cover object-[70%_center] sm:object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/55 to-primary/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/30 to-transparent" />
         <Container className="relative z-10 flex min-h-[320px] flex-col justify-center py-12 sm:min-h-[440px] sm:py-16 lg:min-h-[560px] lg:pb-24 lg:pt-20">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent sm:mb-4">Contact</p>
           <h1 className="hero-shadow max-w-xl font-heading text-3xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
