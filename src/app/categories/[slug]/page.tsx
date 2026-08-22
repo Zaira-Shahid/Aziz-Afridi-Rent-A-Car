@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: Props) {
   if (!category) notFound();
 
   const models = getCarsForCategory(category.slug);
-  const heroImage = models[0]?.image ?? "/images/corolla%20white.png";
+  const heroImage = models[0]?.image ?? "/images/corolla-white.jpg";
   const nameParts = category.name.split(" ");
   const accent = nameParts.length > 1 ? nameParts[nameParts.length - 1] : undefined;
   const title = accent ? nameParts.slice(0, -1).join(" ") : category.name;

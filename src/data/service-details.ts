@@ -802,8 +802,8 @@ const monthlyCarRental: ServiceDetail = {
         tag: "Best Value",
         seats: 5,
         transmission: "Automatic",
-        image: "/images/corolla%20white.png",
-        imageAlt: "/images/corolla%20black.png",
+        image: "/images/corolla-white.jpg",
+        imageAlt: "/images/corolla-black.jpg",
         priceDay: 4500,
       },
       {
@@ -1265,8 +1265,8 @@ const corporateCarRental: ServiceDetail = {
         tag: "2024+",
         seats: 5,
         transmission: "Automatic",
-        image: "/images/corolla%20white.png",
-        imageAlt: "/images/corolla%20black.png",
+        image: "/images/corolla-white.jpg",
+        imageAlt: "/images/corolla-black.jpg",
         priceDay: 6000,
       },
       {
@@ -1283,8 +1283,8 @@ const corporateCarRental: ServiceDetail = {
         tag: "2024+",
         seats: 5,
         transmission: "Automatic",
-        image: "/images/corolla%20white.png",
-        imageAlt: "/images/corolla%20black.png",
+        image: "/images/corolla-white.jpg",
+        imageAlt: "/images/corolla-black.jpg",
         priceDay: 7000,
       },
       {
@@ -1460,8 +1460,8 @@ const airportPickDrop: ServiceDetail = {
         tag: "Executive",
         seats: 3,
         transmission: "Automatic",
-        image: "/images/corolla%20white.png",
-        imageAlt: "/images/corolla%20black.png",
+        image: "/images/corolla-white.jpg",
+        imageAlt: "/images/corolla-black.jpg",
         priceDay: 4500,
       },
       {
