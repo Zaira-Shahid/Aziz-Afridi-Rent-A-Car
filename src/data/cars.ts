@@ -1,8 +1,9 @@
 import type { CarCategory, CarModel, FaqItem, FleetSection } from "@/types";
 
-/** Encode local filenames that contain spaces */
+/** Car fleet images live under /images/fleet (no spaces; fresh path avoids Hostinger CDN 404 cache) */
 export function carImage(filename: string) {
-  return `/images/${filename.split("/").map(encodeURIComponent).join("/")}`;
+  const clean = filename.replace(/^\/?images\/(fleet\/)?/, "");
+  return `/images/fleet/${clean.split("/").map(encodeURIComponent).join("/")}`;
 }
 
 export const fleetSections: FleetSection[] = [

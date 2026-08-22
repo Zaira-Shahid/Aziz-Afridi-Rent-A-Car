@@ -88,6 +88,7 @@ export function CarCard({ car, className }: CarCardProps) {
             src={car.image}
             alt={`${car.name} rental`}
             fill
+            unoptimized
             className={cn(
               "object-cover transition duration-700",
               hasAlt && showAlt ? "scale-105 opacity-0" : "scale-100 opacity-100",
@@ -100,6 +101,7 @@ export function CarCard({ car, className }: CarCardProps) {
               src={car.imageAlt!}
               alt={`${car.name} black color`}
               fill
+              unoptimized
               className={cn(
                 "object-cover transition duration-700",
                 showAlt ? "scale-105 opacity-100" : "scale-100 opacity-0",
