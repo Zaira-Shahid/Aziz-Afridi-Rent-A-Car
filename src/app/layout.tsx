@@ -98,6 +98,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       addressLocality: "Islamabad",
       addressCountry: "PK",
     },
+    hasMap: brand.location.mapsUrl,
     areaServed: "Pakistan",
     priceRange: "$$",
   };

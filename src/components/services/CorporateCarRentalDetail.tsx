@@ -3,6 +3,7 @@ import { CtaBanner } from "@/components/shared";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { brand } from "@/lib/brand";
 import type { ServiceDetail } from "@/types";
 import { ServiceFaqAccordion } from "./ServiceFaqAccordion";
 import { ServiceFleetGrid } from "./ServiceFleetGrid";
@@ -233,7 +234,7 @@ export function CorporateCarRentalDetail({ data }: CorporateCarRentalDetailProps
                       <label className="text-sm font-semibold">Phone Number</label>
                       <input
                         type="tel"
-                        placeholder="03299499996"
+                        placeholder={brand.phone}
                         className="w-full rounded-xl border border-primary/10 bg-[#f3f4f5] p-4 outline-none transition focus:ring-2 focus:ring-secondary"
                       />
                     </div>

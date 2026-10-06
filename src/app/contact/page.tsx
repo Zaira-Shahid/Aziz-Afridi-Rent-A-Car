@@ -25,9 +25,9 @@ const OFFICE_MAP =
 const OFFICES = [
   {
     title: "Islamabad HQ",
-    address: "Signature Plaza, Blue Area, Islamabad",
+    address: brand.location.address,
     hours: "Mon - Sat: 09:00 - 20:00 | Sunday: 10:00 - 18:00",
-    href: "https://www.google.com/maps/search/?api=1&query=Blue+Area+Islamabad",
+    href: brand.location.mapsUrl,
   },
   {
     title: "Rawalpindi / Islamabad Airport Desk",
@@ -68,8 +68,8 @@ const INFO_CARDS = [
   {
     icon: "location_on",
     title: "Our Office",
-    text: "Signature Plaza, Blue Area, Islamabad, Pakistan.",
-    href: "https://www.google.com/maps/search/?api=1&query=Blue+Area+Islamabad",
+    text: brand.location.address,
+    href: brand.location.mapsUrl,
     linkLabel: "Get Directions",
   },
   {
@@ -315,18 +315,23 @@ export default function ContactPage() {
       </section>
 
       <section className="relative h-[360px] w-full sm:h-[440px]">
-        <Image src={OFFICE_MAP} alt="Map to Signature Rent A Car office in Blue Area, Islamabad" fill className="object-cover" sizes="100vw" />
+        <Image src={OFFICE_MAP} alt="Map to Signature Rent A Car office in Islamabad" fill className="object-cover" sizes="100vw" />
         <div className="absolute inset-0 bg-primary/20" />
         <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="luxury-card-shadow flex items-center gap-4 rounded-2xl bg-white p-6">
+          <a
+            href={brand.location.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="luxury-card-shadow flex items-center gap-4 rounded-2xl bg-white p-6 transition hover:scale-[1.02]"
+          >
             <span className="material-symbols-outlined text-4xl text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
               location_on
             </span>
             <div className="text-left">
-              <p className="font-semibold text-primary">Signature Rent A Car</p>
-              <p className="text-sm text-muted">Blue Area, Islamabad</p>
+              <p className="font-semibold text-primary">{brand.location.label}</p>
+              <p className="text-sm text-muted">Islamabad · Get Directions</p>
             </div>
-          </div>
+          </a>
         </div>
       </section>
     </>

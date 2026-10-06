@@ -16,6 +16,7 @@ export const metadata: Metadata = pageMeta({
 
 
 const HERO = "/images/about-hero-v2.png";
+const FOUNDER = "/images/founder-umar-saeed.jpg";
 
 const STORY =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuA_0DvMgtwmvaqx9Ri-RF_X5h36PhzSZEy3QOy3_mIOctfV29MYedB-lytMPbgF6KfGb0CTLBso4efmlWt-tgjviDre4b7Zps_zEo-EnLGTBfUqdptA_tGtr7DjeTGqJ3ACcyhIhsvxwTp4RyoDZJYifoRZsb-QBU3lR01ZZO9lMMWaSWPaWy2IER5DyxTGDLThHulB8tOQb0uf7LmJv425G8do_dV_Xs7zB-O8_gXlzZJfcSFt4FIy";
@@ -200,6 +201,41 @@ export default function AboutPage() {
             <div className="relative h-[360px] overflow-hidden rounded-xl shadow-2xl sm:h-[500px]">
               <Image src={STORY} alt="Luxury SUV outside modern building" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
             </div>
+          </AnimateIn>
+        </Container>
+      </section>
+
+      <section className="bg-white py-16 sm:py-24 lg:py-[100px]">
+        <Container className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
+          <AnimateIn className="relative order-2 md:order-1">
+            <div className="absolute -inset-3 -z-10 rounded-2xl bg-secondary/15 sm:-inset-4" />
+            <div className="relative h-[380px] overflow-hidden rounded-xl shadow-2xl sm:h-[520px]">
+              <Image
+                src={FOUNDER}
+                alt="Umar Saeed, Founder & CEO of Signature Rent A Car"
+                fill
+                className="object-cover object-[center_20%]"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+          </AnimateIn>
+          <AnimateIn delay={120} className="order-1 space-y-5 md:order-2">
+            <span className="inline-block rounded-full bg-accent/25 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+              Leadership
+            </span>
+            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
+              Founder &amp; CEO
+            </h2>
+            <p className="font-heading text-2xl font-semibold text-secondary sm:text-3xl">Umar Saeed</p>
+            <p className="text-base leading-relaxed text-muted sm:text-lg">
+              Umar Saeed founded Signature Rent A Car with a clear goal: deliver premium, reliable
+              chauffeur-driven travel across Pakistan — starting from Islamabad and expanding nationwide.
+            </p>
+            <p className="text-sm leading-relaxed text-muted sm:text-base">
+              Under his leadership, Signature has grown into a trusted mobility partner for families,
+              corporate clients, and travelers who expect punctual service, a polished fleet, and support
+              they can count on every mile of the journey.
+            </p>
           </AnimateIn>
         </Container>
       </section>

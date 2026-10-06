@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { brand } from "@/lib/brand";
 
 const GOOGLE_REVIEWS = [
   {
@@ -138,7 +139,7 @@ export function GoogleReviewsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          href="https://www.google.com/maps"
+          href={brand.location.mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex w-full items-center justify-center rounded-full border border-primary/15 px-5 py-2.5 text-sm font-medium text-primary transition hover:border-primary/30 hover:bg-white sm:w-fit"

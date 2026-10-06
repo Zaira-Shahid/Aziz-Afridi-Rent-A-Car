@@ -2,10 +2,15 @@ export const brand = {
   name: "Signature Rent A Car",
   shortName: "Signature",
   tagline: "Premium car rental across Pakistan",
-  phone: "03299499996",
-  whatsapp: "923299499996",
+  phone: "03311116892",
+  whatsapp: "923311116892",
   email: "info@signaturesrentacar.com",
   currency: "PKR",
+  location: {
+    label: "Signature Rent A Car, Islamabad",
+    address: "Signature Rent A Car, Islamabad, Pakistan",
+    mapsUrl: "https://share.google/sQFsY8bFiIJZUcKvR",
+  },
   social: {
     facebook: "https://www.facebook.com/signaturesrentacar/",
     instagram: "https://www.instagram.com/signaturesrentacar/",
