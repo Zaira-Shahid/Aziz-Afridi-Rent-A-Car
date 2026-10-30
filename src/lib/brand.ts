@@ -2,8 +2,8 @@ export const brand = {
   name: "Signature Rent A Car",
   shortName: "Signature",
   tagline: "Premium car rental across Pakistan",
-  phone: "03311116892",
-  whatsapp: "923311116892",
+  phone: "03005107693",
+  whatsapp: "923005107693",
   email: "info@signaturesrentacar.com",
   currency: "PKR",
   location: {
