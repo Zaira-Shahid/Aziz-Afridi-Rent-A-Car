@@ -281,7 +281,7 @@ export default function ReviewsPage() {
                   href={`https://wa.me/${brand.whatsapp}?text=${encodeURIComponent("Hi Signature, I'd like to share feedback about my recent booking.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95 sm:mt-6 sm:w-auto"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold !text-white transition hover:brightness-95 sm:mt-6 sm:w-auto"
                 >
                   <span className="material-symbols-outlined text-[18px]">rate_review</span>
                   Share Your Experience

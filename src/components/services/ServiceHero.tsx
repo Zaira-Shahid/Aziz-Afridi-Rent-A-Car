@@ -28,7 +28,7 @@ export function ServiceHero({ hero }: ServiceHeroProps) {
           <div className="animate-fade-up-delay-2 flex flex-col gap-3 pt-2 sm:flex-row sm:gap-4">
             <Link
               href={hero.primaryCta.href}
-              className="rounded-xl bg-accent px-8 py-3.5 text-center text-sm font-semibold text-primary transition hover:scale-105"
+              className="rounded-xl bg-accent px-8 py-3.5 text-center text-sm font-semibold !text-white transition hover:scale-105"
             >
               {hero.primaryCta.label}
             </Link>

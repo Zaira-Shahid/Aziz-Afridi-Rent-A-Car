@@ -3,8 +3,8 @@ import { carModels } from "@/data/cars";
 import { cities } from "@/data/cities";
 
 /** Project palette for nav icons */
-const C = "#04C4E3"; // secondary
-const A = "#BFF52C"; // accent
+const C = "#ed0014"; // secondary
+const A = "#ed0014"; // accent
 
 const BRAND_LOGOS: Record<string, string> = {
   Suzuki: "/brands/suzuki-logo.png",

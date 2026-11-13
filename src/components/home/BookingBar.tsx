@@ -195,7 +195,7 @@ export function BookingBar({ className }: BookingBarProps) {
 
         <button
           type="submit"
-          className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent py-4 text-sm font-semibold text-primary shadow-lg transition hover:brightness-110"
+          className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent py-4 text-sm font-semibold !text-white shadow-lg transition hover:brightness-110"
         >
           <span className="material-symbols-outlined text-[20px]">send</span>
           Send on WhatsApp

@@ -25,7 +25,7 @@ export function HomeCta() {
               <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
                 <Link
                   href="/cars"
-                  className="rounded-full bg-accent px-10 py-4 text-sm font-semibold text-primary shadow-xl transition hover:scale-105"
+                  className="rounded-full bg-accent px-10 py-4 text-sm font-semibold !text-white shadow-xl transition hover:scale-105"
                 >
                   Reserve Now
                 </Link>

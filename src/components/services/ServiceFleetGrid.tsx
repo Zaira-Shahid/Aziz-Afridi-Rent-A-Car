@@ -91,7 +91,7 @@ function FleetCard({ item }: { item: ServiceFleetItem }) {
               sizes="(max-width: 768px) 100vw, 25vw"
             />
           ) : null}
-          <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">
+          <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold !text-white">
             {item.tag}
           </span>
         </div>
@@ -117,7 +117,7 @@ function FleetCard({ item }: { item: ServiceFleetItem }) {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-xs font-semibold text-primary transition hover:brightness-95"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-xs font-semibold !text-white transition hover:brightness-95"
             >
               <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">WhatsApp</span>

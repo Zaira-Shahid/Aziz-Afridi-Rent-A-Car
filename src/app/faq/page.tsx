@@ -473,7 +473,7 @@ export default function FaqPage() {
               <div className="animate-fade-up-delay-2 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <a
                   href={`tel:${brand.phone}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold !text-white transition hover:brightness-95"
                 >
                   <span className="material-symbols-outlined text-[18px]">support_agent</span>
                   Call Agent · {formatPhoneDisplay()}
@@ -663,7 +663,7 @@ export default function FaqPage() {
                 <div className="animate-fade-up-delay-2 mt-8 flex flex-col justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
                   <a
                     href={`tel:${brand.phone}`}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-sm font-semibold text-primary transition hover:brightness-95 sm:px-10 sm:py-4"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-sm font-semibold !text-white transition hover:brightness-95 sm:px-10 sm:py-4"
                   >
                     <span className="material-symbols-outlined text-[18px]">support_agent</span>
                     Call Agent

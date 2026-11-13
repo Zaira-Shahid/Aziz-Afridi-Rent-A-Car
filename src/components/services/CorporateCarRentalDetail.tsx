@@ -130,7 +130,7 @@ export function CorporateCarRentalDetail({ data }: CorporateCarRentalDetailProps
                   key={step.title}
                   className="rounded-2xl border border-primary/8 bg-white p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)]"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-heading text-sm font-bold text-primary">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-heading text-sm font-bold !text-white">
                     {index + 1}
                   </span>
                   <h3 className="mt-5 font-heading text-lg font-semibold">{step.title}</h3>

@@ -47,7 +47,7 @@ export function FaqHelpCard({ className }: FaqHelpCardProps) {
         <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center lg:flex-col lg:items-stretch xl:flex-row xl:items-center">
           <a
             href={`tel:${brand.phone}`}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:scale-[1.02] hover:brightness-95 active:scale-[0.98]"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold !text-white transition hover:scale-[1.02] hover:brightness-95 active:scale-[0.98]"
           >
             <span className="material-symbols-outlined text-[18px]">support_agent</span>
             Call Agent

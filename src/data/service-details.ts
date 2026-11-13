@@ -487,7 +487,7 @@ const weddingCarRental: ServiceDetail = {
       "Fill out the form and our wedding concierge will get back to you within 2 hours with a customized quote and availability.",
     contact: [
       { icon: "call", label: "Direct Line", value: formatPhoneDisplay() },
-      { icon: "mail", label: "Email Us", value: "info@signaturesrentacar.com" },
+      { icon: "mail", label: "Email Us", value: "info@example.com" },
     ],
   },
   included: {
@@ -1329,7 +1329,7 @@ const corporateCarRental: ServiceDetail = {
     ],
     contact: [
       { icon: "call", label: "Direct Line", value: formatPhoneDisplay() },
-      { icon: "mail", label: "Email Us", value: "info@signaturesrentacar.com" },
+      { icon: "mail", label: "Email Us", value: "info@example.com" },
     ],
   },
   testimonials: {

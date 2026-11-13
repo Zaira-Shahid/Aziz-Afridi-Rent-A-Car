@@ -144,7 +144,7 @@ export function InquireModal({ car, open, onClose }: InquireModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="absolute right-4 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-base font-bold leading-none text-primary shadow-sm transition hover:brightness-95"
+            className="absolute right-4 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-base font-bold leading-none !text-white shadow-sm transition hover:brightness-95"
           >
             ×
           </button>
@@ -201,7 +201,7 @@ export function InquireModal({ car, open, onClose }: InquireModalProps) {
                       </option>
                     ))}
                   </select>
-                  <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[6px] bg-accent text-primary">
+                  <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[6px] bg-accent !text-white">
                     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                       <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                     </svg>
@@ -225,7 +225,7 @@ export function InquireModal({ car, open, onClose }: InquireModalProps) {
                       </option>
                     ))}
                   </select>
-                  <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[6px] bg-accent text-primary">
+                  <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[6px] bg-accent !text-white">
                     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
                       <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                     </svg>

@@ -115,7 +115,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${sora.variable} ${inter.variable}`}>
+      {/* Extensions may inject body attributes before React hydrates. */}
+      <body className={`${sora.variable} ${inter.variable}`} suppressHydrationWarning>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18444721583"
           strategy="afterInteractive"

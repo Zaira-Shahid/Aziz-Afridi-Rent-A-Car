@@ -56,7 +56,7 @@ function NavIcon({
 
   if (!item.icon) return null;
 
-  const color = item.iconColor ?? "#04C4E3";
+  const color = item.iconColor ?? "#ed0014";
 
   return (
     <span
@@ -160,9 +160,9 @@ export function Header() {
   const mobileMenu =
     open && mounted
       ? createPortal(
-          <div className="fixed inset-0 z-[100] flex flex-col bg-[#000B1D] text-white xl:hidden" role="dialog" aria-modal="true">
-            <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-[#000B1D] px-4 sm:h-16 sm:px-6">
-              <Logo className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px]" />
+          <div className="fixed inset-0 z-[100] flex flex-col bg-[#15181d] text-white xl:hidden" role="dialog" aria-modal="true">
+            <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-[#15181d] px-4 sm:h-16 sm:px-6">
+              <Logo className="h-9 w-[72px] sm:h-10 sm:w-[80px]" />
               <div className="flex shrink-0 items-center gap-2">
                 <a
                   href={`https://wa.me/${brand.whatsapp}`}
@@ -186,7 +186,7 @@ export function Header() {
               </div>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#000B1D]">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#15181d]">
               <div className="mx-auto flex w-full max-w-7xl flex-col gap-1 px-4 py-3 pb-10 sm:px-6">
                 {mainNav.map((item) => {
                   const menu = hasMenu(item);
@@ -236,7 +236,7 @@ export function Header() {
                       </button>
 
                       {expanded ? (
-                        <div className="mt-1 space-y-3 rounded-[12px] border border-white/10 bg-[#121c2e] px-3 py-3">
+                        <div className="mt-1 space-y-3 rounded-[12px] border border-white/10 bg-[#202328] px-3 py-3">
                           <Link
                             href={item.href}
                             className="col-span-2 inline-flex items-center gap-2 py-1.5 text-sm font-semibold text-accent"
@@ -329,7 +329,7 @@ export function Header() {
                   <Link
                     href="/contact"
                     onClick={() => setOpen(false)}
-                    className="rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider !text-primary"
+                    className="rounded-full bg-accent px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider !text-white"
                   >
                     Book Now
                   </Link>
@@ -343,10 +343,10 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-navy text-white backdrop-blur-xl">
+      <header className={cn("sticky top-0 z-50 border-b border-white/10 bg-navy text-white backdrop-blur-xl", "ride-header")}>
         <Container className="flex h-14 items-center justify-between gap-3 sm:h-16 xl:h-[72px]">
           <div className="flex min-w-0 flex-1 items-center xl:flex-none">
-            <Logo priority className="h-5 max-w-[90px] sm:h-6 sm:max-w-[110px] xl:h-7 xl:max-w-[130px]" />
+            <Logo priority className="h-9 w-[72px] sm:h-10 sm:w-[80px] xl:h-12 xl:w-[96px]" />
           </div>
 
           <nav className="hidden h-full items-stretch gap-1 xl:flex xl:gap-2">
@@ -528,13 +528,13 @@ export function Header() {
             </a>
             <Link
               href="/contact"
-              className="rounded-full bg-accent px-6 py-2.5 text-xs font-semibold uppercase tracking-wider !text-primary transition hover:brightness-110"
+              className="rounded-full bg-accent px-6 py-2.5 text-xs font-semibold uppercase tracking-wider !text-white transition hover:brightness-110"
             >
               Book Now
             </Link>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 xl:hidden">
+          <div className="mobile-header-actions flex shrink-0 items-center gap-2 xl:hidden">
             <a
               href={`https://wa.me/${brand.whatsapp}`}
               target="_blank"
@@ -545,7 +545,9 @@ export function Header() {
               <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M12.04 2C6.58 2 2.15 6.4 2.15 11.83c0 1.97.55 3.8 1.5 5.38L2 22l4.95-1.6a9.86 9.86 0 0 0 5.09 1.4h.01c5.46 0 9.89-4.4 9.89-9.83C21.94 6.4 17.5 2 12.04 2Zm5.76 13.98c-.24.68-1.4 1.25-1.93 1.33-.5.07-1.13.1-1.83-.12-.42-.13-.97-.32-1.67-.62-2.94-1.27-4.85-4.23-5-4.42-.14-.19-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.45.27-.29.59-.36.79-.36h.57c.18 0 .42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.36 1.46.29.15.46.12.63-.07.17-.2.73-.85.93-1.14.2-.29.4-.24.66-.14.27.1 1.7.8 1.99.95.29.15.48.22.55.34.07.13.07.73-.17 1.41Z" />
               </svg>
+              <span className="mobile-whatsapp-label">WhatsApp</span>
             </a>
+            <Link href="/contact" className="mobile-book-button">Book Now</Link>
             <button
               type="button"
               aria-label={open ? "Close menu" : "Open menu"}

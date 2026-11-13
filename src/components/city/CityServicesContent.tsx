@@ -230,7 +230,7 @@ export function CityServicesContent() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-xs font-semibold uppercase tracking-wider text-primary transition hover:brightness-110"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-xs font-semibold uppercase tracking-wider !text-white transition hover:brightness-110"
             >
               <span className="material-symbols-outlined text-[20px]">search</span>
               Search Cars
@@ -299,7 +299,7 @@ export function CityServicesContent() {
                     <span
                       className={`absolute top-4 rounded-full px-3 py-1 text-xs font-semibold ${
                         city.badgeAccent
-                          ? "left-4 bg-accent text-primary"
+                          ? "left-4 bg-accent !text-white"
                           : "right-4 bg-white/90 text-primary backdrop-blur"
                       }`}
                     >
@@ -520,7 +520,7 @@ export function CityServicesContent() {
               <div className="mt-10 flex flex-col justify-center gap-4 sm:mt-12 sm:flex-row sm:gap-6">
                 <Link
                   href="/cars"
-                  className="rounded-2xl bg-accent px-10 py-4 text-xs font-semibold uppercase tracking-wider text-primary transition hover:scale-105 sm:px-12 sm:py-5"
+                  className="rounded-2xl bg-accent px-10 py-4 text-xs font-semibold uppercase tracking-wider !text-white transition hover:scale-105 sm:px-12 sm:py-5"
                 >
                   Browse Fleet
                 </Link>

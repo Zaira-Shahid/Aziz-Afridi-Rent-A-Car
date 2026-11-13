@@ -34,7 +34,7 @@ export function FleetParticles() {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     const material = new THREE.PointsMaterial({
-      color: 0x04c4e3,
+      color: 0xed0014,
       size: 0.05,
       transparent: true,
       opacity: 0.55,

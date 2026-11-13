@@ -56,7 +56,7 @@ export function WeeklyCarRentalDetail({ data }: WeeklyCarRentalDetailProps) {
                   )}
                 >
                   {pkg.featured ? (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-4 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-4 py-1 text-[10px] font-semibold uppercase tracking-wide !text-white">
                       Most Popular
                     </span>
                   ) : null}
@@ -134,7 +134,7 @@ export function WeeklyCarRentalDetail({ data }: WeeklyCarRentalDetailProps) {
                 <ol className="mt-10 space-y-8">
                   {process.steps.map((step, index) => (
                     <li key={step.title} className="flex gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent font-heading text-sm font-bold text-primary">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent font-heading text-sm font-bold !text-white">
                         {index + 1}
                       </span>
                       <div>

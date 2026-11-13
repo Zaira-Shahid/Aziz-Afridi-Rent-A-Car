@@ -537,7 +537,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
                 <button
                   type="submit"
                   disabled={saving}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-primary transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold !text-white transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <span className="material-symbols-outlined text-[18px]">{editingSlug ? "save" : "add"}</span>
                   {saving ? "Saving..." : editingSlug ? "Update Blog" : "Publish Blog"}

@@ -108,7 +108,7 @@ export function DailyCarRentalDetail({ data }: DailyCarRentalDetailProps) {
                   )}
                 >
                   {pkg.featured ? (
-                    <span className="absolute -top-4 rounded-full bg-accent px-6 py-1 text-xs font-semibold uppercase tracking-wide text-primary shadow-lg">
+                    <span className="absolute -top-4 rounded-full bg-accent px-6 py-1 text-xs font-semibold uppercase tracking-wide !text-white shadow-lg">
                       Most Popular
                     </span>
                   ) : null}

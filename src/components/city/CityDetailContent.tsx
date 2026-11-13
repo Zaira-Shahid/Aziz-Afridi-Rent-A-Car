@@ -216,7 +216,7 @@ export function CityDetailContent({ city }: CityDetailContentProps) {
 
             <button
               type="submit"
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 text-sm font-semibold text-primary transition hover:brightness-95"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 text-sm font-semibold !text-white transition hover:brightness-95"
             >
               <span className="material-symbols-outlined text-[20px]">search</span>
               Search Cars

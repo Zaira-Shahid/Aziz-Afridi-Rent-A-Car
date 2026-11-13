@@ -97,7 +97,7 @@ export function CarDetailBody({ car, categoryName, related }: CarDetailBodyProps
                   href={`https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(`Hi, I want to book ${car.name}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-primary transition hover:brightness-110"
+                  className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold !text-white transition hover:brightness-110"
                 >
                   Book on WhatsApp
                 </Link>

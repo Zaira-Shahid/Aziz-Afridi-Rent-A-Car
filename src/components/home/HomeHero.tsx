@@ -2,142 +2,84 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { BookingBar } from "@/components/home/BookingBar";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cities } from "@/data";
 import { Container } from "@/components/ui/Container";
-import { cn } from "@/lib/utils";
-
-const HERO_SLIDES = [
-  {
-    src: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1920&q=80",
-    alt: "Premium black luxury sedan for rent in Islamabad",
-    heading: "Best Rent a Car in Islamabad & Rawalpindi",
-    description:
-      "Need a reliable rent a car in Islamabad or Rawalpindi? Signature Rent A Car provides affordable daily, weekly, and monthly car rentals with professional chauffeurs. Choose from economy cars, executive sedans, luxury vehicles, SUVs, Hiace, Coaster, and Grand Cabin rentals for business, family, and travel needs.",
-    ctaLabel: "Book Your Car Today",
-    ctaHref: "/contact",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1920&q=80",
-    alt: "Luxury executive BMW sedan rental",
-    heading: "Luxury Car Rental in Islamabad for Every Occasion",
-    description:
-      "Experience premium travel with the best luxury car rental in Islamabad. Rent Mercedes, Audi, Prado, Fortuner, Civic, Corolla, Land Cruiser, and executive vehicles with professional drivers for weddings, corporate meetings, VIP guests, airport transfers, and business travel throughout Islamabad and Rawalpindi.",
-    ctaLabel: "View Luxury Fleet",
-    ctaHref: "/cars",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1920&q=80",
-    alt: "Airport transfer luxury vehicle with chauffeur",
-    heading: "Airport Transfer & Corporate Car Rental Services",
-    description:
-      "Book trusted airport transfer services in Islamabad and professional corporate car rental solutions. We offer punctual pick-up and drop-off, executive chauffeur services, monthly company rentals, staff transportation, and VIP travel with clean, insured, and well-maintained vehicles.",
-    ctaLabel: "Reserve Your Ride",
-    ctaHref: "/services/airport-pick-drop",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1920&q=80",
-    alt: "SUV ready for northern areas road trip",
-    heading: "Daily, Monthly & Northern Areas Car Rental",
-    description:
-      "Planning a trip? Rent cars for Murree, Naran, Kaghan, Hunza, Skardu, Swat, and destinations across Pakistan. We provide daily and monthly rentals, SUVs, 4x4 vehicles, Hiace, Coaster, and Grand Cabin with experienced drivers for family tours, corporate events, and group travel.",
-    ctaLabel: "Get Instant Quote",
-    ctaHref: "/contact",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1920&q=80",
-    alt: "Wedding and VIP luxury car convoy",
-    heading: "Wedding & VIP Chauffeur Car Rental",
-    description:
-      "Make every occasion unforgettable with Signature’s decorated wedding fleets and VIP chauffeur service. From baraat convoys to executive guest transfers, we deliver spotless luxury vehicles with professional drivers on time.",
-    ctaLabel: "Book Wedding Fleet",
-    ctaHref: "/services/wedding-car-rental",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1920&q=80",
-    alt: "Premium rental car on open highway",
-    heading: "Intercity & Monthly Car Rental Plans",
-    description:
-      "Travel between cities or keep a dedicated car for the month. Signature offers flexible intercity packages and corporate monthly plans with reliable chauffeurs, transparent pricing, and 24/7 agent support across Pakistan.",
-    ctaLabel: "View Monthly Plans",
-    ctaHref: "/services/monthly-car-rental",
-  },
-] as const;
 
 export function HomeHero() {
-  const [active, setActive] = useState(0);
-  const slide = HERO_SLIDES[active];
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActive((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 5000);
-    return () => window.clearInterval(timer);
-  }, []);
+  const router = useRouter();
+  const [location, setLocation] = useState("");
+  const [locationOpen, setLocationOpen] = useState(false);
+  const [activeLocation, setActiveLocation] = useState(-1);
+  const matchingCities = cities.filter((city) => city.name.toLowerCase().includes(location.trim().toLowerCase()));
+  const [pickup, setPickup] = useState("");
+  const [returnDate, setReturnDate] = useState("");
 
   return (
-    <section className="relative flex min-h-0 items-center overflow-x-clip py-12 sm:min-h-[85vh] sm:py-20 lg:min-h-[90vh] lg:py-24">
-      <div className="absolute inset-0 overflow-hidden">
-        {HERO_SLIDES.map((item, index) => (
-          <Image
-            key={item.src}
-            src={item.src}
-            alt={item.alt}
-            fill
-            priority={index === 0}
-            className={cn(
-              "object-cover transition-opacity duration-700",
-              index === active ? "opacity-100" : "opacity-0",
-            )}
-            sizes="100vw"
-          />
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/55 to-navy/30" />
-      </div>
-
-      <Container className="relative z-10 grid min-w-0 items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-8">
-        <div className="min-w-0 text-white lg:col-span-7">
-          <h1
-            key={`heading-${active}`}
-            className="hero-shadow animate-fade-up font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-5xl xl:text-[52px] xl:leading-[1.15]"
-          >
-            {slide.heading}
-          </h1>
-          <p
-            key={`desc-${active}`}
-            className="animate-fade-up-delay mt-4 line-clamp-3 max-w-xl text-sm text-white/90 sm:mt-6 sm:line-clamp-none sm:text-base lg:text-lg"
-          >
-            {slide.description}
-          </p>
-
-          <div className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-center sm:gap-6">
-            <Link
-              key={`cta-${active}`}
-              href={slide.ctaHref}
-              className="inline-flex w-full items-center justify-center rounded-[10px] bg-accent px-6 py-3.5 text-sm font-semibold text-primary transition hover:brightness-95 sm:w-auto"
-            >
-              {slide.ctaLabel}
-            </Link>
-            <div className="flex items-center gap-2">
-              {HERO_SLIDES.map((item, index) => (
-                <button
-                  key={item.src}
-                  type="button"
-                  aria-label={`Show slide ${index + 1}`}
-                  onClick={() => setActive(index)}
-                  className={cn(
-                    "h-2 rounded-full transition-all",
-                    index === active ? "w-8 bg-accent" : "w-2 bg-white/45 hover:bg-white/70",
-                  )}
-                />
-              ))}
+    <section className="ride-hero" aria-labelledby="ride-heading">
+      <Container>
+        <div className="ride-hero-main">
+          <div className="ride-hero-copy">
+            <h1 id="ride-heading">Your Ride, Ready<br />When You Are</h1>
+            <h2>Choose from premium and executive vehicles.</h2>
+            <p>Choose from a wide range of premium and executive vehicles at competitive prices. Enjoy fast booking, flexible plans, and a reliable, hassle-free service every time.</p>
+            <Link href="/cars" className="ride-more">More Information <span aria-hidden="true">?</span></Link>
+          </div>
+          <div className="ride-hero-art" role="img" aria-label="Premium sedans and SUVs ready for your next journey">
+            <div className="ride-map" aria-hidden="true">
+              <div className="ride-map-park park-one" /><div className="ride-map-park park-two" />
+              <div className="ride-map-road road-one" /><div className="ride-map-road road-two" />
+              <span className="ride-map-label map-islamabad">ISLAMABAD</span>
+              <span className="ride-map-label map-rawalpindi">RAWALPINDI</span>
+              <span className="material-symbols-outlined ride-pin pin-blue">location_on</span>
+              <span className="material-symbols-outlined ride-pin pin-red">location_on</span>
+              <svg className="ride-route" viewBox="0 0 500 250"><path d="M85 80 C140 20 170 180 260 110 S360 50 410 95" fill="none" stroke="#a1a8ad" strokeWidth="3" strokeDasharray="7 7" /></svg>
             </div>
+            <div className="ride-cars-cutout"><Image src="/images/hero-cars-transparent.png" alt="" fill sizes="(max-width: 639px) 100vw, (max-width: 1023px) 55vw, 700px" priority /></div>
           </div>
         </div>
-
-        <div className="animate-fade-up-delay-2 relative z-20 w-full min-w-0 lg:col-span-5">
-          <BookingBar />
-        </div>
+        <form className="ride-search" onSubmit={(event) => {
+          event.preventDefault();
+          const params = new URLSearchParams({ location, pickup, return: returnDate });
+          router.push(`/cars?${params.toString()}`);
+        }}>
+          <label className="ride-search-field">
+            <span className="material-symbols-outlined" aria-hidden="true">location_on</span>
+            <span className="ride-location-control"><strong>Location</strong>
+              <input aria-label="Pickup location" role="combobox" aria-autocomplete="list" aria-expanded={locationOpen} aria-controls="hero-locations" aria-activedescendant={locationOpen && activeLocation >= 0 ? `hero-location-${activeLocation}` : undefined} autoComplete="off" placeholder="Search your location" value={location}
+                onFocus={() => setLocationOpen(true)} onBlur={() => { setLocationOpen(false); setActiveLocation(-1); }}
+                onChange={(e) => { setLocation(e.target.value); setLocationOpen(true); setActiveLocation(-1); }}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") { setLocationOpen(false); setActiveLocation(-1); }
+                  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                    e.preventDefault(); setLocationOpen(true);
+                    setActiveLocation((current) => {
+                      const next = e.key === "ArrowDown" ? Math.min(current + 1, matchingCities.length - 1) : Math.max(0, current - 1);
+                      requestAnimationFrame(() => document.getElementById(`hero-location-${next}`)?.scrollIntoView({ block: "nearest" }));
+                      return next;
+                    });
+                  }
+                  if (e.key === "Enter" && locationOpen && matchingCities[activeLocation]) {
+                    e.preventDefault(); setLocation(matchingCities[activeLocation].name); setLocationOpen(false); setActiveLocation(-1);
+                  }
+                }} required />
+              <ul id="hero-locations" role="listbox" aria-label="Pickup locations" className="ride-location-options" hidden={!locationOpen}>
+                {matchingCities.map((city, index) => <li key={city.slug} id={`hero-location-${index}`} role="option" aria-selected={activeLocation === index} onMouseDown={(e) => e.preventDefault()} onClick={() => { setLocation(city.name); setLocationOpen(false); setActiveLocation(-1); }}>{city.name}</li>)}
+                {matchingCities.length === 0 && <li role="presentation">No matching locations</li>}
+              </ul>
+            </span>
+          </label>
+          <label className="ride-search-field">
+            <span className="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+            <span><strong>Pickup date</strong><input aria-label="Pickup date" type="datetime-local" value={pickup} onChange={(e) => { setPickup(e.target.value); if (returnDate && e.target.value > returnDate) setReturnDate(""); }} required /></span>
+          </label>
+          <label className="ride-search-field">
+            <span className="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+            <span><strong>Return date</strong><input aria-label="Return date" type="datetime-local" min={pickup || undefined} value={returnDate} onChange={(e) => setReturnDate(e.target.value)} required /></span>
+          </label>
+          <button className="ride-search-button" type="submit"><span className="material-symbols-outlined" aria-hidden="true">search</span>Search</button>
+        </form>
       </Container>
     </section>
   );

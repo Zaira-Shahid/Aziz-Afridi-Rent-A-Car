@@ -89,7 +89,7 @@ export function BlogPageContent({ initialPosts }: BlogPageContentProps) {
               <div className="animate-fade-up-delay-2 mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-6">
                 <Link
                   href={`/blog/${featured.slug}`}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-sm font-semibold text-primary transition hover:brightness-95 sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-sm font-semibold !text-white transition hover:brightness-95 sm:w-auto"
                 >
                   Read Featured Story
                   <span className="material-symbols-outlined text-[18px]">arrow_forward</span>

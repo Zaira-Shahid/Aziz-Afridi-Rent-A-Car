@@ -50,7 +50,7 @@ export function HowItWorks() {
           >
             <path
               d="M40 32 C 140 8, 220 56, 320 32 S 500 8, 600 32 S 760 56, 860 32 S 940 18, 960 28"
-              stroke="#04C4E3"
+              stroke="#ed0014"
               strokeWidth="2.5"
               strokeDasharray="5 7"
               strokeLinecap="round"

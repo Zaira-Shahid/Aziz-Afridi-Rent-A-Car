@@ -137,7 +137,7 @@ export function CarsHero({
           >
             <Link
               href={primaryCta.href}
-              className="rounded-full bg-accent px-8 py-3.5 text-center text-sm font-semibold text-primary transition hover:brightness-110"
+              className="rounded-full bg-accent px-8 py-3.5 text-center text-sm font-semibold !text-white transition hover:brightness-110"
             >
               {primaryCta.label}
             </Link>

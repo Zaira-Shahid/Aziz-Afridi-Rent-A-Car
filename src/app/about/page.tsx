@@ -451,10 +451,10 @@ export default function AboutPage() {
           <AnimateIn>
             <div className="relative overflow-hidden rounded-[28px] bg-accent px-6 py-14 text-center sm:rounded-[40px] sm:px-12 sm:py-20 md:px-24">
               <div className="relative z-10">
-                <h2 className="animate-fade-up font-heading text-3xl font-semibold text-primary sm:text-4xl">
+                <h2 className="animate-fade-up font-heading text-3xl font-semibold text-white sm:text-4xl">
                   Ready to Experience True Distinction?
                 </h2>
-                <p className="animate-fade-up-delay mx-auto mt-6 max-w-2xl text-base text-[#394d00] sm:text-lg">
+                <p className="animate-fade-up-delay mx-auto mt-6 max-w-2xl text-base text-white/90 sm:text-lg">
                   Your journey deserves a signature touch. Explore our fleet today and redefine your standards
                   of travel.
                 </p>

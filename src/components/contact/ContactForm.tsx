@@ -103,7 +103,7 @@ export function ContactForm() {
         disabled={status !== "idle"}
         className={cn(
           "w-full rounded-lg py-4 text-sm font-semibold transition active:scale-[0.98]",
-          status === "sent" ? "bg-emerald-500 text-white" : "bg-accent text-primary hover:brightness-95",
+          status === "sent" ? "bg-emerald-500 text-white" : "bg-accent !text-white hover:brightness-95",
           status === "submitting" && "opacity-70",
         )}
       >

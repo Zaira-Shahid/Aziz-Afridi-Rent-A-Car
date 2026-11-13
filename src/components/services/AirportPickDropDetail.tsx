@@ -51,7 +51,7 @@ export function AirportPickDropDetail({ data }: AirportPickDropDetailProps) {
                 href={`https://wa.me/${brand.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 font-semibold text-primary transition hover:brightness-95"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 font-semibold !text-white transition hover:brightness-95"
               >
                 <span className="material-symbols-outlined text-[18px]">chat</span>
                 WhatsApp
@@ -118,7 +118,7 @@ export function AirportPickDropDetail({ data }: AirportPickDropDetailProps) {
                 </div>
                 <button
                   type="submit"
-                  className="mt-2 w-full rounded-xl bg-accent py-3.5 text-sm font-semibold text-primary transition hover:brightness-95"
+                  className="mt-2 w-full rounded-xl bg-accent py-3.5 text-sm font-semibold !text-white transition hover:brightness-95"
                 >
                   Check Availability
                 </button>
@@ -189,7 +189,7 @@ export function AirportPickDropDetail({ data }: AirportPickDropDetailProps) {
                   key={step.title}
                   className="rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)]"
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-heading text-sm font-bold text-primary">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-heading text-sm font-bold !text-white">
                     {index + 1}
                   </span>
                   <span className="material-symbols-outlined mt-5 block text-3xl text-secondary">{step.icon}</span>
@@ -277,7 +277,7 @@ export function AirportPickDropDetail({ data }: AirportPickDropDetailProps) {
                 <ServiceFaqAccordion items={faqs.items} />
               </div>
               <div className="lg:col-span-5">
-                <div className="rounded-2xl bg-accent p-8 text-primary sm:p-10">
+                <div className="rounded-2xl bg-accent p-8 !text-white sm:p-10">
                   <h3 className="font-heading text-2xl font-semibold">Still have questions?</h3>
                   <p className="mt-3 text-sm text-primary/75">
                     Our concierge team is available 24/7 to assist with your airport transfer.

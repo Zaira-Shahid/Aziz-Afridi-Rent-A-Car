@@ -13,6 +13,7 @@ import {
   WhyChooseUs,
 } from "@/components/home";
 import { pageMeta } from "@/lib/seo";
+import { PremiumFleetPreview } from "@/components/home/PremiumFleetPreview";
 
 export const metadata: Metadata = pageMeta({
   title: "Premium Car Rental with Driver in Pakistan",
@@ -26,6 +27,7 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
+      <PremiumFleetPreview />
       <BrandStrip />
       <HomeFleet />
       <PromoBanner />

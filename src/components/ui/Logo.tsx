@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/lib/logo.png";
-import { brand } from "@/lib/brand";
+import logo from "../../../public/images/best-carz-logo.png";
 import { cn } from "@/lib/utils";
 
 type LogoProps = {
@@ -14,13 +13,13 @@ export function Logo({ className, priority = false }: LogoProps) {
     <Link
       href="/"
       className={cn("inline-flex shrink-0 items-center", className)}
-      aria-label={brand.name}
+      aria-label="Best Carz Rent A Car"
     >
       <Image
         src={logo}
-        alt={brand.name}
+        alt="Best Carz Rent A Car"
         priority={priority}
-        className="h-full w-auto max-w-full object-contain object-left"
+        className="site-brand-logo h-full w-auto max-w-full object-contain object-left"
         sizes="(max-width: 640px) 160px, (max-width: 1024px) 200px, 220px"
       />
     </Link>

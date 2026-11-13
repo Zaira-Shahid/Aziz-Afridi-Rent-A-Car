@@ -111,7 +111,7 @@ export function CarCard({ car, className }: CarCardProps) {
           ) : null}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/45 via-transparent to-transparent opacity-70 transition duration-300 group-hover:opacity-90" />
           {car.badge ? (
-            <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary shadow-sm">
+            <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold !text-white shadow-sm">
               {car.badge}
             </span>
           ) : null}
@@ -154,7 +154,7 @@ export function CarCard({ car, className }: CarCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-xs font-semibold text-primary transition duration-200 hover:brightness-95"
+              className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-[10px] bg-accent px-2 text-xs font-semibold !text-white transition duration-200 hover:brightness-95"
             >
               <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">WhatsApp</span>

@@ -230,7 +230,7 @@ export default function ContactPage() {
                 href={`https://wa.me/${brand.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-primary transition hover:brightness-95"
+                className="mt-8 inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold !text-white transition hover:brightness-95"
               >
                 <span className="material-symbols-outlined text-[18px]">chat</span>
                 Message Us Now
@@ -239,7 +239,7 @@ export default function ContactPage() {
             <ul className="space-y-4">
               {WHATSAPP_TIPS.map((tip, index) => (
                 <li key={tip} className="flex items-start gap-4 rounded-xl bg-white/5 p-4">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-primary">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold !text-white">
                     {index + 1}
                   </span>
                   <span className="text-sm text-white/80">{tip}</span>
@@ -293,7 +293,7 @@ export default function ContactPage() {
                       href={`https://wa.me/${brand.whatsapp}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-primary transition hover:brightness-95"
+                      className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold !text-white transition hover:brightness-95"
                     >
                       <span className="material-symbols-outlined text-[18px]">chat</span>
                       WhatsApp
