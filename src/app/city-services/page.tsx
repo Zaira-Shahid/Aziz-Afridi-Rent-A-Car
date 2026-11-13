@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { CityServicesContent } from "@/components/city/CityServicesContent";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -10,6 +9,6 @@ export const metadata: Metadata = pageMeta({
   keywords: ["city car rental", "rent a car Lahore", "rent a car Karachi"],
 });
 
-export default function CityServicesPage() {
-  return <CityServicesContent />;
+export default function Page() {
+  return null;
 }
