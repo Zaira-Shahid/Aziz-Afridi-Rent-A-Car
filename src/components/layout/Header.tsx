@@ -56,7 +56,7 @@ function NavIcon({
 
   if (!item.icon) return null;
 
-  const color = item.iconColor ?? "#ed0014";
+  const color = item.iconColor ?? "#278a08";
 
   return (
     <span
@@ -160,8 +160,8 @@ export function Header() {
   const mobileMenu =
     open && mounted
       ? createPortal(
-          <div className="fixed inset-0 z-[100] flex flex-col bg-[#15181d] text-white xl:hidden" role="dialog" aria-modal="true">
-            <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-[#15181d] px-4 sm:h-16 sm:px-6">
+          <div className="fixed inset-0 z-[100] flex flex-col bg-[#06264b] text-white xl:hidden" role="dialog" aria-modal="true">
+            <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-white/10 bg-[#06264b] px-4 sm:h-16 sm:px-6">
               <Logo className="h-9 w-[72px] sm:h-10 sm:w-[80px]" />
               <div className="flex shrink-0 items-center gap-2">
                 <a
@@ -186,7 +186,7 @@ export function Header() {
               </div>
             </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#15181d]">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#06264b]">
               <div className="mx-auto flex w-full max-w-7xl flex-col gap-1 px-4 py-3 pb-10 sm:px-6">
                 {mainNav.map((item) => {
                   const menu = hasMenu(item);
@@ -236,7 +236,7 @@ export function Header() {
                       </button>
 
                       {expanded ? (
-                        <div className="mt-1 space-y-3 rounded-[12px] border border-white/10 bg-[#202328] px-3 py-3">
+                        <div className="mt-1 space-y-3 rounded-[12px] border border-white/10 bg-[#0b345e] px-3 py-3">
                           <Link
                             href={item.href}
                             className="col-span-2 inline-flex items-center gap-2 py-1.5 text-sm font-semibold text-accent"

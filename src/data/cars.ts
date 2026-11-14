@@ -283,7 +283,7 @@ export const carModels: CarModel[] = [
     imageAlt: carImage("prado-black.png"),
     colors: ["White", "Black"],
     featured: true,
-    badge: "Signature",
+    badge: "Aziz Afridi",
   },
   {
     slug: "toyota-fortuner",
@@ -527,7 +527,7 @@ export const homeFaqs: FaqItem[] = [
   {
     question: "Do you offer car rental with a driver?",
     answer:
-      "Yes. Signature Rent A Car provides chauffeur-driven vehicles for city travel, airport transfers, corporate trips, weddings, and outstation journeys.",
+      "Yes. Aziz Afridi Rent A Car provides chauffeur-driven vehicles for city travel, airport transfers, corporate trips, weddings, and outstation journeys.",
   },
   {
     question: "Which cities do you cover?",

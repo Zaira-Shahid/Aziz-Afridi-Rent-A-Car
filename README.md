@@ -1,6 +1,6 @@
-# Signature Rent A Car
+# Aziz Afridi Rent A Car
 
-Premium car rental website for Signature Rent A Car — built with Next.js App Router, TypeScript, and Tailwind CSS. Designs converted from Google Stitch into responsive production pages.
+Premium car rental website for Aziz Afridi Rent A Car — built with Next.js App Router, TypeScript, and Tailwind CSS. Designs converted from Google Stitch into responsive production pages.
 
 ## Stack
 

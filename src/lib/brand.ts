@@ -1,6 +1,6 @@
 export const brand = {
-  name: "Signature Rent A Car",
-  shortName: "Signature",
+  name: "Aziz Afridi Rent A Car",
+  shortName: "Aziz Afridi",
   tagline: "Premium car rental across Pakistan",
   // Demo contact details. Replace these before accepting real bookings.
   phone: "03000000000",
@@ -8,8 +8,8 @@ export const brand = {
   email: "info@example.com",
   currency: "PKR",
   location: {
-    label: "Signature Rent A Car, Islamabad",
-    address: "Signature Rent A Car, Islamabad, Pakistan",
+    label: "Aziz Afridi Rent A Car, Islamabad",
+    address: "Aziz Afridi Rent A Car, Islamabad, Pakistan",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Islamabad+Pakistan",
   },
   social: {
@@ -20,9 +20,9 @@ export const brand = {
     pinterest: "https://example.com/pinterest",
   },
   colors: {
-    primary: "#15181d",
-    secondary: "#ed0014",
-    accent: "#ed0014",
+    primary: "#06264b",
+    secondary: "#278a08",
+    accent: "#278a08",
     background: "#F8F9FA",
   },
 } as const;

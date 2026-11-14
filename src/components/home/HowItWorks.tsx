@@ -31,11 +31,11 @@ export function HowItWorks() {
         <Reveal>
           <div className="mx-auto max-w-3xl text-center lg:mx-0 lg:max-w-2xl lg:text-left">
             <h2 className="font-heading text-2xl font-bold tracking-tight text-primary sm:text-3xl lg:text-4xl">
-              How to Book a Car with Signature Rent A Car?
+              How to Book a Car with Aziz Afridi Rent A Car?
             </h2>
             <p className="mt-3 text-sm text-muted sm:text-base">
               Booking a chauffeur-driven car rental in Islamabad &amp; Rawalpindi is quick and hassle-free.
-              Follow these four simple steps to reserve your vehicle with Signature Rent A Car.
+              Follow these four simple steps to reserve your vehicle with Aziz Afridi Rent A Car.
             </p>
           </div>
         </Reveal>
@@ -50,7 +50,7 @@ export function HowItWorks() {
           >
             <path
               d="M40 32 C 140 8, 220 56, 320 32 S 500 8, 600 32 S 760 56, 860 32 S 940 18, 960 28"
-              stroke="#ed0014"
+              stroke="#278a08"
               strokeWidth="2.5"
               strokeDasharray="5 7"
               strokeLinecap="round"

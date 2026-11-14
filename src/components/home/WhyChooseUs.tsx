@@ -19,7 +19,7 @@ export function WhyChooseUs() {
               Frequently Asked Questions
             </h2>
             <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
-              Answers to common questions about chauffeur-driven car rental with Signature.
+              Answers to common questions about chauffeur-driven car rental with Aziz Afridi.
             </p>
           </div>
         </Reveal>

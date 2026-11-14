@@ -7,7 +7,7 @@ export const defaultKeywords = [
   "rent a car Pakistan",
   "car rental Islamabad",
   "car rental Rawalpindi",
-  "Signature Rent A Car",
+  "Aziz Afridi Rent A Car",
   "SUV rental Pakistan",
   "luxury car rental",
   "airport car rental",

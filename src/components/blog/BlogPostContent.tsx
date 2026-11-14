@@ -171,7 +171,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
       </section>
 
       <CtaBanner
-        title="Plan your next trip with Signature"
+        title="Plan your next trip with Aziz Afridi"
         description="Book a sedan, SUV, or chauffeur for city days, airport transfers, and mountain weekends."
       />
     </>
