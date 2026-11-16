@@ -1,0 +1,116 @@
+import { cn } from "@/lib/utils";
+
+type IconDef = {
+  /** SVG path data on a 24×24 grid. */
+  paths: string[];
+  /** Solid shapes (brand marks, stars) instead of 2px outline strokes. */
+  filled?: boolean;
+};
+
+/*
+ * Small shared icon set (24×24, 2px round strokes). Icons are added here as pages need them
+ * so the whole site uses one consistent style and no icon font.
+ */
+const icons = {
+  phone: {
+    paths: [
+      "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
+    ],
+  },
+  mail: { paths: ["M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z", "m22 6-10 7L2 6"] },
+  menu: { paths: ["M3 6h18", "M3 12h18", "M3 18h18"] },
+  close: { paths: ["M18 6 6 18", "m6 6 12 12"] },
+  "chevron-down": { paths: ["m6 9 6 6 6-6"] },
+  "chevron-up": { paths: ["m18 15-6-6-6 6"] },
+  "chevron-left": { paths: ["m15 18-6-6 6-6"] },
+  "chevron-right": { paths: ["m9 18 6-6-6-6"] },
+  "arrow-right": { paths: ["M5 12h14", "m12 5 7 7-7 7"] },
+  "arrow-up-right": { paths: ["M7 17 17 7", "M7 7h10v10"] },
+  check: { paths: ["M20 6 9 17l-5-5"] },
+  plus: { paths: ["M5 12h14", "M12 5v14"] },
+  minus: { paths: ["M5 12h14"] },
+  search: { paths: ["M3 11a8 8 0 1 0 16 0 8 8 0 1 0-16 0", "m21 21-4.3-4.3"] },
+  "map-pin": { paths: ["M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z", "M9 10a3 3 0 1 0 6 0 3 3 0 1 0-6 0"] },
+  calendar: {
+    paths: ["M8 2v4", "M16 2v4", "M3 10h18", "M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"],
+  },
+  clock: { paths: ["M2 12a10 10 0 1 0 20 0 10 10 0 1 0-20 0", "M12 6v6l4 2"] },
+  user: { paths: ["M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", "M8 7a4 4 0 1 0 8 0 4 4 0 1 0-8 0"] },
+  users: {
+    paths: [
+      "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",
+      "M5 7a4 4 0 1 0 8 0 4 4 0 1 0-8 0",
+      "M22 21v-2a4 4 0 0 0-3-3.87",
+      "M16 3.13a4 4 0 0 1 0 7.75",
+    ],
+  },
+  car: {
+    paths: [
+      "M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2",
+      "M7 17h10",
+      "M5 17a2 2 0 1 0 4 0 2 2 0 1 0-4 0",
+      "M15 17a2 2 0 1 0 4 0 2 2 0 1 0-4 0",
+    ],
+  },
+  plane: {
+    paths: [
+      "M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z",
+    ],
+  },
+  briefcase: {
+    paths: ["M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16", "M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"],
+  },
+  "shield-check": {
+    paths: [
+      "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+      "m9 12 2 2 4-4",
+    ],
+  },
+  "alert-circle": { paths: ["M2 12a10 10 0 1 0 20 0 10 10 0 1 0-20 0", "M12 8v4", "M12 16h.01"] },
+  star: {
+    filled: true,
+    paths: ["m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"],
+  },
+  whatsapp: {
+    filled: true,
+    paths: [
+      "M12.04 2C6.58 2 2.15 6.4 2.15 11.83c0 1.97.55 3.8 1.5 5.38L2 22l4.95-1.6a9.86 9.86 0 0 0 5.09 1.4h.01c5.46 0 9.89-4.4 9.89-9.83C21.94 6.4 17.5 2 12.04 2Zm5.76 13.98c-.24.68-1.4 1.25-1.93 1.33-.5.07-1.13.1-1.83-.12-.42-.13-.97-.32-1.67-.62-2.94-1.27-4.85-4.23-5-4.42-.14-.19-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.45.27-.29.59-.36.79-.36h.57c.18 0 .42-.07.66.5.24.58.82 2 .89 2.15.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.38-.45.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.36 1.46.29.15.46.12.63-.07.17-.2.73-.85.93-1.14.2-.29.4-.24.66-.14.27.1 1.7.8 1.99.95.29.15.48.22.55.34.07.13.07.73-.17 1.41Z",
+    ],
+  },
+} satisfies Record<string, IconDef>;
+
+export type IconName = keyof typeof icons;
+
+type IconProps = {
+  name: IconName;
+  /** Width and height in px. */
+  size?: number;
+  className?: string;
+  /** Accessible name. Leave empty for decorative icons (hidden from screen readers). */
+  label?: string;
+};
+
+export function Icon({ name, size = 20, className, label }: IconProps) {
+  const icon: IconDef = icons[name];
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill={icon.filled ? "currentColor" : "none"}
+      stroke={icon.filled ? "none" : "currentColor"}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("shrink-0", className)}
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+      focusable="false"
+    >
+      {icon.paths.map((d) => (
+        <path key={d} d={d} />
+      ))}
+    </svg>
+  );
+}
