@@ -11,5 +11,4 @@ export { HomeReviews } from "./HomeReviews";
 export { HomeFaq } from "./HomeFaq";
 export { HomeBlog } from "./HomeBlog";
 export { HomeCta } from "./HomeCta";
-export { BookingBar } from "./BookingBar";
 export { LocationsStrip } from "./LocationsStrip";

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BookingBar } from "@/components/home/BookingBar";
+import { BookingBar } from "@/components/contact/BookingBar";
 import { CtaBanner } from "@/components/shared";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
