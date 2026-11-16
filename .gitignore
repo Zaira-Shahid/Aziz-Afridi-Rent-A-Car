@@ -45,6 +45,6 @@ yarn-error.log*
 
 # redesign working files (not committed)
 /CLAUDE.md
-/CLIENT_CHECKLIST.md
 /demo/
 
+/docs/design-reference/

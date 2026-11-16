@@ -2,8 +2,10 @@
 
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import Link from "next/link";
-import { useEffect, useId, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
+import { Container } from "@/components/ui/Container";
+import { Icon } from "@/components/ui/Icon";
+import { buttonClasses } from "@/components/ui/button-styles";
 import { blogCategories, blogPosts } from "@/data";
 import { getAuthUserEmail, isAllowedBlogAdminEmail } from "@/lib/blog-admin";
 import { formatBlogDate, slugify } from "@/lib/blog-storage";
@@ -15,13 +17,10 @@ import {
   updateFirebaseBlogPost,
 } from "@/lib/blog-firestore";
 import { getFirebaseAuth, getGoogleProvider, isFirebaseConfigured } from "@/lib/firebase";
+import { cn } from "@/lib/utils";
 import type { BlogPost } from "@/types";
 
-type BlogAdminPanelProps = {
-  open: boolean;
-  onClose: () => void;
-  onPostsChange: (posts: BlogPost[]) => void;
-};
+const INVALID_LOGIN = "Invalid login details.";
 
 const emptyForm = {
   title: "",
@@ -45,9 +44,23 @@ function postToForm(post: BlogPost) {
   };
 }
 
-export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelProps) {
-  const titleId = useId();
-  const [mounted, setMounted] = useState(false);
+function isValidUrl(value: string) {
+  try {
+    return Boolean(new URL(value));
+  } catch {
+    return false;
+  }
+}
+
+const inputClass =
+  "block w-full min-w-0 rounded-xl border border-line bg-surface px-4 py-3 text-base text-navy-deep placeholder:text-muted focus:border-green-strong focus:bg-white sm:text-sm";
+const labelClass = "mb-1.5 block text-xs font-bold uppercase tracking-wide text-muted";
+const smallButton =
+  "inline-flex min-h-11 items-center justify-center rounded-xl px-3.5 text-xs font-semibold transition";
+
+/** Blog admin: Google sign-in for allowed accounts, then create / edit / delete posts stored in Firestore. */
+export function BlogAdminPanel() {
+  const configured = isFirebaseConfigured();
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -56,26 +69,20 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
   const [formError, setFormError] = useState("");
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [postsLoaded, setPostsLoaded] = useState(false);
   const [viewPost, setViewPost] = useState<BlogPost | null>(null);
-  const [postsLoading, setPostsLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [seeding, setSeeding] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const postsLoading = loggedIn && !postsLoaded;
 
   useEffect(() => {
-    if (!open || !isFirebaseConfigured()) {
-      setLoggedIn(false);
-      setUserEmail("");
-      return;
-    }
-
+    if (!configured) return;
     const unsub = onAuthStateChanged(getFirebaseAuth(), async (user) => {
       if (!user) {
         setLoggedIn(false);
         setUserEmail("");
+        setPostsLoaded(false);
         return;
       }
 
@@ -92,9 +99,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
         await signOut(getFirebaseAuth());
         setLoggedIn(false);
         setUserEmail("");
-        setLoginError(
-          `Signed in as ${email}, but this account is not allowed. Allowed: ${["ulainnoor957@gmail.com", "developerx.org@gmail.com", "signaturesrentacar@gmail.com", "xfirebasc@gmail.com"].join(", ")}`,
-        );
+        setLoginError(INVALID_LOGIN);
         return;
       }
 
@@ -103,24 +108,12 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
       setLoginError("");
     });
     return () => unsub();
-  }, [open]);
+  }, [configured]);
 
   useEffect(() => {
-    if (!open) return;
-    setForm(emptyForm);
-    setEditingSlug(null);
-    setFormError("");
-    setViewPost(null);
-    setGoogleLoading(false);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open || !loggedIn) return;
+    if (!loggedIn) return;
 
     let cancelled = false;
-    setPostsLoading(true);
-    setFormError("");
-
     (async () => {
       try {
         let items = await fetchFirebaseBlogPosts();
@@ -129,7 +122,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
         }
         if (cancelled) return;
         setPosts(items);
-        onPostsChange(items);
+        setFormError("");
       } catch (error) {
         if (cancelled) return;
         setPosts([]);
@@ -143,44 +136,25 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
             : "Could not load blogs from Firebase. Create Firestore Database and publish rules.",
         );
       } finally {
-        if (!cancelled) setPostsLoading(false);
+        if (!cancelled) setPostsLoaded(true);
       }
     })();
 
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- reload when panel opens or login changes
-  }, [open, loggedIn]);
+  }, [loggedIn]);
 
   async function handleSeedBlogs() {
     setSeeding(true);
     setFormError("");
     try {
-      const items = await seedStaticBlogsToFirebase(blogPosts);
-      setPosts(items);
-      onPostsChange(items);
+      setPosts(await seedStaticBlogsToFirebase(blogPosts));
     } catch {
       setFormError("Failed to sync site blogs to Firebase. Check Firestore rules.");
     } finally {
       setSeeding(false);
     }
-  }
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  if (!mounted || !open) return null;
-
-  function refreshPosts(next: BlogPost[]) {
-    setPosts(next);
-    onPostsChange(next);
   }
 
   function update<K extends keyof typeof emptyForm>(key: K, value: string) {
@@ -189,7 +163,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
   async function handleGoogleLogin() {
     setLoginError("");
-    if (!isFirebaseConfigured()) {
+    if (!configured) {
       setLoginError("Firebase is not configured.");
       return;
     }
@@ -207,9 +181,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
       if (!isAllowedBlogAdminEmail(email)) {
         await signOut(getFirebaseAuth());
-        setLoginError(
-          `Signed in as ${email}, but this account is not allowed. Choose developerx.org@gmail.com (or another authorized admin account).`,
-        );
+        setLoginError(INVALID_LOGIN);
         return;
       }
 
@@ -236,7 +208,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
   async function handleLogout() {
     try {
-      if (isFirebaseConfigured()) {
+      if (configured) {
         await signOut(getFirebaseAuth());
       }
     } catch {
@@ -244,6 +216,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     }
     setLoggedIn(false);
     setUserEmail("");
+    setPostsLoaded(false);
     setForm(emptyForm);
     setEditingSlug(null);
     setViewPost(null);
@@ -264,10 +237,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
       return null;
     }
 
-    try {
-      // eslint-disable-next-line no-new
-      new URL(image);
-    } catch {
+    if (!isValidUrl(image)) {
       setFormError("Image must be a valid link (https://...).");
       return null;
     }
@@ -294,8 +264,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
       if (!post) return;
       setSaving(true);
       try {
-        const next = await updateFirebaseBlogPost(post);
-        refreshPosts(next);
+        setPosts(await updateFirebaseBlogPost(post));
         setForm(emptyForm);
         setEditingSlug(null);
       } catch {
@@ -313,8 +282,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
     setSaving(true);
     try {
-      const next = await createFirebaseBlogPost(post);
-      refreshPosts(next);
+      setPosts(await createFirebaseBlogPost(post));
       setForm(emptyForm);
     } catch {
       setFormError("Failed to save blog in Firebase. Check Firestore rules.");
@@ -340,8 +308,7 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     if (!window.confirm("Delete this blog post?")) return;
     setSaving(true);
     try {
-      const next = await deleteFirebaseBlogPost(slug);
-      refreshPosts(next);
+      setPosts(await deleteFirebaseBlogPost(slug));
       if (editingSlug === slug) cancelEdit();
       if (viewPost?.slug === slug) setViewPost(null);
     } catch {
@@ -351,64 +318,40 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
     }
   }
 
-  return createPortal(
-    <div
-      className="fixed inset-0 z-[120] flex items-end justify-center p-0 sm:items-center sm:p-4"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-    >
-      <button type="button" className="absolute inset-0 bg-primary/70 backdrop-blur-sm" aria-label="Close" onClick={onClose} />
-
-      <div
-        className={`relative z-10 flex max-h-[94vh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl ${
-          loggedIn ? "max-w-6xl" : "max-w-md"
-        }`}
-      >
-        <div className="flex items-center justify-between border-b border-primary/8 px-5 py-4 sm:px-6">
+  return (
+    <div className="min-h-[70vh] bg-surface py-10 sm:py-14">
+      <Container>
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-secondary">Admin</p>
-            <h2 id={titleId} className="font-heading text-xl font-semibold text-primary sm:text-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-green-strong">Admin</p>
+            <h1 className="mt-1 font-heading text-3xl font-extrabold italic text-navy-deep sm:text-4xl">
               {loggedIn ? "Manage Blog Posts" : "Admin Login"}
-            </h2>
+            </h1>
           </div>
-          <div className="flex items-center gap-2">
-            {loggedIn ? (
-              <div className="flex items-center gap-2">
-                {userEmail ? (
-                  <span className="hidden max-w-[160px] truncate text-[11px] text-muted sm:inline">{userEmail}</span>
-                ) : null}
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="rounded-xl border border-primary/10 px-3 py-2 text-xs font-semibold text-primary transition hover:bg-[#f8f9fa]"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : null}
-            <button
-              type="button"
-              onClick={onClose}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary/10 text-primary transition hover:bg-[#f8f9fa]"
-              aria-label="Close"
-            >
-              <span className="material-symbols-outlined">close</span>
-            </button>
-          </div>
+          {loggedIn ? (
+            <div className="flex items-center gap-3">
+              {userEmail ? <span className="hidden max-w-[220px] truncate text-xs text-muted sm:inline">{userEmail}</span> : null}
+              <button
+                type="button"
+                onClick={handleLogout}
+                className={buttonClasses({ variant: "outline", size: "sm", pill: true })}
+              >
+                Logout
+              </button>
+            </div>
+          ) : null}
         </div>
 
         {!loggedIn ? (
-          <div className="mx-auto w-full max-w-md px-5 py-10 sm:px-6 sm:py-14">
+          <div className="mx-auto w-full max-w-md rounded-panel border border-line bg-white p-7 shadow-soft sm:p-9">
             <p className="mb-6 text-sm text-muted">
               Admin access is limited to authorized Google accounts. Sign in with an allowed account only.
             </p>
-
             <button
               type="button"
               onClick={handleGoogleLogin}
               disabled={googleLoading}
-              className="inline-flex w-full items-center justify-center gap-3 rounded-xl border border-primary/15 bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-[#f8f9fa] disabled:cursor-not-allowed disabled:opacity-60"
+              className={buttonClasses({ variant: "outline", size: "lg", className: "w-full gap-3" })}
             >
               <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
                 <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.2 6.1 29.4 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.5-.4-3.5z" />
@@ -418,22 +361,26 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
               </svg>
               {googleLoading ? "Connecting..." : "Continue with Google"}
             </button>
-
-            {loginError ? <p className="mt-4 text-sm font-medium text-red-600">{loginError}</p> : null}
+            {!configured ? (
+              <p role="alert" className="mt-4 text-sm font-medium text-danger">
+                Firebase is not configured.
+              </p>
+            ) : null}
+            {loginError ? (
+              <p role="alert" className="mt-4 text-sm font-medium text-danger">
+                {loginError}
+              </p>
+            ) : null}
           </div>
         ) : (
-          <div className="grid min-h-0 flex-1 lg:grid-cols-2">
-            <div className="min-h-0 overflow-y-auto border-b border-primary/8 px-5 py-5 sm:px-6 lg:border-b-0 lg:border-r">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <section aria-labelledby="blog-form-title" className="rounded-panel border border-line bg-white p-5 shadow-soft sm:p-7">
               <div className="mb-4 flex items-center justify-between gap-3">
-                <h3 className="font-heading text-lg font-semibold text-primary">
+                <h2 id="blog-form-title" className="font-heading text-lg font-bold text-navy-deep">
                   {editingSlug ? "Edit Blog" : "Add Blog"}
-                </h3>
+                </h2>
                 {editingSlug ? (
-                  <button
-                    type="button"
-                    onClick={cancelEdit}
-                    className="text-xs font-semibold text-secondary hover:underline"
-                  >
+                  <button type="button" onClick={cancelEdit} className="min-h-11 text-xs font-semibold text-green-strong hover:underline">
                     Cancel edit
                   </button>
                 ) : null}
@@ -441,23 +388,23 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Title</span>
+                  <span className={labelClass}>Title</span>
                   <input
                     value={form.title}
                     onChange={(e) => update("title", e.target.value)}
-                    className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
+                    className={inputClass}
                     placeholder="Best weekend drives around Islamabad"
                     required
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Short Excerpt</span>
+                  <span className={labelClass}>Short Excerpt</span>
                   <textarea
                     value={form.excerpt}
                     onChange={(e) => update("excerpt", e.target.value)}
                     rows={2}
-                    className="w-full resize-y rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
+                    className={cn(inputClass, "resize-y")}
                     placeholder="One or two lines shown on the blog card"
                     required
                   />
@@ -465,12 +412,8 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Category</span>
-                    <select
-                      value={form.category}
-                      onChange={(e) => update("category", e.target.value)}
-                      className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
-                    >
+                    <span className={labelClass}>Category</span>
+                    <select value={form.category} onChange={(e) => update("category", e.target.value)} className={inputClass}>
                       {blogCategories.map((category) => (
                         <option key={category.slug} value={category.slug}>
                           {category.name}
@@ -480,28 +423,28 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
                   </label>
 
                   <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Author</span>
+                    <span className={labelClass}>Author</span>
                     <input
                       value={form.author}
                       onChange={(e) => update("author", e.target.value)}
-                      className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
+                      className={inputClass}
                       placeholder="Aziz Afridi Team"
                     />
                   </label>
                 </div>
 
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Image Link (URL)</span>
+                  <span className={labelClass}>Image Link (URL)</span>
                   <input
                     type="url"
                     value={form.image}
                     onChange={(e) => update("image", e.target.value)}
-                    className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
+                    className={inputClass}
                     placeholder="https://images.unsplash.com/photo-..."
                     required
                   />
                   {form.image ? (
-                    <div className="relative mt-3 h-28 overflow-hidden rounded-xl border border-primary/8 bg-[#f3f4f5]">
+                    <div className="relative mt-3 h-28 overflow-hidden rounded-xl border border-line bg-surface">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={form.image} alt="Preview" className="h-full w-full object-cover" />
                     </div>
@@ -509,80 +452,82 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
                 </label>
 
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">Read Time</span>
+                  <span className={labelClass}>Read Time</span>
                   <input
                     value={form.readTime}
                     onChange={(e) => update("readTime", e.target.value)}
-                    className="w-full rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
+                    className={inputClass}
                     placeholder="5 min read"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted">
-                    Content (one paragraph per line)
-                  </span>
+                  <span className={labelClass}>Content (one paragraph per line)</span>
                   <textarea
                     value={form.content}
                     onChange={(e) => update("content", e.target.value)}
                     rows={6}
-                    className="w-full resize-y rounded-xl border border-primary/10 bg-[#f8f9fa] px-4 py-3 text-sm outline-none focus:border-secondary focus:bg-white focus:ring-2 focus:ring-secondary/20"
+                    className={cn(inputClass, "resize-y")}
                     placeholder={"First paragraph...\n\nSecond paragraph..."}
                     required
                   />
                 </label>
 
-                {formError ? <p className="text-sm font-medium text-red-600">{formError}</p> : null}
+                {formError ? (
+                  <p role="alert" className="text-sm font-medium text-danger">
+                    {formError}
+                  </p>
+                ) : null}
 
                 <button
                   type="submit"
                   disabled={saving}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold !text-white transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
+                  className={buttonClasses({ variant: "green", size: "lg", pill: true, className: "w-full" })}
                 >
-                  <span className="material-symbols-outlined text-[18px]">{editingSlug ? "save" : "add"}</span>
+                  <Icon name={editingSlug ? "check" : "plus"} size={18} />
                   {saving ? "Saving..." : editingSlug ? "Update Blog" : "Publish Blog"}
                 </button>
               </form>
-            </div>
+            </section>
 
-            <div className="flex min-h-0 flex-col overflow-hidden bg-[#f8f9fa]">
-              <div className="border-b border-primary/8 bg-white px-5 py-4 sm:px-6">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-heading text-lg font-semibold text-primary">All Added Blogs</h3>
-                    <p className="mt-1 text-xs text-muted">
-                      Saved in Firebase. Newest posts appear first. ({posts.length})
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleSeedBlogs}
-                    disabled={seeding || postsLoading}
-                    className="rounded-xl border border-primary/15 px-3 py-2 text-[11px] font-semibold text-primary transition hover:bg-[#f8f9fa] disabled:opacity-60"
-                  >
-                    {seeding ? "Syncing..." : "Sync site blogs"}
-                  </button>
+            <section aria-labelledby="blog-list-title" className="rounded-panel border border-line bg-white p-5 shadow-soft sm:p-7">
+              <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h2 id="blog-list-title" className="font-heading text-lg font-bold text-navy-deep">
+                    All Added Blogs
+                  </h2>
+                  <p className="mt-1 text-xs text-muted">
+                    Saved in Firebase. Newest posts appear first. ({posts.length})
+                  </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={handleSeedBlogs}
+                  disabled={seeding || postsLoading}
+                  className={cn(smallButton, "border border-line text-navy-deep hover:bg-surface disabled:opacity-60")}
+                >
+                  {seeding ? "Syncing..." : "Sync site blogs"}
+                </button>
               </div>
 
               {viewPost ? (
-                <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-6">
+                <div>
                   <button
                     type="button"
                     onClick={() => setViewPost(null)}
-                    className="mb-4 inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline"
+                    className="mb-4 inline-flex min-h-11 items-center gap-1 text-xs font-semibold text-green-strong hover:underline"
                   >
-                    <span className="material-symbols-outlined text-[16px]">arrow_back</span>
+                    <Icon name="chevron-left" size={16} />
                     Back to list
                   </button>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={viewPost.image} alt={viewPost.title} className="mb-4 h-40 w-full rounded-xl object-cover" />
-                  <h4 className="font-heading text-xl font-semibold text-primary">{viewPost.title}</h4>
+                  <h3 className="font-heading text-xl font-bold text-navy-deep">{viewPost.title}</h3>
                   <p className="mt-2 text-xs text-muted">
                     {viewPost.date} • {viewPost.readTime} • By {viewPost.author}
                   </p>
-                  <p className="mt-3 text-sm text-primary/80">{viewPost.excerpt}</p>
-                  <div className="mt-4 space-y-3 text-sm leading-relaxed text-primary/75">
+                  <p className="mt-3 text-sm text-fg">{viewPost.excerpt}</p>
+                  <div className="mt-4 space-y-3 text-sm leading-relaxed text-fg">
                     {viewPost.content.map((paragraph) => (
                       <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                     ))}
@@ -591,94 +536,87 @@ export function BlogAdminPanel({ open, onClose, onPostsChange }: BlogAdminPanelP
                     <button
                       type="button"
                       onClick={() => startEdit(viewPost)}
-                      className="rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-white"
+                      className={cn(smallButton, "bg-navy text-white hover:bg-navy-deep")}
                     >
                       Edit
                     </button>
                     <Link
                       href={`/blog/${viewPost.slug}`}
-                      onClick={onClose}
-                      className="rounded-xl border border-primary/15 px-4 py-2 text-xs font-semibold text-primary"
+                      className={cn(smallButton, "border border-line text-navy-deep hover:bg-surface")}
                     >
                       Open page
                     </Link>
                   </div>
                 </div>
-              ) : (
-                <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4 sm:px-6">
-                  {formError ? <p className="mb-4 text-sm font-medium text-red-600">{formError}</p> : null}
-                  {postsLoading ? (
-                    <p className="py-10 text-center text-sm text-muted">Loading blogs from Firebase...</p>
-                  ) : posts.length === 0 ? (
-                    <p className="py-10 text-center text-sm text-muted">
-                      No blogs in Firebase yet. Click &quot;Sync site blogs&quot; or add one from the left form.
+              ) : postsLoading ? (
+                <p role="status" className="py-10 text-center text-sm text-muted">
+                  Loading blogs from Firebase...
+                </p>
+              ) : posts.length === 0 ? (
+                <div className="py-10 text-center text-sm text-muted">
+                  {formError ? (
+                    <p role="alert" className="mb-3 font-medium text-danger">
+                      {formError}
                     </p>
-                  ) : (
-                    <ul className="space-y-3">
-                      {posts.map((post) => {
-                        const category = blogCategories.find((item) => item.slug === post.category);
-                        return (
-                          <li
-                            key={post.slug}
-                            className="overflow-hidden rounded-2xl border border-primary/8 bg-white shadow-sm"
-                          >
-                            <div className="flex gap-3 p-3 sm:p-4">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src={post.image}
-                                alt=""
-                                className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24"
-                              />
-                              <div className="min-w-0 flex-1">
-                                {category ? (
-                                  <span className="text-[10px] font-semibold uppercase tracking-wide text-secondary">
-                                    {category.name}
-                                  </span>
-                                ) : null}
-                                <h4 className="mt-0.5 line-clamp-2 font-heading text-sm font-semibold text-primary sm:text-base">
-                                  {post.title}
-                                </h4>
-                                <p className="mt-1 line-clamp-2 text-xs text-muted">{post.excerpt}</p>
-                                <p className="mt-1 text-[11px] text-muted">
-                                  {post.date} • {post.readTime}
-                                </p>
-                                <div className="mt-3 flex flex-wrap gap-2">
-                                  <button
-                                    type="button"
-                                    onClick={() => setViewPost(post)}
-                                    className="rounded-lg border border-primary/10 px-2.5 py-1.5 text-[11px] font-semibold text-primary transition hover:bg-[#f8f9fa]"
-                                  >
-                                    View
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => startEdit(post)}
-                                    className="rounded-lg bg-secondary/10 px-2.5 py-1.5 text-[11px] font-semibold text-secondary transition hover:bg-secondary/20"
-                                  >
-                                    Edit
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDelete(post.slug)}
-                                    className="rounded-lg px-2.5 py-1.5 text-[11px] font-semibold text-red-600 transition hover:bg-red-50"
-                                  >
-                                    Delete
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
+                  ) : null}
+                  No blogs in Firebase yet. Click &quot;Sync site blogs&quot; or add one from the form.
                 </div>
+              ) : (
+                <ul className="max-h-[70vh] space-y-3 overflow-y-auto pr-1">
+                  {posts.map((post) => {
+                    const category = blogCategories.find((item) => item.slug === post.category);
+                    return (
+                      <li key={post.slug} className="overflow-hidden rounded-2xl border border-line bg-surface">
+                        <div className="flex gap-3 p-3 sm:p-4">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={post.image} alt="" className="h-20 w-20 shrink-0 rounded-xl object-cover sm:h-24 sm:w-24" />
+                          <div className="min-w-0 flex-1">
+                            {category ? (
+                              <span className="text-[11px] font-bold uppercase tracking-wide text-green-strong">
+                                {category.name}
+                              </span>
+                            ) : null}
+                            <h3 className="mt-0.5 line-clamp-2 font-heading text-sm font-bold text-navy-deep sm:text-base">
+                              {post.title}
+                            </h3>
+                            <p className="mt-1 line-clamp-2 text-xs text-muted">{post.excerpt}</p>
+                            <p className="mt-1 text-[11px] text-muted">
+                              {post.date} • {post.readTime}
+                            </p>
+                            <div className="mt-2 flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setViewPost(post)}
+                                className={cn(smallButton, "border border-line bg-white text-navy-deep hover:bg-surface")}
+                              >
+                                View
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => startEdit(post)}
+                                className={cn(smallButton, "bg-green-strong/10 text-green-strong hover:bg-green-strong/20")}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDelete(post.slug)}
+                                className={cn(smallButton, "text-danger hover:bg-red-50")}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
               )}
-            </div>
+            </section>
           </div>
         )}
-      </div>
-    </div>,
-    document.body,
+      </Container>
+    </div>
   );
 }

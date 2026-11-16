@@ -5,6 +5,8 @@ type SectionHeadingProps = {
   description?: string;
   /** Small uppercase label above the title. */
   eyebrow?: string;
+  /** Part of `title` to show in brand green (the mockups highlight the last words). Must be a substring of `title`. */
+  highlight?: string;
   align?: "left" | "center";
   /** Light text for dark (navy) sections. */
   invert?: boolean;
@@ -12,10 +14,23 @@ type SectionHeadingProps = {
   titleClassName?: string;
 };
 
+function renderTitle(title: string, highlight: string | undefined, invert: boolean) {
+  const at = highlight ? title.indexOf(highlight) : -1;
+  if (!highlight || at < 0) return title;
+  return (
+    <>
+      {title.slice(0, at)}
+      <span className={invert ? "text-green" : "text-green-strong"}>{highlight}</span>
+      {title.slice(at + highlight.length)}
+    </>
+  );
+}
+
 export function SectionHeading({
   title,
   description,
   eyebrow,
+  highlight,
   align = "left",
   invert = false,
   className,
@@ -27,8 +42,8 @@ export function SectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            "mb-3 text-xs font-semibold uppercase tracking-[0.14em]",
-            invert ? "text-gold" : "text-gold-strong",
+            "mb-3 text-xs font-bold uppercase tracking-[0.14em]",
+            invert ? "text-green" : "text-green-strong",
           )}
         >
           {eyebrow}
@@ -36,12 +51,12 @@ export function SectionHeading({
       ) : null}
       <h2
         className={cn(
-          "font-heading text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-3xl lg:text-4xl",
-          invert ? "text-white" : "text-ink",
+          "font-heading text-[1.75rem] font-extrabold italic leading-tight tracking-tight sm:text-3xl lg:text-4xl",
+          invert ? "text-white" : "text-navy-deep",
           titleClassName,
         )}
       >
-        {title}
+        {renderTitle(title, highlight, invert)}
       </h2>
       {description ? (
         <p

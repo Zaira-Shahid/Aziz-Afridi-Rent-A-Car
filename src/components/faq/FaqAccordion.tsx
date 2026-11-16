@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useId, useState } from "react";
+import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
 
 type FaqCategory = { slug: string; label: string };
@@ -12,9 +12,11 @@ type FaqAccordionProps = {
   faqs: FaqEntry[];
 };
 
+/** Topic list on the left (a swipeable row on phones) and the answers of the chosen topic on the right. */
 export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
   const [activeCategory, setActiveCategory] = useState(categories[0]?.slug ?? "");
   const [openIndex, setOpenIndex] = useState(0);
+  const baseId = useId();
 
   const filtered = faqs.filter((item) => item.category === activeCategory);
 
@@ -24,103 +26,83 @@ export function FaqAccordion({ categories, faqs }: FaqAccordionProps) {
   }
 
   return (
-    <div className="min-w-0">
-      {/* Mobile: wrap pills · Desktop: underline tabs */}
-      <div className="grid grid-cols-2 gap-2 sm:hidden">
-        {categories.map((category) => {
-          const active = category.slug === activeCategory;
-          return (
-            <button
-              key={category.slug}
-              type="button"
-              onClick={() => selectCategory(category.slug)}
-              className={cn(
-                "rounded-xl border px-3 py-2.5 text-center text-xs font-semibold transition",
-                active
-                  ? "border-secondary bg-secondary/10 text-secondary"
-                  : "border-primary/10 bg-white text-muted hover:border-secondary/40 hover:text-secondary",
-              )}
-            >
-              {category.label}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="hidden gap-6 overflow-x-auto border-b border-primary/10 pb-1 [scrollbar-width:none] sm:flex sm:gap-8 [&::-webkit-scrollbar]:hidden">
-        {categories.map((category) => {
-          const active = category.slug === activeCategory;
-          return (
-            <button
-              key={category.slug}
-              type="button"
-              onClick={() => selectCategory(category.slug)}
-              className={cn(
-                "shrink-0 whitespace-nowrap border-b-2 pb-3 text-sm font-semibold transition sm:pb-4",
-                active ? "border-secondary text-secondary" : "border-transparent text-muted hover:text-secondary",
-              )}
-            >
-              {category.label}
-            </button>
-          );
-        })}
-      </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeCategory}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.28, ease: "easeOut" }}
-          className="mt-5 space-y-3 sm:mt-8 sm:space-y-4"
-        >
-          {filtered.map((item, index) => {
-            const open = openIndex === index;
+    <div className="grid min-w-0 gap-6 lg:grid-cols-[15rem_1fr] lg:gap-10">
+      <nav aria-label="FAQ topics" className="min-w-0 lg:sticky lg:top-28 lg:self-start">
+        <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden">
+          {categories.map((category) => {
+            const active = category.slug === activeCategory;
             return (
-              <motion.div
-                key={item.question}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.045, ease: "easeOut" }}
-                className={cn(
-                  "overflow-hidden rounded-xl border border-primary/8 bg-white transition duration-300",
-                  open && "shadow-[0_10px_30px_rgba(0,31,38,0.06)]",
-                )}
-              >
+              <li key={category.slug} className="shrink-0 lg:shrink">
                 <button
                   type="button"
-                  onClick={() => setOpenIndex(open ? -1 : index)}
-                  className="flex w-full items-center justify-between gap-3 p-4 text-left sm:gap-4 sm:p-6"
-                  aria-expanded={open}
-                >
-                  <span className="min-w-0 font-heading text-sm text-primary sm:text-base lg:text-lg">
-                    {item.question}
-                  </span>
-                  <span
-                    className={cn(
-                      "material-symbols-outlined shrink-0 text-secondary transition-transform duration-300",
-                      open && "rotate-180",
-                    )}
-                  >
-                    expand_more
-                  </span>
-                </button>
-                <div
+                  onClick={() => selectCategory(category.slug)}
+                  aria-pressed={active}
                   className={cn(
-                    "grid transition-all duration-300 ease-out",
-                    open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+                    "flex min-h-11 w-full items-center justify-between gap-3 whitespace-nowrap rounded-full px-5 text-sm font-semibold transition lg:rounded-xl",
+                    active
+                      ? "bg-navy text-white shadow-soft"
+                      : "border border-line bg-white text-navy-deep hover:border-navy",
                   )}
                 >
-                  <div className="overflow-hidden">
-                    <p className="px-4 pb-4 text-sm leading-relaxed text-muted sm:px-6 sm:pb-6">{item.answer}</p>
-                  </div>
-                </div>
-              </motion.div>
+                  {category.label}
+                  <Icon name="chevron-right" size={16} className="hidden lg:block" />
+                </button>
+              </li>
             );
           })}
-        </motion.div>
-      </AnimatePresence>
+        </ul>
+      </nav>
+
+      <div className="min-w-0 space-y-3">
+        {filtered.map((item, index) => {
+          const open = openIndex === index;
+          const buttonId = `${baseId}-q-${activeCategory}-${index}`;
+          const panelId = `${baseId}-a-${activeCategory}-${index}`;
+          return (
+            <div
+              key={item.question}
+              className={cn(
+                "overflow-hidden rounded-card border bg-white transition",
+                open ? "border-green-strong shadow-soft" : "border-line",
+              )}
+            >
+              <h3>
+                <button
+                  type="button"
+                  id={buttonId}
+                  onClick={() => setOpenIndex(open ? -1 : index)}
+                  className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  aria-expanded={open}
+                  aria-controls={panelId}
+                >
+                  <span className="min-w-0 font-semibold text-navy-deep sm:text-lg">{item.question}</span>
+                  <span
+                    className={cn(
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition",
+                      open ? "bg-green-strong text-white" : "bg-navy/10 text-navy",
+                    )}
+                  >
+                    <Icon name={open ? "minus" : "plus"} size={16} />
+                  </span>
+                </button>
+              </h3>
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                className={cn(
+                  "grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none",
+                  open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                )}
+              >
+                <div className="overflow-hidden">
+                  <p className="px-5 pb-5 text-sm leading-relaxed text-muted sm:text-base">{item.answer}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

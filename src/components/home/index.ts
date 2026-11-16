@@ -1,12 +1,12 @@
 export { HomeHero } from "./HomeHero";
-export { BookingBar } from "./BookingBar";
-export { HomeFleet } from "./HomeFleet";
+export { FeatureStrip } from "./FeatureStrip";
+export { ExploreFleet } from "./ExploreFleet";
+export { DiscoverDrive } from "./DiscoverDrive";
 export { BrandStrip } from "./BrandStrip";
-export { PromoBanner } from "./PromoBanner";
-export { HowItWorks } from "./HowItWorks";
-export { WhyChooseUs } from "./WhyChooseUs";
 export { HomeServices } from "./HomeServices";
+export { HowItWorks } from "./HowItWorks";
 export { HomeDestinations } from "./HomeDestinations";
+export { PromoBanners } from "./PromoBanners";
 export { HomeReviews } from "./HomeReviews";
 export { HomeFaq } from "./HomeFaq";
 export { HomeBlog } from "./HomeBlog";

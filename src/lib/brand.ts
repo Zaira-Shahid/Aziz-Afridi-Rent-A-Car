@@ -2,9 +2,11 @@ export const brand = {
   name: "Aziz Afridi Rent A Car",
   shortName: "Aziz Afridi",
   tagline: "Premium car rental across Pakistan",
-  // Demo contact details. Replace these before accepting real bookings.
-  phone: "03000000000",
-  whatsapp: "923000000000",
+  // Real client details. Used for tel: links, wa.me links and shown through formatPhoneDisplay().
+  phone: "+923489899030",
+  whatsapp: "923489899030",
+  easypaisa: "0348 9899030",
+  // Email not provided by the client yet (placeholder, see the client checklist in CLAUDE.md).
   email: "info@example.com",
   currency: "PKR",
   location: {
@@ -13,11 +15,10 @@ export const brand = {
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Islamabad+Pakistan",
   },
   social: {
-    facebook: "https://example.com/facebook",
-    instagram: "https://example.com/instagram",
-    tiktok: "https://example.com/tiktok",
-    youtube: "https://example.com/youtube",
-    pinterest: "https://example.com/pinterest",
+    facebook: "https://www.facebook.com/azizafridirentacar/",
+    instagram: "https://www.instagram.com/azizafridirentacar/",
+    pinterest: "https://www.pinterest.com/azizafridirentacar/",
+    x: "https://x.com/azizafridirentl",
   },
   colors: {
     primary: "#06264b",
@@ -33,9 +34,10 @@ export function formatPrice(amount: number) {
 
 /** Display phone for UI (same number used for Call Us everywhere) */
 export function formatPhoneDisplay() {
-  const digits = brand.phone.replace(/\D/g, "");
+  let digits = brand.phone.replace(/\D/g, "");
+  if (digits.startsWith("92") && digits.length === 12) digits = `0${digits.slice(2)}`;
   if (digits.length === 11) {
-    return `${digits.slice(0, 4)}-${digits.slice(4)}`;
+    return `${digits.slice(0, 4)} ${digits.slice(4)}`;
   }
   return brand.phone;
 }

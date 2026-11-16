@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { brand } from "@/lib/brand";
+import { Icon } from "@/components/ui/Icon";
+import { Section } from "@/components/ui/Section";
+import { brand, formatPhoneDisplay } from "@/lib/brand";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -31,10 +33,10 @@ const TOC = [
 function SectionHeading({ n, title, id }: { n: number; title: string; id: string }) {
   return (
     <div className="mb-6 flex items-center gap-4" id={id}>
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-secondary/15 font-heading text-lg font-semibold text-secondary">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-strong font-heading text-lg font-bold text-white">
         {n}
       </span>
-      <h2 className="font-heading text-2xl font-semibold text-primary sm:text-3xl">{title}</h2>
+      <h2 className="font-heading text-2xl font-extrabold italic text-navy-deep sm:text-3xl">{title}</h2>
     </div>
   );
 }
@@ -42,57 +44,51 @@ function SectionHeading({ n, title, id }: { n: number; title: string; id: string
 export default function TermsPage() {
   return (
     <>
-      <header className="relative flex min-h-[280px] items-center justify-center overflow-hidden py-16 sm:min-h-[360px] sm:py-20">
-        <Image src={HERO} alt="Luxury sedan interior detail" fill priority className="object-cover" sizes="100vw" />
-        <div className="absolute inset-0 bg-navy/70" />
-        <div className="relative z-10 px-4 text-center">
-          <nav className="mb-4 flex justify-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-white/80 sm:mb-6 sm:text-xs">
-            <Link href="/" className="hover:text-white">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="text-white">Terms &amp; Conditions</span>
-          </nav>
-          <h1 className="font-heading text-3xl font-bold text-white sm:text-5xl">Terms &amp; Conditions</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base">
-            Please read these terms carefully before using our services. This agreement governs your rental
-            experience with {brand.name}.
-          </p>
-        </div>
+      <header className="relative isolate overflow-hidden bg-navy-deep text-white">
+        <span aria-hidden="true" className="absolute -right-24 top-0 -z-10 h-full w-72 -skew-x-[20deg] bg-green/15" />
+        <span aria-hidden="true" className="absolute -right-40 top-0 -z-10 h-full w-44 -skew-x-[20deg] bg-navy/60" />
+        <Container className="grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+          <div>
+            <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-white/80">
+              <Link href="/" className="inline-flex min-h-11 items-center hover:text-white">
+                Home
+              </Link>
+              <Icon name="chevron-right" size={14} />
+              <span aria-current="page" className="text-white">Terms &amp; Conditions</span>
+            </nav>
+            <h1 className="font-heading text-4xl font-extrabold italic leading-[1.08] tracking-tight sm:text-5xl">
+              Terms &amp; <span className="text-green">Conditions</span>
+            </h1>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+              Please read these terms carefully before using our services. This agreement governs your rental
+              experience with {brand.name}.
+            </p>
+          </div>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-panel rounded-tr-[5rem] bg-navy shadow-lift">
+            <Image src={HERO} alt="Luxury sedan interior detail" fill priority className="object-cover" sizes="(min-width: 1024px) 45vw, 100vw" />
+          </div>
+        </Container>
       </header>
 
-      <section className="bg-surface py-16 sm:py-24 lg:py-[100px]">
-        <Container className="flex flex-col gap-12 lg:flex-row lg:gap-10">
-          <aside className="lg:w-1/4">
-            <div className="lg:sticky lg:top-24">
-              <div className="rounded-2xl border border-primary/8 bg-white/80 p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] backdrop-blur sm:p-8">
-                <h3 className="font-heading text-lg font-semibold text-primary">Contents</h3>
-                <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-muted sm:grid-cols-2 lg:grid-cols-1 lg:space-y-0">
-                  {TOC.map((item, i) => (
-                    <li key={item.id}>
-                      <a href={`#${item.id}`} className="transition hover:text-secondary">
-                        {i + 1}. {item.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-10 rounded-xl bg-navy p-6 text-white">
-                  <h4 className="font-heading text-base font-semibold">Need Help?</h4>
-                  <p className="mt-2 text-xs text-white/60">Our support team is available for any clarifications.</p>
-                  <a
-                    href={`mailto:${brand.email}`}
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:text-white"
-                  >
-                    Contact Support
-                    <span className="material-symbols-outlined text-base">open_in_new</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </aside>
+      <Section tone="surface">
+        <nav aria-label="Contents" className="mb-10">
+          <h2 className="sr-only">Contents</h2>
+          <ul className="flex flex-wrap gap-2">
+            {TOC.map((item, i) => (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  className="inline-flex min-h-11 items-center rounded-full border border-line bg-white px-4 text-sm font-semibold text-navy-deep transition hover:border-navy hover:bg-navy hover:text-white"
+                >
+                  {i + 1}. {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          <div className="space-y-16 lg:w-3/4">
-            <div className="scroll-mt-24">
+        <div className="mx-auto max-w-4xl space-y-8">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={1} title="Introduction" id="intro" />
               <div className="space-y-4 text-muted">
                 <p className="text-base leading-relaxed sm:text-lg">
@@ -110,11 +106,11 @@ export default function TermsPage() {
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={2} title="Rental Agreement" id="agreement" />
               <div className="space-y-6 text-muted">
-                <div className="rounded-xl border-l-4 border-secondary bg-[#f3f4f5] p-6">
-                  <p className="mb-2 text-sm font-semibold text-primary">Core Provision</p>
+                <div className="rounded-card border-l-4 border-green-strong bg-surface p-6">
+                  <p className="mb-2 text-sm font-semibold text-navy-deep">Core Provision</p>
                   <p className="text-sm sm:text-base">
                     The rental agreement becomes binding once the deposit is received and the booking confirmation
                     is issued by our system. All rentals are subject to vehicle availability at the time of pickup.
@@ -128,20 +124,20 @@ export default function TermsPage() {
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={3} title="Customer Responsibilities" id="customer" />
               <div className="grid gap-6 sm:grid-cols-2">
-                <div className="rounded-xl border border-primary/8 bg-white p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)]">
-                  <span className="material-symbols-outlined mb-4 text-secondary">description</span>
-                  <h4 className="mb-3 font-heading text-lg font-semibold text-primary">Documentation</h4>
+                <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
+                  <Icon name="briefcase" size={24} className="text-green-strong mb-4" />
+                  <h3 className="mb-3 font-heading text-lg font-semibold text-navy-deep">Documentation</h3>
                   <p className="text-sm text-muted">
                     Clients must provide original identification documents, a valid license, and the credit card
                     used for booking during vehicle handover.
                   </p>
                 </div>
-                <div className="rounded-xl border border-primary/8 bg-white p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)]">
-                  <span className="material-symbols-outlined mb-4 text-secondary">minor_crash</span>
-                  <h4 className="mb-3 font-heading text-lg font-semibold text-primary">Vehicle Inspection</h4>
+                <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
+                  <Icon name="car" size={24} className="text-green-strong mb-4" />
+                  <h3 className="mb-3 font-heading text-lg font-semibold text-navy-deep">Vehicle Inspection</h3>
                   <p className="text-sm text-muted">
                     You are required to inspect the vehicle with our representative and sign the condition report
                     before departure. Any pre-existing damage must be documented.
@@ -149,13 +145,13 @@ export default function TermsPage() {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-xl border border-primary/8 bg-white p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)]">
-                <p className="mb-6 text-base font-semibold text-primary sm:text-lg">
+              <div className="mt-6 rounded-card border border-line bg-surface p-6 sm:p-8">
+                <p className="mb-6 text-base font-semibold text-navy-deep sm:text-lg">
                   Damage &amp; Accident Reporting Procedure
                 </p>
                 <ol className="space-y-4 text-sm text-muted sm:text-base">
                   <li className="flex gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-xs font-semibold text-secondary">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-strong/10 text-xs font-semibold text-green-strong">
                       1
                     </span>
                     <span>
@@ -164,16 +160,16 @@ export default function TermsPage() {
                     </span>
                   </li>
                   <li className="flex gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-xs font-semibold text-secondary">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-strong/10 text-xs font-semibold text-green-strong">
                       2
                     </span>
                     <span>
-                      Contact our 24/7 emergency support line at {brand.phone} immediately to report the incident,
+                      Contact our 24/7 emergency support line at {formatPhoneDisplay()} immediately to report the incident,
                       regardless of severity.
                     </span>
                   </li>
                   <li className="flex gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-xs font-semibold text-secondary">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-strong/10 text-xs font-semibold text-green-strong">
                       3
                     </span>
                     <span>
@@ -182,7 +178,7 @@ export default function TermsPage() {
                     </span>
                   </li>
                   <li className="flex gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-xs font-semibold text-secondary">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-strong/10 text-xs font-semibold text-green-strong">
                       4
                     </span>
                     <span>
@@ -191,7 +187,7 @@ export default function TermsPage() {
                     </span>
                   </li>
                   <li className="flex gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-xs font-semibold text-secondary">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-strong/10 text-xs font-semibold text-green-strong">
                       5
                     </span>
                     <span>
@@ -203,38 +199,38 @@ export default function TermsPage() {
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={4} title="Vehicle Usage Policy" id="usage" />
-              <div className="rounded-xl border border-primary/8 bg-white p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)]">
-                <p className="mb-6 text-base font-semibold text-primary sm:text-lg">
+              <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
+                <p className="mb-6 text-base font-semibold text-navy-deep sm:text-lg">
                   Strict prohibitions apply to all fleet vehicles:
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined mt-1 text-red-500">block</span>
+                    <Icon name="alert-circle" size={24} className="text-danger mt-1 shrink-0" />
                     <p className="text-sm text-muted sm:text-base">
-                      <span className="font-semibold text-primary">No Racing/Off-roading:</span> Vehicles must
+                      <span className="font-semibold text-navy-deep">No Racing/Off-roading:</span> Vehicles must
                       remain on paved public roads. Track use is strictly forbidden and voids all insurance.
                     </p>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined mt-1 text-red-500">smoke_free</span>
+                    <Icon name="alert-circle" size={24} className="text-danger mt-1 shrink-0" />
                     <p className="text-sm text-muted sm:text-base">
-                      <span className="font-semibold text-primary">Smoke-Free Policy:</span> All vehicles are
+                      <span className="font-semibold text-navy-deep">Smoke-Free Policy:</span> All vehicles are
                       strictly non-smoking. A deep cleaning fee applies to any violation.
                     </p>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined mt-1 text-red-500">person_off</span>
+                    <Icon name="user" size={24} className="text-danger mt-1 shrink-0" />
                     <p className="text-sm text-muted sm:text-base">
-                      <span className="font-semibold text-primary">Unauthorized Drivers:</span> Only drivers listed
+                      <span className="font-semibold text-navy-deep">Unauthorized Drivers:</span> Only drivers listed
                       on the agreement are permitted to operate the vehicle.
                     </p>
                   </div>
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined mt-1 text-red-500">flight_takeoff</span>
+                    <Icon name="plane" size={24} className="text-danger mt-1 shrink-0" />
                     <p className="text-sm text-muted sm:text-base">
-                      <span className="font-semibold text-primary">Cross-Border Travel:</span> Taking any vehicle
+                      <span className="font-semibold text-navy-deep">Cross-Border Travel:</span> Taking any vehicle
                       outside Pakistan is strictly prohibited without prior written approval from {brand.name}.
                       Unauthorized cross-border travel voids all insurance coverage and immediately terminates the
                       rental agreement, making the client fully liable for the vehicle&apos;s value.
@@ -243,8 +239,8 @@ export default function TermsPage() {
                 </div>
               </div>
 
-              <div className="mt-6 rounded-xl border-l-4 border-secondary bg-[#f3f4f5] p-6">
-                <p className="mb-2 text-sm font-semibold text-primary">Fuel Policy</p>
+              <div className="mt-6 rounded-card border-l-4 border-green-strong bg-surface p-6">
+                <p className="mb-2 text-sm font-semibold text-navy-deep">Fuel Policy</p>
                 <p className="text-sm text-muted sm:text-base">
                   All vehicles are provided on a &ldquo;Full-to-Full&rdquo; basis unless a different arrangement is
                   confirmed in writing at booking. The vehicle is handed over with a full tank and must be returned
@@ -256,7 +252,7 @@ export default function TermsPage() {
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={5} title="Payment Terms" id="payment" />
               <div className="space-y-6 text-muted">
                 <p className="text-sm sm:text-base">
@@ -264,64 +260,62 @@ export default function TermsPage() {
                   stated otherwise. A security deposit will be pre-authorized on your card at the time of pickup.
                 </p>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                  <div className="rounded-xl bg-[#e7e8e9] p-6 text-center">
+                  <div className="rounded-card border border-line bg-surface p-6 text-center">
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">Booking Deposit</p>
-                    <p className="font-heading text-lg font-semibold text-primary">30%</p>
+                    <p className="font-heading text-lg font-semibold text-navy-deep">30%</p>
                   </div>
-                  <div className="rounded-xl bg-[#e7e8e9] p-6 text-center">
+                  <div className="rounded-card border border-line bg-surface p-6 text-center">
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">Security Bond</p>
-                    <p className="font-heading text-lg font-semibold text-primary">Varies</p>
+                    <p className="font-heading text-lg font-semibold text-navy-deep">Varies</p>
                   </div>
-                  <div className="rounded-xl bg-[#e7e8e9] p-6 text-center">
+                  <div className="rounded-card border border-line bg-surface p-6 text-center">
                     <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">Late Return Fee</p>
-                    <p className="font-heading text-lg font-semibold text-primary">Daily Rate</p>
+                    <p className="font-heading text-lg font-semibold text-navy-deep">Daily Rate</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={6} title="Cancellation Policy" id="cancellation" />
-              <div className="rounded-xl border border-secondary/20 bg-white/70 p-8 backdrop-blur">
+              <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
                 <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
                   <div className="flex-1">
-                    <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide text-secondary">Full Refund</h5>
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-green-strong">Full Refund</h3>
                     <p className="text-sm text-muted sm:text-base">
                       Cancellations made more than 72 hours before the scheduled pickup time.
                     </p>
                   </div>
-                  <div className="hidden w-px bg-primary/10 sm:block" />
+                  <div className="hidden w-px bg-line sm:block" />
                   <div className="flex-1">
-                    <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">
                       Partial Refund (50%)
-                    </h5>
+                    </h3>
                     <p className="text-sm text-muted sm:text-base">Cancellations made between 24 and 72 hours before pickup.</p>
                   </div>
-                  <div className="hidden w-px bg-primary/10 sm:block" />
+                  <div className="hidden w-px bg-line sm:block" />
                   <div className="flex-1">
-                    <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide text-red-500">No Refund</h5>
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-danger">No Refund</h3>
                     <p className="text-sm text-muted sm:text-base">Cancellations within 24 hours of pickup or &ldquo;no-shows&rdquo;.</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={7} title="Insurance Information" id="insurance" />
               <p className="mb-6 text-sm text-muted sm:text-base">
                 All {brand.name} vehicles are covered by comprehensive commercial insurance. However, the client is
                 responsible for the &ldquo;Insurance Excess&rdquo; amount in the event of an accident.
               </p>
-              <div className="rounded-2xl bg-navy p-8 text-white sm:p-10">
+              <div className="rounded-card rounded-tr-[3.5rem] bg-navy-deep p-7 text-white sm:p-10">
                 <div className="flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
-                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary/20">
-                    <span className="material-symbols-outlined text-3xl text-secondary" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      shield
-                    </span>
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-green/20">
+                    <Icon name="shield-check" size={30} className="text-green" />
                   </div>
                   <div className="text-center sm:text-left">
-                    <h4 className="font-heading text-lg font-semibold">Premium Protection Plan</h4>
-                    <p className="mt-2 text-sm text-white/60">
+                    <h3 className="font-heading text-lg font-semibold">Premium Protection Plan</h3>
+                    <p className="mt-2 text-sm text-white/80">
                       Reduce your excess to zero and enjoy full peace of mind. Available for an additional daily
                       fee at the time of booking.
                     </p>
@@ -330,7 +324,7 @@ export default function TermsPage() {
               </div>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={8} title="Liability" id="liability" />
               <p className="text-sm text-muted sm:text-base">
                 {brand.name} shall not be held liable for any indirect, incidental, or consequential damages
@@ -339,22 +333,22 @@ export default function TermsPage() {
               </p>
             </div>
 
-            <div className="scroll-mt-24">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={9} title="Privacy Rules" id="privacy" />
               <div className="space-y-6 text-muted">
                 <p className="text-sm sm:text-base">
                   Your privacy is important to us. We use the information you provide to process your booking and
                   improve our service. For more detailed information, please refer to our{" "}
-                  <Link href="/privacy" className="font-semibold text-secondary hover:underline">
+                  <Link href="/privacy" className="font-semibold text-green-strong hover:underline">
                     Privacy Policy
                   </Link>{" "}
                   page.
                 </p>
-                <div className="rounded-xl border border-primary/8 bg-white p-8 shadow-[0_10px_30px_rgba(14,28,46,0.04)]">
+                <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
                   <div className="flex items-start gap-4">
-                    <span className="material-symbols-outlined mt-1 text-secondary">gps_fixed</span>
+                    <Icon name="map-pin" size={24} className="text-green-strong mt-1 shrink-0" />
                     <div>
-                      <h4 className="mb-2 font-heading text-base font-semibold text-primary">GPS Tracking Notice</h4>
+                      <h3 className="mb-2 font-heading text-base font-semibold text-navy-deep">GPS Tracking Notice</h3>
                       <p className="text-sm sm:text-base">
                         All {brand.name} vehicles are fitted with GPS tracking devices for safety, theft recovery,
                         route verification, and mileage monitoring. By accepting these terms, the client consents to
@@ -370,7 +364,7 @@ export default function TermsPage() {
               </div>
             </div>
 
-            <div className="scroll-mt-24 border-b border-primary/8 pb-12">
+            <div className="scroll-mt-24 rounded-panel border border-line bg-white p-6 shadow-soft sm:p-10">
               <SectionHeading n={10} title="Amendments" id="amendments" />
               <div className="space-y-4 text-muted">
                 <p className="text-sm sm:text-base">
@@ -387,10 +381,20 @@ export default function TermsPage() {
               </div>
             </div>
 
+            <div className="rounded-panel rounded-tr-[4rem] bg-navy-deep p-7 text-white sm:p-9">
+              <h2 className="font-heading text-xl font-extrabold italic">Need Help?</h2>
+              <p className="mt-2 text-sm text-white/80">Our support team is available for any clarifications.</p>
+              <a
+                href={`mailto:${brand.email}`}
+                className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-green hover:text-white"
+              >
+                Contact Support
+                <Icon name="arrow-up-right" size={16} />
+              </a>
+            </div>
             <p className="text-xs text-muted">Last Updated: October 24, 2024</p>
-          </div>
-        </Container>
-      </section>
+        </div>
+      </Section>
     </>
   );
 }

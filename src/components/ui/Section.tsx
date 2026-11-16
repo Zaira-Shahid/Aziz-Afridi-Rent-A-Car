@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/ui/Container";
 
-type SectionTone = "surface" | "white" | "ink";
+type SectionTone = "surface" | "white" | "navy";
 
 type SectionProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ type SectionProps = {
 const toneStyles: Record<SectionTone, string> = {
   surface: "",
   white: "bg-white",
-  ink: "bg-ink text-white",
+  navy: "bg-navy-deep text-white",
 };
 
 /** One vertical rhythm for the whole site: 48px on phones, 64px on tablets, 96px on desktop. */

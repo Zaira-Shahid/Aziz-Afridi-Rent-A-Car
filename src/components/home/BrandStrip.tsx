@@ -1,60 +1,55 @@
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const brands = [
-  { name: "Toyota", image: "/brands/toyota-logo.png" },
-  { name: "Honda", image: "/brands/honda-logo.png" },
-  { name: "Suzuki", image: "/brands/suzuki-logo.png" },
-  { name: "Kia", image: "/brands/kia-logo.png" },
-  { name: "Hyundai", image: "/brands/hyundai-logo.png" },
-  { name: "Mercedes", image: "/brands/mercedes-logo.png" },
-  { name: "Audi", image: "/brands/audi-logo.png" },
-  { name: "Lexus", image: "/brands/lexus-logo.png" },
-  { name: "Changan", image: "/brands/changan-logo.png" },
-  { name: "Haval", image: "/brands/haval-logo.jfif.jpeg" },
+  { name: "Toyota", image: "/brands/toyota-logo.webp" },
+  { name: "Honda", image: "/brands/honda-logo.webp" },
+  { name: "Suzuki", image: "/brands/suzuki-logo.webp" },
+  { name: "Kia", image: "/brands/kia-logo.webp" },
+  { name: "Hyundai", image: "/brands/hyundai-logo.webp" },
+  { name: "Mercedes", image: "/brands/mercedes-logo.webp" },
+  { name: "Audi", image: "/brands/audi-logo.webp" },
+  { name: "Lexus", image: "/brands/lexus-logo.webp" },
+  { name: "Changan", image: "/brands/changan-logo.webp" },
+  { name: "Haval", image: "/brands/haval-logo.jfif.webp" },
 ] as const;
 
-function BrandItem({ name, image }: { name: string; image: string }) {
-  return (
-    <div className="brand-logo-card relative mx-2 h-[110px] w-[110px] shrink-0 sm:mx-3 sm:h-[140px] sm:w-[140px]">
-      <span className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[16px] bg-white p-3 sm:p-4">
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className="object-contain p-3 sm:p-4"
-          sizes="140px"
-        />
-      </span>
-    </div>
-  );
-}
-
+/** Slow logo marquee made of capsule chips. It pauses on hover and stops for reduced-motion users. */
 export function BrandStrip() {
+  // Three copies so the loop (translated by one third) never shows a gap.
   const loop = [...brands, ...brands, ...brands];
 
   return (
-    <section className="brand-strip-section relative overflow-hidden py-12 sm:py-16">
-      <div className="brand-strip-wave" aria-hidden="true" />
+    <section className="overflow-hidden bg-white py-14 sm:py-20">
+      <Reveal>
+        <SectionHeading
+          eyebrow="Brands"
+          title="Trusted car brands"
+          description="Popular brands available for daily, weekly, and monthly rental."
+          align="center"
+          className="px-4"
+        />
+      </Reveal>
 
-      <div className="relative z-10 mx-auto mb-8 max-w-7xl px-4 text-center sm:mb-10 sm:px-6 lg:px-8">
-        <Reveal>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent">Brands</p>
-          <h2 className="font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Trusted car brands
-          </h2>
-          <p className="mx-auto mt-2 max-w-xl px-2 text-sm text-white/65 sm:text-base">
-            Popular brands available for daily, weekly, and monthly rental.
-          </p>
-        </Reveal>
-      </div>
-
-      <div className="relative z-10 overflow-hidden pb-2 pt-2">
-        <div className="marquee-track flex w-max">
+      <div className="mt-10 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <ul className="marquee-track flex w-max items-center gap-4 py-3" style={{ animationDuration: "50s" }}>
           {loop.map((item, index) => (
-            <BrandItem key={`${item.name}-${index}`} name={item.name} image={item.image} />
+            <li
+              key={`${item.name}-${index}`}
+              aria-hidden={index >= brands.length ? true : undefined}
+              className="flex h-16 w-40 shrink-0 items-center justify-center rounded-full border border-line bg-white px-6 shadow-soft sm:h-[4.5rem] sm:w-48"
+            >
+              <Image
+                src={item.image}
+                alt={index < brands.length ? item.name : ""}
+                width={140}
+                height={56}
+                className="h-11 w-auto max-w-full object-contain sm:h-12"
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

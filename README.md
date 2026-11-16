@@ -1,111 +1,162 @@
-# Aziz Afridi Rent A Car
+# Aziz Afridi Rent a Car
 
-Premium car rental website for Aziz Afridi Rent A Car — built with Next.js App Router, TypeScript, and Tailwind CSS. Designs converted from Google Stitch into responsive production pages.
+Website for **Aziz Afridi Rent a Car**, a chauffeur-driven car rental business in Pakistan. Visitors can browse the fleet by category, search by city and date, request a car through WhatsApp, read city and service pages, and read the travel blog. The business owner can add and edit blog posts from a private admin page.
 
-## Stack
+The site is a **static export** (plain HTML, CSS and JavaScript). It needs no server at runtime and is uploaded to Hostinger. A Vercel configuration is also included.
 
-- Next.js 16 (App Router)
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- Yarn
+## Screenshots
+
+Taken with Playwright from the production build (`scripts/take-screenshots.js`).
+
+| Page | Desktop (1440 px) | Mobile (390 px) |
+|---|---|---|
+| Home | [home-desktop.jpg](docs/screenshots/home-desktop.jpg) | [home-mobile.jpg](docs/screenshots/home-mobile.jpg) |
+| Cars | [cars-desktop.jpg](docs/screenshots/cars-desktop.jpg) | [cars-mobile.jpg](docs/screenshots/cars-mobile.jpg) |
+| Car details | [car-details-desktop.jpg](docs/screenshots/car-details-desktop.jpg) | [car-details-mobile.jpg](docs/screenshots/car-details-mobile.jpg) |
+| Contact | [contact-desktop.jpg](docs/screenshots/contact-desktop.jpg) | [contact-mobile.jpg](docs/screenshots/contact-mobile.jpg) |
+
+Some photos (blog covers, city and service images) are loaded from third-party hosts. They appear blank in screenshots taken without internet access.
+
+## Features
+
+- **Home page**: hero with search bar (pickup city, dates, vehicle type), feature strip, fleet tiles, "Discover Your Drive" fleet groups, trusted-brand marquee, services, how it works, destinations, promo banners, reviews, FAQ, blog preview and a closing call to action.
+- **Fleet**: 27 cars in 10 categories, with seats, transmission, fuel, daily price and a detail page for each car. The `/cars` page reads the home search (`?location&pickup&return`) in the browser.
+- **Car inquiry**: a keyboard-accessible dialog collects date, times, name, email and phone, then opens a prefilled WhatsApp message. Call and WhatsApp buttons are on every car card.
+- **Services**: 8 service pages (airport, hotel, executive, wedding, daily, weekly, monthly, corporate). The booking forms on the Airport, Hotel, Wedding and Corporate pages open `/contact` with the typed values filled in.
+- **Cities**: 31 city and area pages with a WhatsApp search form, plus a searchable city services overview.
+- **Contact**: a form that builds a WhatsApp message. It can be prefilled from the URL (`/contact?name=&email=&phone=&pickup=&message=`; any other simple parameter becomes a line at the top of the message).
+- **Blog**: listing, category pages and post pages, with client-side search by title and excerpt. Posts come from `src/data/blog.ts` and from Firestore.
+- **Blog admin** at `/admin/blog`: Google sign-in for allowed accounts, then create, edit, delete and sync posts in Firestore. The page is not linked from the site and is marked `noindex`.
+- **Other pages**: About, FAQ (7 topics), Reviews feedback, Terms, Privacy, Booking Policy and a custom 404.
+- **Sticky Call and WhatsApp bar** on mobile, floating WhatsApp button on desktop.
+- **SEO**: page titles and descriptions, JSON-LD, `sitemap.xml` and `robots.txt`.
+
+## Tech stack
+
+- [Next.js](https://nextjs.org/) 16 (App Router) with React 19 and TypeScript
+- [Tailwind CSS](https://tailwindcss.com/) 4
+- Firebase (Authentication for the blog admin, Firestore for blog posts, Analytics)
+- Fonts through `next/font/google`: Poppins (headings) and Inter (body)
+- Playwright (dev dependency) for the screenshots
+
+## Design system
+
+| Token | Value | Use |
+|---|---|---|
+| Navy | `#00306C` | Headings, navigation, solid buttons |
+| Deep navy | `#002048` | Footer, dark panels |
+| Brand green | `#3CA500` | Icons and highlighted words on navy |
+| Action green | `#2B7D00` | Button fills and small green text on white |
+| Gray | `#4B4B4B` | Secondary text |
+| Background | `#F6F7F9` / white | Page background |
+
+- Bold italic Poppins headings with the last words in green; Inter for body text.
+- 12 px buttons and inputs, 16 px cards, pill buttons in the header and hero, soft shadows, 4 px spacing base.
+- Icons are inline SVG from `src/components/ui/Icon.tsx` (no icon font, no emoji).
+- Every button is at least 44 px tall with a visible focus ring. Motion respects `prefers-reduced-motion`.
+- Mobile first, checked at 390, 768 and 1440 px.
+
+## Pages and routes
+
+| Route | Page |
+|---|---|
+| `/` | Home |
+| `/about` | About us |
+| `/cars` | All cars, grouped by fleet |
+| `/cars/[slug]` | Car details (27) |
+| `/categories/[slug]` | Cars in one category (10) |
+| `/services` | Services overview |
+| `/services/[slug]` | Service pages (8) |
+| `/city-services` | City services overview |
+| `/rent-a-car/[slug]` | City and area pages (31) |
+| `/blog` | Blog listing with search |
+| `/blog/[slug]` | A blog post or a blog category |
+| `/admin/blog` | Blog admin (private, `noindex`) |
+| `/contact` | Contact form and details |
+| `/faq` | Frequently asked questions |
+| `/reviews` | Customer feedback |
+| `/terms`, `/privacy`, `/booking-policy` | Legal pages |
 
 ## Getting started
 
+Requirements: Node.js 20 or newer and npm.
+
 ```bash
-yarn install
-yarn dev
+git clone <repository-url>
+cd aziz-rent-a-car
+npm install
+cp .env.example .env.local
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Scripts
+### Environment variables
 
-- `yarn dev` — development server (Turbopack)
-- `yarn build` — production build
-- `yarn start` — production server
-- `yarn lint` — ESLint
+Set these in `.env.local` (names only; get the values from the Firebase project settings):
 
-## Brand guidelines
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
+- `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+- `NEXT_PUBLIC_SITE_URL` (optional, used for the sitemap and `robots.txt`)
 
-| Role | Hex | Usage |
-|------|-----|--------|
-| Primary | `#000B1D` | Header, footer, heroes, headings |
-| Secondary | `#04C4E3` | Links, icons, accents, Call Us |
-| Accent / CTA | `#BFF52C` | Book Now, WhatsApp, primary CTAs |
-| Background | `#F8F9FA` | Page background, cards, forms |
+### Scripts
 
-- Headings: **Sora**
-- Body: **Inter**
-- Style: modern, premium, clean, fully responsive
+| Command | What it does |
+|---|---|
+| `npm run dev` | Development server (Turbopack) |
+| `npm run build` | Production build, then the Hostinger path fix-up (`scripts/sanitize-hostinger-paths.js`) |
+| `npm run lint` | ESLint |
+| `npx tsc --noEmit` | Type check |
+| `node scripts/take-screenshots.js` | Retake the README screenshots from `out/` (run `npm run build` first) |
 
-Tokens live in `src/lib/brand.ts` and `src/app/globals.css`.
+## Build and deployment
 
-## Stitch screens (full UI)
+### Hostinger (static export)
 
-These pages use full Stitch-based layouts:
+1. Run `npm run build`. This creates the `out/` folder.
+   The build step renames folders that contain `$` (for example `__next.cars.$d$slug`) because Hostinger's Apache returns 404 for them. It prints `OK: no $ left in out/ names` when it is done.
+2. In Hostinger, open **File Manager** (or connect over FTP) and go to `public_html`.
+3. Upload **the contents** of `out/` (not the folder itself) into `public_html`, replacing the old files.
+4. Visit the site and check `/`, `/cars`, a car page and `/contact`.
 
-| Page | URL |
-|------|-----|
-| Home | `/` |
-| About | `/about` |
-| City Services | `/city-services` |
-| Hotel Transfer | `/services/hotel-transfer` |
-| Executive Car Rental | `/services/executive-car-rental` |
-| Wedding Car Rental | `/services/wedding-car-rental` |
-| Daily Car Rental | `/services/daily-car-rental` |
-| Reviews | `/reviews` |
-| Terms & Conditions | `/terms` |
-| Contact Us | `/contact` |
-| Booking Policy | `/booking-policy` |
-| Blog | `/blog` |
-| FAQ | `/faq` |
+To show the custom 404 page, add this line to `public_html/.htaccess`: `ErrorDocument 404 /404.html`.
 
-## Other routes
+Before going live, add the final domain to **Firebase Authentication → Settings → Authorized domains**, otherwise Google sign-in on `/admin/blog` will not work.
 
-- `/cars` + `/cars/[slug]` — fleet listing and car detail
-- `/categories/[slug]` — economy, sedan, SUV, luxury, hiace
-- `/services` + remaining service slugs (airport, corporate, weekly, monthly)
-- `/rent-a-car/[slug]` — city SEO pages (31 cities)
-- `/blog/[slug]` — blog categories
-- `/privacy`
+### Vercel
 
-## Features
-
-- Responsive layout (mobile → desktop)
-- Car cards with **WhatsApp**, **Call Us**, and **Inquiry** actions
-- Inquiry modal (opens WhatsApp with booking details)
-- Sticky header with desktop + mobile navigation
-- Service detail pages with fleet, includes, audience, FAQs
-- Blog, FAQ accordion, reviews, legal/policy pages
+`vercel.json` is included. On Vercel the site is built as a normal Next.js app (the static export is only used when `VERCEL` is not set). Add the environment variables above in the project settings. The install command in `vercel.json` is `yarn install`, so keep `yarn.lock` in sync or change it to `npm install`.
 
 ## Folder structure
 
-```text
+```
 src/
-  app/                    # App Router pages
+  app/            Routes (App Router), global styles, sitemap, robots
   components/
-    ui/                   # Button, Container, Section, Logo…
-    layout/               # Header, Footer, SiteShell
-    shared/               # PageHero, CtaBanner…
-    home/                 # Home sections
-    cars/                 # CarCard, InquireModal, CarGridSection
-    services/             # Stitch service page layouts + fleet grid
-    city/                 # City Services content
-    contact/              # Contact form
-    faq/                  # FAQ accordion
-  data/                   # Cars, cities, services, service-details, nav
-  lib/                    # Brand + helpers
-  types/                  # Shared TypeScript types
+    blog/         Blog listing, post, category and admin
+    cars/         Car card, grids, detail page, inquiry dialog, search banner
+    city/         City pages and city services overview
+    contact/      Contact form, booking bar, URL prefill helper
+    faq/          FAQ accordion and help card
+    home/         Home page sections
+    layout/       Header, footer, mobile menu, sticky action bar
+    services/     Service pages and their shared blocks
+    shared/       Page hero, call-to-action banner, simple content page
+    ui/           Button, Card, Container, Section, Icon and other building blocks
+  data/           Cars, services, cities, blog posts, navigation (page content lives here)
+  lib/            Brand details, Firebase, blog helpers, SEO
+  types/          Shared TypeScript types
+public/           Images (fleet, brands, services) and brand assets
+scripts/          Build fix-up, screenshots and one-off maintenance scripts
+docs/screenshots/ README screenshots
+firestore.rules   Firestore security rules
 ```
 
-## Deploy
+## Content and data
 
-Built for Vercel. Push to `main` and connect the GitHub repo, or run:
-
-```bash
-yarn build
-yarn start
-```
-
-# Best_Rent_a_Car
+Most text, prices and images are in `src/data/*.ts` and `src/lib/brand.ts` (phone, WhatsApp, social links). Components read from there, so changing a price or a phone number means editing one place and rebuilding.

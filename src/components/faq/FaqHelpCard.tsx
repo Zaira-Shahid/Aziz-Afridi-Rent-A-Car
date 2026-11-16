@@ -1,6 +1,7 @@
-"use client";
-
 import Image from "next/image";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Icon } from "@/components/ui/Icon";
+import { buttonClasses } from "@/components/ui/button-styles";
 import { brand, formatPhoneDisplay } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
@@ -11,58 +12,60 @@ type FaqHelpCardProps = {
   className?: string;
 };
 
+/** Wide help card: agent photo on the left, call and WhatsApp buttons on the right. */
 export function FaqHelpCard({ className }: FaqHelpCardProps) {
   return (
     <div
       className={cn(
-        "group relative min-h-[240px] overflow-hidden rounded-2xl shadow-2xl sm:min-h-[280px] lg:h-[560px] lg:min-h-0",
+        "grid overflow-hidden rounded-panel bg-navy-deep text-white shadow-lift md:grid-cols-[0.8fr_1.2fr]",
         className,
       )}
     >
-      <Image
-        src={AGENT_IMAGE}
-        alt="Call agent with headset ready to help"
-        fill
-        className="object-cover object-[center_15%] transition-transform duration-700 ease-out group-hover:scale-105"
-        sizes="(max-width: 1024px) 100vw, 33vw"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/55 to-navy/15" />
-
-      <div className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 backdrop-blur-md sm:left-5 sm:top-5">
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="dot-pulse absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
+      <div className="relative min-h-[240px] md:min-h-[300px]">
+        <Image
+          src={AGENT_IMAGE}
+          alt="Call agent with headset ready to help"
+          fill
+          className="object-cover object-[center_15%]"
+          sizes="(min-width: 768px) 40vw, 100vw"
+        />
+        <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-navy-deep/80 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider backdrop-blur-md">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="dot-pulse absolute inline-flex h-full w-full rounded-full bg-green opacity-75" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green" />
+          </span>
+          Agent Online
         </span>
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-white">Agent Online</span>
       </div>
-
-      <div className="absolute inset-x-0 bottom-0 z-10 animate-fade-up-delay p-5 sm:p-7 lg:p-8">
-        <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-accent/20 text-accent sm:mb-4 sm:h-12 sm:w-12">
-          <span className="material-symbols-outlined text-[24px]">support_agent</span>
-        </div>
-        <h3 className="font-heading text-lg font-semibold text-white sm:text-xl">Need immediate help?</h3>
-        <p className="mt-2 max-w-sm text-sm leading-relaxed text-white/75">
+      <div className="flex flex-col justify-center p-7 sm:p-10">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green/20 text-green">
+          <Icon name="headset" size={26} />
+        </span>
+        <h3 className="mt-5 font-heading text-2xl font-extrabold italic">Need immediate help?</h3>
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-white/80 sm:text-base">
           Talk to a live Aziz Afridi agent for bookings, changes, and roadside support — available 24/7.
         </p>
-        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center lg:flex-col lg:items-stretch xl:flex-row xl:items-center">
-          <a
-            href={`tel:${brand.phone}`}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold !text-white transition hover:scale-[1.02] hover:brightness-95 active:scale-[0.98]"
-          >
-            <span className="material-symbols-outlined text-[18px]">support_agent</span>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <ButtonLink href={`tel:${brand.phone}`} variant="green" pill size="md">
+            <Icon name="headset" size={18} />
             Call Agent
-          </a>
+          </ButtonLink>
           <a
             href={`https://wa.me/${brand.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20"
+            className={buttonClasses({
+              variant: "outline",
+              pill: true,
+              size: "md",
+              className: "border-white/70 text-white hover:border-white hover:bg-white hover:text-navy-deep",
+            })}
           >
-            <span className="material-symbols-outlined text-[18px]">chat</span>
+            <Icon name="whatsapp" size={18} />
             WhatsApp
           </a>
         </div>
-        <p className="mt-3 text-xs text-white/55">{formatPhoneDisplay()}</p>
+        <p className="mt-4 text-xs text-white/70">{formatPhoneDisplay()}</p>
       </div>
     </div>
   );

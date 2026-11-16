@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { cn } from "@/lib/utils";
 
 const GOOGLE_REVIEWS = [
   {
     name: "Ahmed Khan",
     date: "12 July 2026",
     initials: "AK",
-    color: "#4285F4",
     rating: 5,
     text: "Excellent service from Aziz Afridi. Booked a Fortuner for Murree and the car was spotless, delivered on time, and the WhatsApp support was very helpful throughout.",
   },
@@ -15,7 +17,6 @@ const GOOGLE_REVIEWS = [
     name: "Sara Malik",
     date: "3 July 2026",
     initials: "SM",
-    color: "#EA4335",
     rating: 5,
     text: "Rented a Corolla for Islamabad airport pickup. Smooth booking, fair pricing, and the driver was professional. Highly recommend for family trips.",
   },
@@ -23,11 +24,13 @@ const GOOGLE_REVIEWS = [
     name: "Usman Raza",
     date: "28 June 2026",
     initials: "UR",
-    color: "#34A853",
     rating: 5,
     text: "Best car rental experience in Islamabad. Monthly rental for our office was easy to arrange and the cars were always well maintained.",
   },
 ];
+
+/** Avatar circle colors, taken from the brand palette. */
+const avatarColors = ["bg-navy", "bg-green-strong", "bg-navy-deep"];
 
 function GoogleMark({ className = "h-5 w-5" }: { className?: string }) {
   return (
@@ -52,17 +55,11 @@ function GoogleMark({ className = "h-5 w-5" }: { className?: string }) {
   );
 }
 
-function Stars({ count }: { count: number }) {
+function Stars({ count, size = 18 }: { count: number; size?: number }) {
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-0.5" role="img" aria-label={`${count} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, index) => (
-        <span
-          key={index}
-          className="material-symbols-outlined text-[18px] text-[#FBBC04]"
-          style={{ fontVariationSettings: "'FILL' 1" }}
-        >
-          {index < count ? "star" : "star_border"}
-        </span>
+        <Icon key={index} name="star" size={size} className={index < count ? "text-green" : "text-line"} />
       ))}
     </div>
   );
@@ -70,91 +67,92 @@ function Stars({ count }: { count: number }) {
 
 export function HomeReviews() {
   return (
-    <section className="bg-[#f7f8fa] py-16 sm:py-24">
-      <Container>
-        <Reveal>
-          <div className="mb-8 text-center sm:mb-10 sm:text-left">
-            <h2 className="font-heading text-3xl font-semibold tracking-tight text-primary sm:text-4xl">
-              What Our Clients Say
-            </h2>
-            <p className="mt-2 text-sm text-muted sm:text-base">
-              Real Google reviews from customers who booked with Aziz Afridi.
-            </p>
-          </div>
-        </Reveal>
+    <Section tone="white">
+      <Reveal>
+        <SectionHeading
+          title="What Our Clients Say"
+          description="Real Google reviews from customers who booked with Aziz Afridi."
+          align="center"
+        />
+      </Reveal>
 
-        <div className="mb-6 flex flex-wrap items-center gap-4 border-b border-primary/10 pb-3">
-          <span className="border-b-2 border-[#4285F4] pb-3 text-sm font-semibold text-primary">
-            <span className="inline-flex items-center gap-2">
-              <GoogleMark className="h-4 w-4" />
-              Google
-            </span>
+      <div className="mt-8 flex flex-col items-center gap-4 sm:mt-10">
+        <div className="flex items-center gap-2 text-sm" aria-hidden="true">
+          <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-navy px-4 font-semibold text-white">
+            <GoogleMark className="h-4 w-4" />
+            Google
           </span>
-          <span className="pb-3 text-sm text-muted">All reviews</span>
+          <span className="inline-flex min-h-9 items-center rounded-full border border-line px-4 text-muted">
+            All reviews
+          </span>
         </div>
-
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <GoogleMark className="h-7 w-7" />
-            <span className="text-lg font-bold text-primary">Excellent</span>
+            <span className="text-lg font-bold text-navy-deep">Excellent</span>
             <Stars count={5} />
-            <span className="text-sm font-semibold text-primary">4.9</span>
+            <span className="text-sm font-semibold text-navy-deep">4.9</span>
             <span className="text-sm text-muted">| 895 reviews</span>
           </div>
           <a
             href="https://www.google.com/maps"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex w-fit items-center rounded-full border border-primary/15 px-5 py-2.5 text-sm font-medium text-primary transition hover:border-primary/30 hover:bg-white"
+            className="inline-flex min-h-11 items-center text-sm font-bold text-green-strong underline-offset-4 hover:underline"
           >
             Write a review
           </a>
         </div>
+      </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {GOOGLE_REVIEWS.map((review, index) => (
-            <Reveal key={review.name} delay={index * 100}>
-            <article
-              className="h-full rounded-2xl border border-primary/8 bg-white p-5 shadow-[0_8px_24px_rgba(0,11,29,0.06)] sm:p-6"
-            >
-              <div className="mb-4 flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-11 w-11 items-center justify-center rounded-full text-sm font-semibold text-white"
-                    style={{ backgroundColor: review.color }}
-                  >
-                    {review.initials}
+      <ul className="mt-10 grid gap-5 md:grid-cols-3 md:gap-6">
+        {GOOGLE_REVIEWS.map((review, index) => (
+          <li key={review.name}>
+            <Reveal delay={index * 100} className="h-full">
+              <article className="relative flex h-full flex-col rounded-card border border-line bg-surface p-6 shadow-soft sm:p-7">
+                <Icon name="quote" size={40} className="text-green/40" />
+                <p className="mt-4 flex-1 text-base leading-relaxed text-fg">{review.text}</p>
+                <Link
+                  href="/reviews"
+                  className="mt-3 inline-flex min-h-11 w-fit items-center text-sm font-bold text-green-strong hover:underline"
+                >
+                  Read more
+                </Link>
+                <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-5">
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "grid size-12 shrink-0 place-items-center rounded-full text-sm font-bold text-white",
+                        avatarColors[index % avatarColors.length],
+                      )}
+                    >
+                      {review.initials}
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-bold text-navy-deep">{review.name}</h3>
+                      <p className="text-xs text-muted">{review.date}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-semibold text-primary">{review.name}</h4>
-                    <p className="text-xs text-muted">{review.date}</p>
+                  <div className="flex flex-col items-end gap-1">
+                    <Stars count={review.rating} size={16} />
+                    <GoogleMark className="h-4 w-4" />
                   </div>
                 </div>
-                <GoogleMark className="h-5 w-5 shrink-0" />
-              </div>
-
-              <div className="mb-3 flex items-center gap-2">
-                <Stars count={review.rating} />
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#4285F4]">
-                  <span className="material-symbols-outlined text-[10px] !leading-none text-white">check</span>
-                </span>
-              </div>
-
-              <p className="text-sm leading-relaxed text-primary/75">{review.text}</p>
-              <Link href="/reviews" className="mt-3 inline-block text-sm text-muted transition hover:text-primary">
-                Read more
-              </Link>
-            </article>
+              </article>
             </Reveal>
-          ))}
-        </div>
+          </li>
+        ))}
+      </ul>
 
-        <div className="mt-8 text-center">
-          <Link href="/reviews" className="text-sm font-medium text-primary underline-offset-4 hover:underline">
-            Read all reviews
-          </Link>
-        </div>
-      </Container>
-    </section>
+      <div className="mt-8 text-center">
+        <Link
+          href="/reviews"
+          className="inline-flex min-h-11 items-center text-sm font-bold text-navy-deep underline-offset-4 hover:text-green-strong hover:underline"
+        >
+          Read all reviews
+        </Link>
+      </div>
+    </Section>
   );
 }

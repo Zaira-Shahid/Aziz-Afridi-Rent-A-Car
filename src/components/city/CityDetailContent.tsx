@@ -1,17 +1,21 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import type { CityPage } from "@/types";
 import { CarCard } from "@/components/cars/CarCard";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Container } from "@/components/ui/Container";
+import { Icon } from "@/components/ui/Icon";
+import { Reveal } from "@/components/ui/Reveal";
+import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { buttonClasses } from "@/components/ui/button-styles";
 import { carModels } from "@/data";
 import { brand } from "@/lib/brand";
-import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
 
 /** Islamabad hero — local landmark image */
-const ISLAMABAD_HERO = "/services/islambad.jpeg";
+const ISLAMABAD_HERO = "/services/islambad.webp";
 
 const FLEET_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuA1A79IDJIW_aFnBsQj1JQWPCi85fII9bVRg7OP6lB_FM1HQdJCKMuU8ogEgCN8BaR7e98m8vMSjxppY1ZnkiXVlqgYQeoOtmXBwsSEKC6ly7j83OJLZ_6f9NhpEJ-j9LAl-aLND1WWTUIvkGca0VXOQRKgPACwengq_1yXUh927w_jT_ARf7iovL-okVs1HPNIcnET-cmAft3oJ3orvTPjKoSSB7pDaUy8WPoJAhlk61FaopWNyHxv";
@@ -99,10 +103,15 @@ function airportCopy(city: CityPage) {
   return `Seamless transfers from the nearest airport and major hubs directly to your destination in ${city.name}.`;
 }
 
+const fieldClass =
+  "block w-full min-w-0 rounded-xl border border-line bg-surface py-3.5 pl-11 pr-4 text-base text-navy-deep focus:border-green-strong focus:bg-white sm:text-sm";
+const labelClass = "mb-1.5 block text-sm font-semibold text-navy-deep";
+
 export function CityDetailContent({ city }: CityDetailContentProps) {
   const [pickupDate, setPickupDate] = useState("");
   const [category, setCategory] = useState(CATEGORIES[0]);
   const heroImage = getCityHeroImage(city);
+  const baseId = useId();
 
   const popularCars = useMemo(
     () =>
@@ -130,221 +139,199 @@ export function CityDetailContent({ city }: CityDetailContentProps) {
 
   return (
     <>
-      <section className="relative flex min-h-[420px] items-center overflow-hidden px-4 pb-12 pt-24 sm:min-h-[480px] sm:px-6 sm:pb-16 sm:pt-28 lg:min-h-[520px] lg:px-16 lg:pb-20 lg:pt-32">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src={heroImage}
-            alt={`Rent a car in ${city.name}`}
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
+      {/* Hero: navy panel, big title and a framed city photo */}
+      <header className="relative isolate overflow-hidden bg-navy-deep pb-24 text-white sm:pb-28">
+        <span aria-hidden="true" className="absolute -right-24 top-0 -z-10 h-full w-72 -skew-x-[20deg] bg-green/15" />
+        <span aria-hidden="true" className="absolute -right-40 top-0 -z-10 h-full w-44 -skew-x-[20deg] bg-navy/60" />
+        <Container className="grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-20">
+          <div>
+            <h1 className="animate-fade-up font-heading text-4xl font-extrabold italic leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+              Rent A Car In <span className="text-green">{city.name}</span>
+            </h1>
+            <p className="animate-fade-up-delay mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+              {cityBlurb(city)}
+            </p>
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-panel rounded-tr-[5rem] bg-navy shadow-lift">
+            <Image
+              src={heroImage}
+              alt={`Rent a car in ${city.name}`}
+              fill
+              priority
+              className="object-cover object-center"
+              sizes="(min-width: 1024px) 45vw, 100vw"
+            />
+          </div>
+        </Container>
+      </header>
+
+      {/* Search card overlapping the hero */}
+      <div className="relative z-10 -mt-14 px-4 sm:-mt-16 sm:px-6 lg:px-8">
+        <form
+          onSubmit={handleSearch}
+          className="mx-auto grid max-w-5xl gap-4 rounded-panel bg-white p-5 shadow-lift sm:p-6 md:grid-cols-4 md:items-end"
+        >
+          <div>
+            <label htmlFor={`${baseId}-loc`} className={labelClass}>
+              Pickup Location
+            </label>
+            <div className="relative">
+              <Icon name="map-pin" size={18} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-green-strong" />
+              <input id={`${baseId}-loc`} readOnly value={`${city.name}, Pakistan`} className={fieldClass} />
+            </div>
+          </div>
+          <div>
+            <label htmlFor={`${baseId}-date`} className={labelClass}>
+              Pickup Date
+            </label>
+            <div className="relative">
+              <Icon name="calendar" size={18} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-green-strong" />
+              <input
+                id={`${baseId}-date`}
+                type="date"
+                value={pickupDate}
+                onChange={(e) => setPickupDate(e.target.value)}
+                className={fieldClass}
+              />
+            </div>
+          </div>
+          <div>
+            <label htmlFor={`${baseId}-cat`} className={labelClass}>
+              Vehicle Category
+            </label>
+            <div className="relative">
+              <Icon name="car" size={18} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-green-strong" />
+              <select
+                id={`${baseId}-cat`}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className={fieldClass}
+              >
+                {CATEGORIES.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <button type="submit" className={buttonClasses({ variant: "green", size: "lg", className: "w-full" })}>
+            <Icon name="search" size={18} />
+            Search Cars
+          </button>
+        </form>
+      </div>
+
+      {/* Why choose us: one big dark panel on the left, three rows on the right */}
+      <Section tone="surface">
+        <Reveal>
+          <SectionHeading
+            title={`Why Choose Aziz Afridi in ${city.name}?`}
+            description={`Experience unmatched professionalism, pristine vehicles, and seamless service tailored for travel in ${city.name}.`}
+            align="center"
+            className="mx-auto mb-10 max-w-2xl sm:mb-14"
           />
-          <div className="absolute inset-0 bg-primary/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-        </div>
+        </Reveal>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center text-center">
-          <h1 className="hero-shadow animate-fade-up font-heading text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl lg:leading-tight">
-            Rent A Car In <span className="text-accent">{city.name}</span>
-          </h1>
-          <p className="animate-fade-up-delay mt-3 max-w-2xl text-sm text-white/85 sm:mt-4 sm:text-base lg:text-lg">
-            {cityBlurb(city)}
-          </p>
-
-          <form
-            onSubmit={handleSearch}
-            className="animate-fade-up-delay-2 mt-6 w-full max-w-5xl rounded-xl border border-white/15 bg-white/10 p-3 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.2)] backdrop-blur-xl sm:mt-8 sm:p-4 md:grid md:grid-cols-4 md:items-end md:gap-4"
-          >
-            <label className="mb-4 flex flex-col gap-2 text-left md:mb-0">
-              <span className="px-2 text-xs font-semibold uppercase tracking-wider text-white/80">
-                Pickup Location
-              </span>
-              <span className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-primary/45">
-                  location_on
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Reveal className="h-full">
+            <div className="flex h-full flex-col overflow-hidden rounded-panel bg-navy-deep text-white">
+              <div className="p-7 sm:p-9">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green/20 text-green">
+                  <Icon name="crown" size={26} />
                 </span>
-                <input
-                  readOnly
-                  value={`${city.name}, Pakistan`}
-                  className="w-full rounded-lg border-none bg-white py-3 pl-10 pr-4 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
+                <h3 className="mt-5 font-heading text-2xl font-extrabold italic">Luxury Fleet</h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/80 sm:text-base">
+                  From executive sedans to premium SUVs, our immaculately maintained fleet ensures you
+                  travel across {city.name} in supreme comfort and style.
+                </p>
+              </div>
+              <div className="relative mt-auto aspect-[16/9] w-full">
+                <Image
+                  src={FLEET_IMAGE}
+                  alt="Luxury fleet"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                 />
-              </span>
-            </label>
-
-            <label className="mb-4 flex flex-col gap-2 text-left md:mb-0">
-              <span className="px-2 text-xs font-semibold uppercase tracking-wider text-white/80">
-                Pickup Date
-              </span>
-              <span className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-primary/45">
-                  calendar_month
-                </span>
-                <input
-                  type="date"
-                  value={pickupDate}
-                  onChange={(e) => setPickupDate(e.target.value)}
-                  className="w-full min-w-0 max-w-full cursor-pointer rounded-lg border-none bg-white py-3 pl-10 pr-4 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
-                />
-              </span>
-            </label>
-
-            <label className="mb-4 flex flex-col gap-2 text-left md:mb-0">
-              <span className="px-2 text-xs font-semibold uppercase tracking-wider text-white/80">
-                Vehicle Category
-              </span>
-              <span className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-primary/45">
-                  directions_car
-                </span>
-                <select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="w-full appearance-none rounded-lg border-none bg-white py-3 pl-10 pr-10 text-sm text-primary outline-none focus:ring-2 focus:ring-accent"
-                >
-                  {CATEGORIES.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-                <span className="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-primary/45">
-                  expand_more
-                </span>
-              </span>
-            </label>
-
-            <button
-              type="submit"
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-accent px-6 text-sm font-semibold !text-white transition hover:brightness-95"
-            >
-              <span className="material-symbols-outlined text-[20px]">search</span>
-              Search Cars
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <section className="bg-white py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <Reveal>
-            <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16">
-              <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
-                Why Choose Aziz Afridi in {city.name}?
-              </h2>
-              <p className="mt-4 text-sm text-primary/65 sm:text-base">
-                Experience unmatched professionalism, pristine vehicles, and seamless service tailored for
-                travel in {city.name}.
-              </p>
+              </div>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <Reveal className="md:col-span-2">
-              <div className="flex h-full flex-col justify-between rounded-xl bg-[#f3f4f5] p-6 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.08)] sm:p-8">
+          <div className="grid gap-6">
+            <Reveal delay={80}>
+              <div className="flex gap-5 rounded-card border border-line bg-white p-6 shadow-soft sm:p-7">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-green-strong/10 text-green-strong">
+                  <Icon name="headset" size={24} />
+                </span>
                 <div>
-                  <span className="mb-4 inline-flex rounded-full bg-primary p-3 text-white">
-                    <span className="material-symbols-outlined text-3xl">diamond</span>
-                  </span>
-                  <h3 className="font-heading text-xl font-semibold sm:text-2xl">Luxury Fleet</h3>
-                  <p className="mt-3 mb-6 text-sm text-primary/65 sm:text-base">
-                    From executive sedans to premium SUVs, our immaculately maintained fleet ensures you
-                    travel across {city.name} in supreme comfort and style.
+                  <h3 className="font-heading text-lg font-bold text-navy-deep sm:text-xl">24/7 Support</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted sm:text-base">
+                    Round-the-clock assistance ensuring your journey in {city.name} is uninterrupted.
                   </p>
                 </div>
-                <div className="relative h-40 overflow-hidden rounded-lg sm:h-48">
-                  <Image src={FLEET_IMAGE} alt="Luxury fleet" fill className="object-cover" sizes="(max-width:768px) 100vw, 66vw" />
+              </div>
+            </Reveal>
+            <Reveal delay={120}>
+              <div className="flex gap-5 rounded-card border border-line bg-white p-6 shadow-soft sm:p-7">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-green-strong/10 text-green-strong">
+                  <Icon name="wallet" size={24} />
+                </span>
+                <div>
+                  <h3 className="font-heading text-lg font-bold text-navy-deep sm:text-xl">Affordable Prices</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted sm:text-base">
+                    Transparent pricing with no hidden fees, offering premium service at competitive rates.
+                  </p>
                 </div>
               </div>
             </Reveal>
-
-            <Reveal delay={80}>
-              <div className="flex h-full flex-col rounded-xl bg-[#f3f4f5] p-6 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.08)] sm:p-8">
-                <span className="mb-4 inline-flex w-fit rounded-full bg-[#e1e3e4] p-3 text-primary">
-                  <span className="material-symbols-outlined text-3xl">support_agent</span>
-                </span>
-                <h3 className="font-heading text-xl font-semibold sm:text-2xl">24/7 Support</h3>
-                <p className="mt-3 flex-1 text-sm text-primary/65 sm:text-base">
-                  Round-the-clock assistance ensuring your journey in {city.name} is uninterrupted.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <div className="flex h-full flex-col rounded-xl bg-[#f3f4f5] p-6 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.08)] sm:p-8">
-                <span className="mb-4 inline-flex w-fit rounded-full bg-[#e1e3e4] p-3 text-primary">
-                  <span className="material-symbols-outlined text-3xl">payments</span>
-                </span>
-                <h3 className="font-heading text-xl font-semibold sm:text-2xl">Affordable Prices</h3>
-                <p className="mt-3 flex-1 text-sm text-primary/65 sm:text-base">
-                  Transparent pricing with no hidden fees, offering premium service at competitive rates.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={140} className="md:col-span-2">
-              <div className="flex h-full flex-col items-stretch justify-between gap-6 rounded-xl bg-[#f3f4f5] p-6 shadow-[0_10px_30px_-10px_rgba(14,28,46,0.08)] sm:p-8 md:flex-row md:items-center">
-                <div className="flex-1">
-                  <span className="mb-4 inline-flex rounded-full bg-[#e1e3e4] p-3 text-primary">
-                    <span className="material-symbols-outlined text-3xl">flight_land</span>
+            <Reveal delay={160}>
+              <div className="overflow-hidden rounded-card border border-line bg-white shadow-soft sm:flex">
+                <div className="flex-1 p-6 sm:p-7">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-strong/10 text-green-strong">
+                    <Icon name="plane" size={24} />
                   </span>
-                  <h3 className="font-heading text-xl font-semibold sm:text-2xl">Airport Pickup</h3>
-                  <p className="mt-3 text-sm text-primary/65 sm:text-base">{airportCopy(city)}</p>
+                  <h3 className="mt-4 font-heading text-lg font-bold text-navy-deep sm:text-xl">Airport Pickup</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted sm:text-base">{airportCopy(city)}</p>
                 </div>
-                <div className="relative h-40 w-full flex-1 overflow-hidden rounded-lg">
+                <div className="relative aspect-[16/9] w-full sm:aspect-auto sm:w-2/5">
                   <Image
                     src={AIRPORT_IMAGE}
                     alt="Airport pickup"
                     fill
-                    className="object-cover"
-                    sizes="(max-width:768px) 100vw, 33vw"
+                    className="object-cover sm:rounded-bl-[3rem]"
+                    sizes="(min-width: 1024px) 20vw, 100vw"
                   />
                 </div>
               </div>
             </Reveal>
           </div>
-        </Container>
-      </section>
+        </div>
+      </Section>
 
-      <section className="bg-background py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <Reveal>
-            <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-12 sm:flex-row sm:items-end">
-              <div>
-                <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
-                  Popular Cars in {city.name}
-                </h2>
-                <p className="mt-2 text-sm text-primary/65 sm:text-base">
-                  Select from our most requested vehicles for {city.name} travel.
-                </p>
-              </div>
-              <Link
-                href="/cars"
-                className="hidden items-center gap-1 text-sm font-semibold text-primary transition hover:text-secondary md:inline-flex"
-              >
-                View All Cars <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </Link>
-            </div>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {popularCars.map((car, index) => (
-              <Reveal key={car.slug} delay={index * 80}>
-                <CarCard car={car} />
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={200}>
-            <Link
-              href="/cars"
-              className="mt-8 block rounded-full border border-primary py-3 text-center text-sm font-semibold text-primary md:hidden"
-            >
+      {/* Popular cars: swipeable row on phones, 4 columns on desktop */}
+      <Section tone="white">
+        <Reveal>
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-12 sm:flex-row sm:items-end">
+            <SectionHeading
+              title={`Popular Cars in ${city.name}`}
+              description={`Select from our most requested vehicles for ${city.name} travel.`}
+            />
+            <ButtonLink href="/cars" variant="outline" pill size="md" className="shrink-0">
               View All Cars
-            </Link>
-          </Reveal>
-        </Container>
-      </section>
+              <Icon name="arrow-right" size={18} />
+            </ButtonLink>
+          </div>
+        </Reveal>
+
+        <ul className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 lg:gap-6">
+          {popularCars.map((car) => (
+            <li key={car.slug} className="w-[82%] shrink-0 snap-start sm:w-auto">
+              <CarCard car={car} />
+            </li>
+          ))}
+        </ul>
+      </Section>
     </>
   );
 }

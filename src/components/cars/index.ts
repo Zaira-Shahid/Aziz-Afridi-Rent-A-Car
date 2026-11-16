@@ -1,5 +1,6 @@
 export { CarCard } from "./CarCard";
 export { CarGridSection } from "./CarGridSection";
+export { CarsCatalog } from "./CarsCatalog";
 export { CarSliderSection } from "./CarSliderSection";
 export { CarsHero } from "./CarsHero";
 export { CarDetailBody } from "./CarDetailBody";
