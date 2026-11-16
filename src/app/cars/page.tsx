@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { CarGridSection, CarsHero } from "@/components/cars";
+import { SearchBanner } from "@/components/cars/SearchBanner";
 import { CtaBanner } from "@/components/shared";
 import { brand } from "@/lib/brand";
 import { carCategories, carModels } from "@/data";
@@ -19,20 +21,12 @@ const heroImage =
   carModels[0]?.image ??
   "/images/fleet/s500-white.png";
 
-export default async function CarsPage({ searchParams }: {
-  searchParams: Promise<{ location?: string; pickup?: string; return?: string }>;
-}) {
-  const search = await searchParams;
+export default function CarsPage() {
   return (
     <>
-      {search.location && (
-        <div className="border-b border-secondary/15 bg-secondary/5 px-6 py-4 text-center text-sm text-primary">
-          <strong>Your rental search: {search.location}</strong>
-          {search.pickup && <span> · Pickup: {search.pickup.replace("T", " at ")}</span>}
-          {search.return && <span> · Return: {search.return.replace("T", " at ")}</span>}
-          <p className="mt-1">Browse the fleet below. Availability is confirmed when you enquire.</p>
-        </div>
-      )}
+      <Suspense fallback={null}>
+        <SearchBanner />
+      </Suspense>
       <CarsHero
         badge="Aziz Afridi Fleet"
         title="Our"
