@@ -31,9 +31,8 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
 const socialLinks: { label: string; href: string; icon: IconName }[] = [
   { label: "Facebook", href: brand.social.facebook, icon: "facebook" },
   { label: "Instagram", href: brand.social.instagram, icon: "instagram" },
-  { label: "TikTok", href: brand.social.tiktok, icon: "tiktok" },
-  { label: "YouTube", href: brand.social.youtube, icon: "youtube" },
   { label: "Pinterest", href: brand.social.pinterest, icon: "pinterest" },
+  { label: "X", href: brand.social.x, icon: "x" },
 ];
 
 function ContactRow({ icon, children }: { icon: IconName; children: React.ReactNode }) {
@@ -66,6 +65,7 @@ export function Footer() {
                   {formatPhoneDisplay()}
                 </a>
               </ContactRow>
+              <ContactRow icon="wallet">Easypaisa: {brand.easypaisa}</ContactRow>
               <ContactRow icon="mail">
                 <a href={`mailto:${brand.email}`} className={linkClass}>
                   {brand.email}

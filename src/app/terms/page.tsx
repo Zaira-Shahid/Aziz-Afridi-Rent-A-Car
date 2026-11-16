@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-import { brand } from "@/lib/brand";
+import { brand, formatPhoneDisplay } from "@/lib/brand";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -168,7 +168,7 @@ export default function TermsPage() {
                       2
                     </span>
                     <span>
-                      Contact our 24/7 emergency support line at {brand.phone} immediately to report the incident,
+                      Contact our 24/7 emergency support line at {formatPhoneDisplay()} immediately to report the incident,
                       regardless of severity.
                     </span>
                   </li>
