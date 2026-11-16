@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import Script from "next/script";
 import { FirebaseAnalytics } from "@/components/FirebaseAnalytics";
 import { SiteShell } from "@/components/layout/SiteShell";
@@ -7,10 +7,12 @@ import { brand } from "@/lib/brand";
 import { absoluteUrl, defaultKeywords, siteUrl } from "@/lib/seo";
 import "./globals.css";
 
-const sora = Sora({
+// Headings: bold and extra-bold, upright and italic (the mockups use bold italic headings).
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-sora",
-  weight: ["500", "600", "700"],
+  variable: "--font-poppins",
+  weight: ["700", "800"],
+  style: ["normal", "italic"],
 });
 
 const inter = Inter({
@@ -116,7 +118,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       {/* Extensions may inject body attributes before React hydrates. */}
-      <body className={`${sora.variable} ${inter.variable}`} suppressHydrationWarning>
+      <body className={`${poppins.variable} ${inter.variable}`} suppressHydrationWarning>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-18444721583"
           strategy="afterInteractive"
