@@ -34,6 +34,15 @@ const EXTRA_LABELS: Record<string, string> = {
   duration: "Duration",
   car: "Car",
   company: "Company",
+  from: "Pickup",
+  to: "Drop-off",
+  airport: "Airport",
+  hotel: "Hotel",
+  vehicle: "Vehicle",
+  venue: "Venue",
+  decoration: "Decoration",
+  contact: "Contact person",
+  requirement: "Vehicle requirement",
 };
 
 const MAX_VALUE_LENGTH = 300;

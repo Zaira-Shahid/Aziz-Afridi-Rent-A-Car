@@ -16,6 +16,7 @@ export default function ServicesIndexPage() {
     <>
       <PageHero
         title="Our Services"
+        highlight="Services"
         description="Every item in the Services menu has its own full page — pick the plan that matches your trip."
       />
       <ServicesGrid />

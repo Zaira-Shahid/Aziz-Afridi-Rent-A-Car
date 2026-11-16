@@ -1,5 +1,4 @@
 export { ServiceHero } from "./ServiceHero";
-export { ServiceFeatureGrid } from "./ServiceFeatureGrid";
 export { ServiceFleetGrid } from "./ServiceFleetGrid";
 export { ServiceTestimonials } from "./ServiceTestimonials";
 export { ServiceFaqAccordion } from "./ServiceFaqAccordion";
