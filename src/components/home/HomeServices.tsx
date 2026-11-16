@@ -1,57 +1,80 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Container } from "@/components/ui/Container";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { serviceDetails } from "@/data";
 
-const SERVICES = [
+const SERVICES: { icon: IconName; title: string; text: string; href: string; detailSlug: string }[] = [
   {
-    icon: "person_pin_circle",
+    icon: "user-check",
     title: "Chauffeur Service",
     text: "Sit back and relax while our professional chauffeurs handle the navigation and traffic.",
     href: "/services/executive-car-rental",
+    detailSlug: "executive-car-rental",
   },
   {
-    icon: "flight_takeoff",
+    icon: "plane",
     title: "Airport Transfers",
     text: "VIP meet and greet services at major terminals with immediate luxury transfers.",
     href: "/services/airport-pick-drop",
+    detailSlug: "airport-pick-drop",
   },
   {
-    icon: "event_available",
+    icon: "briefcase",
     title: "Corporate Events",
     text: "Fleet management for high-profile business gatherings, weddings, and exclusive events.",
     href: "/services/corporate-car-rental",
+    detailSlug: "corporate-car-rental",
   },
 ];
 
 export function HomeServices() {
   return (
-    <section className="py-16 sm:py-24 lg:py-[100px]">
-      <Container>
-        <Reveal>
-          <h2 className="text-center font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-            Services Tailored to Your Lifestyle
-          </h2>
-        </Reveal>
-        <div className="mt-12 grid gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((item, index) => (
-            <Reveal key={item.title} delay={index * 100}>
-              <div className="group h-full rounded-2xl border border-primary/10 bg-white p-6 transition hover:border-secondary hover:shadow-xl sm:p-8 lg:p-10">
-                <span className="material-symbols-outlined mb-6 block text-[48px] text-primary transition group-hover:text-secondary">
-                  {item.icon}
-                </span>
-                <h3 className="font-heading text-xl font-semibold sm:text-2xl">{item.title}</h3>
-                <p className="mt-4 text-sm text-muted sm:text-base">{item.text}</p>
-                <Link
-                  href={item.href}
-                  className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary transition group-hover:gap-2"
-                >
-                  Explore Service <span className="material-symbols-outlined text-[18px]">chevron_right</span>
-                </Link>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Container>
-    </section>
+    <Section>
+      <Reveal>
+        <SectionHeading eyebrow="Services" title="Services Tailored to Your Lifestyle" align="center" />
+      </Reveal>
+
+      <ul className="-mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:mx-0 sm:mt-14 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0">
+        {SERVICES.map((item) => {
+          const cover = serviceDetails[item.detailSlug]?.hero.image;
+          return (
+            <li key={item.title} className="w-[78%] shrink-0 snap-center sm:w-auto">
+              <Link
+                href={item.href}
+                className="group flex h-full min-h-[30rem] flex-col overflow-hidden rounded-card border border-line bg-white shadow-soft transition duration-300 hover:shadow-lift sm:min-h-[32rem]"
+              >
+                <div className="relative h-60 overflow-hidden rounded-t-[8rem] bg-navy-deep sm:h-64">
+                  {cover ? (
+                    <Image
+                      src={cover}
+                      alt=""
+                      fill
+                      sizes="(min-width: 640px) 33vw, 78vw"
+                      className="object-cover transition duration-700 motion-safe:group-hover:scale-105"
+                    />
+                  ) : null}
+                </div>
+                <div className="relative flex flex-1 flex-col px-6 pb-7 pt-0">
+                  <span className="-mt-7 grid size-14 place-items-center rounded-full border-4 border-white bg-green-strong text-white shadow-soft">
+                    <Icon name={item.icon} size={24} />
+                  </span>
+                  <h3 className="mt-4 font-heading text-xl font-extrabold italic text-navy-deep sm:text-2xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">{item.text}</p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-bold text-green-strong transition-all group-hover:gap-3">
+                    Explore Service
+                    <Icon name="arrow-right" size={16} />
+                  </span>
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </Section>
   );
 }

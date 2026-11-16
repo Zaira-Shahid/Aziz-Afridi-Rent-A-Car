@@ -1,62 +1,73 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { blogPosts } from "@/data";
 
+/** Heading on top, then tall cards: date and title above the photo, photo with one large rounded corner, excerpt below. */
 export function HomeBlog() {
   return (
-    <Section className="bg-white">
+    <Section tone="white">
       <Reveal>
-        <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-10 sm:flex-row sm:items-end">
-          <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">Blog</p>
-            <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
-              Travel guides & tips
-            </h2>
-            <p className="mt-3 max-w-xl text-sm text-primary/65 sm:text-base">
-              Useful reads for planning city trips and mountain getaways.
-            </p>
-          </div>
-          <ButtonLink href="/blog" variant="outline">
+        <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
+          <SectionHeading
+            eyebrow="Blog"
+            title="Travel guides & tips"
+            description="Useful reads for planning city trips and mountain getaways."
+          />
+          <ButtonLink href="/blog" variant="outline" pill size="md" className="shrink-0">
             View Blog
+            <Icon name="arrow-right" size={18} />
           </ButtonLink>
         </div>
       </Reveal>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {blogPosts.slice(0, 6).map((post, index) => (
-          <Reveal key={post.slug} delay={Math.min(index, 5) * 80}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-[12px] border border-primary/8 bg-background transition duration-300 hover:-translate-y-1.5 hover:border-secondary/25 hover:shadow-[0_16px_40px_rgba(0,11,29,0.08)]">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover transition duration-700 group-hover:scale-110"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <p className="text-xs uppercase tracking-wide text-secondary">{post.date}</p>
-                <h3 className="mt-2 text-lg font-semibold text-primary">
-                  <Link href={`/blog/${post.slug}`} className="transition-colors hover:text-secondary">
+          <li key={post.slug}>
+            <Reveal delay={(index % 3) * 80} className="h-full">
+              <article className="group flex h-full flex-col rounded-card border border-line bg-surface p-5 shadow-soft transition duration-300 hover:shadow-lift sm:p-6">
+                <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-green-strong">
+                  <Icon name="calendar" size={14} />
+                  {post.date}
+                </p>
+                <h3 className="mt-2 font-heading text-xl font-extrabold italic leading-snug text-navy-deep">
+                  <Link href={`/blog/${post.slug}`} className="hover:text-green-strong">
                     {post.title}
                   </Link>
                 </h3>
-                <p className="mt-2 flex-1 text-sm text-primary/60">{post.excerpt}</p>
+
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition hover:text-secondary"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  className="relative mt-4 block aspect-[4/3] overflow-hidden rounded-xl rounded-tr-[4.5rem] bg-navy-deep"
                 >
-                  Read more <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                  <Image
+                    src={post.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+                    className="object-cover transition duration-700 motion-safe:group-hover:scale-105"
+                  />
                 </Link>
-              </div>
-            </article>
-          </Reveal>
+
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-muted sm:text-base">{post.excerpt}</p>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="mt-4 inline-flex min-h-11 w-fit items-center gap-1.5 text-sm font-bold text-green-strong transition-all hover:gap-3"
+                >
+                  Read more
+                  <Icon name="arrow-right" size={16} />
+                </Link>
+              </article>
+            </Reveal>
+          </li>
         ))}
-      </div>
+      </ul>
     </Section>
   );
 }

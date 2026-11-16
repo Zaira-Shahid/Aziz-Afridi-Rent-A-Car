@@ -19,7 +19,7 @@ const BRAND_LOGOS: Record<string, string> = {
   Changan: "/brands/changan-logo.webp",
 };
 
-function brandLogo(brand: string) {
+export function brandLogo(brand: string) {
   return BRAND_LOGOS[brand] ?? BRAND_LOGOS[brand.replace(/-Benz$/i, "")] ?? undefined;
 }
 

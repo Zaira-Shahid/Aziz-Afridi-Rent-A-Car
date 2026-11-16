@@ -1,66 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { homeFaqs } from "@/data";
 import { cn } from "@/lib/utils";
 
+/** Home FAQ: heading on the left, numbered accordion on the right. */
 export function HomeFaq() {
   const [openIndex, setOpenIndex] = useState(0);
+  const uid = useId();
 
   return (
-    <Section className="bg-background">
-      <div className="mx-auto max-w-3xl">
-        <Reveal>
-          <div className="mb-10 text-center">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary">Support</p>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Frequently Asked Questions
-            </h2>
-            <p className="mt-3 text-primary/65">Answers to common questions before you book.</p>
-          </div>
+    <Section>
+      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <Reveal className="lg:sticky lg:top-28 lg:self-start">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-green-strong sm:text-sm">Support</p>
+          <h2 className="font-heading text-3xl font-extrabold italic leading-tight tracking-tight text-navy-deep sm:text-4xl">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
+            Answers to common questions about chauffeur-driven car rental with Aziz Afridi.
+          </p>
         </Reveal>
 
-        <div className="space-y-3">
+        <ul className="space-y-3">
           {homeFaqs.map((item, index) => {
             const open = openIndex === index;
+            const panelId = `${uid}-panel-${index}`;
+            const buttonId = `${uid}-button-${index}`;
             return (
-              <Reveal key={item.question} delay={Math.min(index, 5) * 60}>
-              <div
-                className="overflow-hidden rounded-[12px] border border-primary/8 bg-white"
-              >
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-                  onClick={() => setOpenIndex(open ? -1 : index)}
-                  aria-expanded={open}
-                >
-                  <span className="font-medium text-primary">{item.question}</span>
-                  <span
+              <li key={item.question}>
+                <Reveal delay={Math.min(index, 5) * 60}>
+                  <div
                     className={cn(
-                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-secondary transition",
-                      open && "rotate-45",
+                      "overflow-hidden rounded-card border bg-white transition-colors",
+                      open ? "border-green-strong shadow-soft" : "border-line",
                     )}
                   >
-                    +
-                  </span>
-                </button>
-                <div
-                  className={cn(
-                    "grid transition-all duration-300",
-                    open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-                  )}
-                >
-                  <div className="overflow-hidden">
-                    <p className="px-5 pb-5 text-sm leading-relaxed text-primary/65">{item.answer}</p>
+                    <h3>
+                      <button
+                        type="button"
+                        id={buttonId}
+                        aria-expanded={open}
+                        aria-controls={panelId}
+                        onClick={() => setOpenIndex(open ? -1 : index)}
+                        className="flex min-h-14 w-full items-center gap-4 px-4 py-3 text-left sm:px-5"
+                      >
+                        <span className="font-heading text-sm font-extrabold italic text-green-strong">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="flex-1 text-base font-semibold text-navy-deep">{item.question}</span>
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            "grid size-8 shrink-0 place-items-center rounded-full transition",
+                            open ? "bg-green-strong text-white" : "bg-surface text-navy-deep",
+                          )}
+                        >
+                          <Icon name={open ? "minus" : "plus"} size={16} />
+                        </span>
+                      </button>
+                    </h3>
+                    <div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      hidden={!open}
+                      className="px-4 pb-5 pl-14 pr-5 text-sm leading-relaxed text-muted sm:px-5 sm:pl-[3.75rem] sm:text-base"
+                    >
+                      {item.answer}
+                    </div>
                   </div>
-                </div>
-              </div>
-              </Reveal>
+                </Reveal>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </Section>
   );
