@@ -2,9 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useId, useMemo, useState } from "react";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
+import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { buttonClasses } from "@/components/ui/button-styles";
 
 const HERO =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuDObDk9FnJ_zDMDuCf8585s03QVwuFCHe4TImsKGgPU32m6ovZhgEwBdnyXi870THDwWfvaIFZ0uw9XuzOFPKbuIs4H4-4JDSmYt4IDQEM4XuERd3uK9RzH3gXFHW8eWFS9HNXRZokYrrqXAs1yNpd7f6SA-BkcQjlBnRpiv01F9UFVu4dZkAMsuot1VpqDVimLLopsXK3PwkbzUyZsl2itlw9n5s7qR8tuhjVkz_sGrDKdTI0KcdGn";
@@ -101,42 +106,42 @@ const CITY_CARDS = [
   },
 ];
 
-const POPULAR_ROUTES = [
-  { from: "Islamabad", to: "Murree", icon: "landscape", text: "A 1.5 hour scenic climb — our most requested weekend route." },
-  { from: "Islamabad Airport", to: "City Center", icon: "flight_land", text: "Meet-and-greet transfers timed to your flight, day or night." },
-  { from: "Islamabad", to: "Hunza / Skardu", icon: "terrain", text: "Multi-day northern expeditions with 4x4-equipped vehicles." },
-  { from: "Islamabad", to: "Lahore", icon: "route", text: "Motorway-ready sedans for the intercity business run." },
-  { from: "Rawalpindi", to: "Naran / Kaghan", icon: "hiking", text: "Rugged crossovers built for the Kaghan valley's mountain roads." },
-  { from: "Karachi", to: "Hyderabad", icon: "signpost", text: "Comfortable long-distance sedans for the coastal corridor." },
+const POPULAR_ROUTES: { from: string; to: string; icon: IconName; text: string }[] = [
+  { from: "Islamabad", to: "Murree", icon: "map-pin", text: "A 1.5 hour scenic climb — our most requested weekend route." },
+  { from: "Islamabad Airport", to: "City Center", icon: "plane", text: "Meet-and-greet transfers timed to your flight, day or night." },
+  { from: "Islamabad", to: "Hunza / Skardu", icon: "map-pin", text: "Multi-day northern expeditions with 4x4-equipped vehicles." },
+  { from: "Islamabad", to: "Lahore", icon: "car", text: "Motorway-ready sedans for the intercity business run." },
+  { from: "Rawalpindi", to: "Naran / Kaghan", icon: "map-pin", text: "Rugged crossovers built for the Kaghan valley's mountain roads." },
+  { from: "Karachi", to: "Hyderabad", icon: "map-pin", text: "Comfortable long-distance sedans for the coastal corridor." },
 ];
 
-const WHY_CITY = [
+const WHY_CITY: { icon: IconName; title: string; text: string }[] = [
   {
-    icon: "person_pin_circle",
+    icon: "user-check",
     title: "Local, Vetted Drivers",
     text: "Chauffeurs based in-city who know the shortcuts, checkpoints, and traffic patterns.",
   },
   {
-    icon: "home_pin",
+    icon: "map-pin",
     title: "Doorstep Delivery",
     text: "Your car arrives at your home, office, or hotel — no counter queues, no delays.",
   },
   {
-    icon: "terrain",
+    icon: "map-pin",
     title: "4x4 for the North",
     text: "Purpose-built SUVs and off-roaders for Hunza, Skardu, and Naran terrain.",
   },
   {
-    icon: "sell",
+    icon: "wallet",
     title: "Fixed City Rates",
     text: "Transparent, city-specific pricing agreed upfront — no surprise surcharges.",
   },
 ];
 
-const STEPS = [
-  { icon: "travel_explore", title: "Select City", text: "Choose your destination and preferred pickup location." },
-  { icon: "directions_car", title: "Pick a Car", text: "Browse our elite collection from sedans to rugged SUVs." },
-  { icon: "key", title: "Enjoy Journey", text: "We deliver the car to your doorstep. Drive with confidence." },
+const STEPS: { icon: IconName; title: string; text: string }[] = [
+  { icon: "search", title: "Select City", text: "Choose your destination and preferred pickup location." },
+  { icon: "car", title: "Pick a Car", text: "Browse our elite collection from sedans to rugged SUVs." },
+  { icon: "shield-check", title: "Enjoy Journey", text: "We deliver the car to your doorstep. Drive with confidence." },
 ];
 
 const REVIEWS = [
@@ -173,10 +178,20 @@ const STATS = [
   { value: "24/7", label: "Support" },
 ];
 
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+}
+
 export function CityServicesContent() {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
   const pageSize = 4;
+  const searchId = useId();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -192,347 +207,336 @@ export function CityServicesContent() {
 
   return (
     <>
-      <section className="relative flex min-h-[420px] items-center justify-center overflow-hidden px-4 py-14 sm:min-h-[480px] sm:px-6 sm:py-16 lg:min-h-[520px] lg:px-8 lg:py-20">
-        <Image src={HERO} alt="City skyline at golden hour" fill priority className="object-cover" sizes="100vw" />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <nav className="animate-fade-up mb-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/80">
-            <Link href="/" className="hover:text-white">
-              Home
-            </Link>
-            <span className="material-symbols-outlined text-sm">chevron_right</span>
-            <span className="text-white">City Services</span>
-          </nav>
-          <h1 className="hero-shadow animate-fade-up font-heading text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-            Elite Mobility Across the Nation&apos;s Pulse
-          </h1>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setPage(0);
-            }}
-            className="glass-panel animate-fade-up-delay mx-auto mt-8 flex max-w-3xl flex-col gap-4 rounded-2xl p-4 shadow-2xl sm:mt-10 sm:flex-row sm:p-6"
-          >
-            <div className="relative flex-1">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
-                location_on
+      {/* Hero: text and search on the left, framed skyline photo on the right */}
+      <header className="relative isolate overflow-hidden bg-navy-deep text-white">
+        <span aria-hidden="true" className="absolute -right-24 top-0 -z-10 h-full w-72 -skew-x-[20deg] bg-green/15" />
+        <span aria-hidden="true" className="absolute -right-40 top-0 -z-10 h-full w-44 -skew-x-[20deg] bg-navy/60" />
+        <Container className="grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-20">
+          <div>
+            <nav aria-label="Breadcrumb" className="animate-fade-up mb-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white/80">
+              <Link href="/" className="inline-flex min-h-11 items-center hover:text-white">
+                Home
+              </Link>
+              <Icon name="chevron-right" size={14} />
+              <span aria-current="page" className="text-white">
+                City Services
               </span>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setPage(0);
-                }}
-                placeholder="Select a city for your journey..."
-                className="w-full rounded-xl border border-white/20 bg-white/10 py-4 pl-12 pr-4 text-white outline-none placeholder:text-white/60 focus:ring-2 focus:ring-accent"
+            </nav>
+            <h1 className="animate-fade-up font-heading text-4xl font-extrabold italic leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.2rem]">
+              Elite Mobility Across the Nation&apos;s <span className="text-green">Pulse</span>
+            </h1>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(0);
+              }}
+              className="animate-fade-up-delay mt-8 flex flex-col gap-3 rounded-panel bg-white p-4 shadow-lift sm:flex-row sm:p-5"
+            >
+              <label htmlFor={searchId} className="sr-only">
+                City
+              </label>
+              <div className="relative flex-1">
+                <Icon name="map-pin" size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-green-strong" />
+                <input
+                  id={searchId}
+                  type="text"
+                  value={query}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setPage(0);
+                  }}
+                  placeholder="Select a city for your journey..."
+                  className="block min-h-12 w-full rounded-xl border border-line bg-surface py-3 pl-11 pr-4 text-base text-navy-deep placeholder:text-muted focus:border-green-strong focus:bg-white sm:text-sm"
+                />
+              </div>
+              <button type="submit" className={buttonClasses({ variant: "green", size: "md" })}>
+                <Icon name="search" size={18} />
+                Search Cars
+              </button>
+            </form>
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-panel rounded-tr-[5rem] bg-navy shadow-lift">
+            <Image
+              src={HERO}
+              alt="City skyline at golden hour"
+              fill
+              priority
+              className="object-cover"
+              sizes="(min-width: 1024px) 45vw, 100vw"
+            />
+          </div>
+        </Container>
+      </header>
+
+      {/* Cities: tall photo tiles with the text over the image, 4 per page */}
+      <Section tone="surface">
+        <Reveal>
+          <div className="mb-10 flex flex-col items-start justify-between gap-6 sm:mb-14 md:flex-row md:items-end">
+            <div className="max-w-2xl">
+              <SectionHeading
+                eyebrow="Our Presence"
+                title="Discover Excellence in Every Destination"
+                description="From the modern boulevards of Islamabad to the rugged beauty of Hunza, Aziz Afridi provides seamless luxury car rentals tailored to each city's unique terrain and lifestyle. Every location is served by a dedicated local team, so whether you're navigating Karachi's coastal traffic or climbing into the Karakoram, your vehicle and driver are matched to the journey ahead."
               />
             </div>
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-4 text-xs font-semibold uppercase tracking-wider !text-white transition hover:brightness-110"
-            >
-              <span className="material-symbols-outlined text-[20px]">search</span>
-              Search Cars
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <section className="py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <Reveal>
-            <div className="mb-10 flex flex-col items-start justify-between gap-6 sm:mb-16 md:flex-row md:items-end">
-              <div className="max-w-2xl">
-                <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-                  Our Presence
-                </span>
-                <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                  Discover Excellence in Every Destination
-                </h2>
-                <p className="mt-5 text-base text-muted sm:text-lg">
-                  From the modern boulevards of Islamabad to the rugged beauty of Hunza, Aziz Afridi provides
-                  seamless luxury car rentals tailored to each city&apos;s unique terrain and lifestyle. Every
-                  location is served by a dedicated local team, so whether you&apos;re navigating Karachi&apos;s
-                  coastal traffic or climbing into the Karakoram, your vehicle and driver are matched to the
-                  journey ahead.
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  aria-label="Previous cities"
-                  disabled={safePage === 0}
-                  onClick={() => setPage((p) => Math.max(0, p - 1))}
-                  className="rounded-full border border-primary/20 p-3 transition hover:bg-primary hover:text-white disabled:opacity-40"
-                >
-                  <span className="material-symbols-outlined">west</span>
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next cities"
-                  disabled={safePage >= totalPages - 1}
-                  onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-                  className="rounded-full border border-primary/20 p-3 transition hover:bg-primary hover:text-white disabled:opacity-40"
-                >
-                  <span className="material-symbols-outlined">east</span>
-                </button>
-              </div>
-            </div>
-          </Reveal>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            {visible.map((city, index) => (
-              <Reveal key={city.slug} delay={Math.min(index, 3) * 80}>
-              <article
-                className="group luxury-card-shadow h-full overflow-hidden rounded-2xl bg-white transition duration-500 hover:-translate-y-2"
+            <div className="flex gap-2">
+              <button
+                type="button"
+                aria-label="Previous cities"
+                disabled={safePage === 0}
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                className="flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-navy/30 text-navy-deep transition hover:bg-navy hover:text-white disabled:pointer-events-none disabled:opacity-40"
               >
-                <div className="relative h-56 overflow-hidden sm:h-64">
+                <Icon name="chevron-left" size={22} />
+              </button>
+              <button
+                type="button"
+                aria-label="Next cities"
+                disabled={safePage >= totalPages - 1}
+                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                className="flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-navy/30 text-navy-deep transition hover:bg-navy hover:text-white disabled:pointer-events-none disabled:opacity-40"
+              >
+                <Icon name="chevron-right" size={22} />
+              </button>
+            </div>
+          </div>
+        </Reveal>
+
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {visible.map((city, index) => (
+            <li key={city.slug}>
+              <Reveal delay={Math.min(index, 3) * 80} className="h-full">
+                <Link
+                  href={`/rent-a-car/${city.slug}`}
+                  className="group relative block aspect-[3/4] overflow-hidden rounded-panel rounded-tr-[3.5rem] bg-navy shadow-soft"
+                >
                   <Image
                     src={city.image}
-                    alt={city.name}
+                    alt=""
                     fill
-                    className="object-cover transition duration-700 group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, 25vw"
+                    className="object-cover transition duration-700 motion-safe:group-hover:scale-105"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                   />
+                  <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/45 to-transparent" />
                   {city.badge ? (
                     <span
                       className={`absolute top-4 rounded-full px-3 py-1 text-xs font-semibold ${
                         city.badgeAccent
-                          ? "left-4 bg-accent !text-white"
-                          : "right-4 bg-white/90 text-primary backdrop-blur"
+                          ? "left-4 bg-green-strong text-white"
+                          : "left-4 bg-white/90 text-navy-deep backdrop-blur"
                       }`}
                     >
                       {city.badge}
                     </span>
                   ) : null}
-                </div>
-                <div className="p-5 sm:p-6">
-                  <h3 className="font-heading text-xl font-semibold sm:text-2xl">{city.name}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm text-muted sm:text-base">{city.text}</p>
-                  <Link
-                    href={`/rent-a-car/${city.slug}`}
-                    className="mt-6 flex items-center justify-between text-sm font-semibold text-primary"
-                  >
-                    <span className="group-hover:underline">View Cars</span>
-                    <span className="material-symbols-outlined transition group-hover:translate-x-1">
-                      arrow_forward
+                  <span className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
+                    <span className="block font-heading text-2xl font-extrabold italic">{city.name}</span>
+                    <span className="mt-2 line-clamp-3 block text-sm leading-relaxed text-white/85">{city.text}</span>
+                    <span className="mt-4 flex items-center justify-between text-sm font-semibold">
+                      <span className="group-hover:underline">View Cars</span>
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-strong transition motion-safe:group-hover:translate-x-1">
+                        <Icon name="arrow-right" size={18} />
+                      </span>
                     </span>
-                  </Link>
-                </div>
-              </article>
+                  </span>
+                </Link>
               </Reveal>
-            ))}
-          </div>
+            </li>
+          ))}
+        </ul>
 
-          {filtered.length === 0 ? (
-            <p className="mt-10 text-center text-muted">No cities match your search.</p>
-          ) : null}
-        </Container>
-      </section>
+        {filtered.length === 0 ? <p className="mt-10 text-center text-muted">No cities match your search.</p> : null}
+      </Section>
 
-      <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
-        <Container>
+      {/* Why rent by city: heading panel on the left, 2x2 list on the right */}
+      <Section tone="white">
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.6fr] lg:gap-12">
           <Reveal>
-            <div className="mb-10 text-center sm:mb-16">
-              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-                Local Advantage
-              </span>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Why Rent by City
-              </h2>
+            <div className="h-full rounded-panel rounded-tr-[4rem] bg-navy-deep p-8 text-white sm:p-10">
+              <SectionHeading eyebrow="Local Advantage" title="Why Rent by City" invert />
             </div>
           </Reveal>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid gap-5 sm:grid-cols-2">
             {WHY_CITY.map((item, index) => (
-              <Reveal key={item.title} delay={index * 80}>
-                <div className="h-full overflow-hidden rounded-2xl border border-primary/8 bg-white p-6 text-center shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8">
-                  <span className="material-symbols-outlined mb-4 inline-flex text-[2rem] text-secondary sm:text-4xl" aria-hidden>
-                    {item.icon}
-                  </span>
-                  <h4 className="font-heading text-base font-semibold sm:text-lg">{item.title}</h4>
-                  <p className="mt-2 text-sm text-muted">{item.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="overflow-hidden bg-navy py-16 text-white sm:py-24 lg:py-[100px]">
-        <Container className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal className="relative order-2 aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl sm:aspect-square lg:order-1 lg:aspect-video">
-            <Image
-              src={MAP}
-              alt="Pakistan service coverage map"
-              fill
-              className="object-cover opacity-80"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-            <div className="absolute left-1/2 top-1/4 h-4 w-4 -translate-x-1/2 rounded-full bg-accent" />
-            <div className="absolute left-1/2 top-1/4 h-4 w-4 -translate-x-1/2 animate-ping rounded-full bg-accent" />
-          </Reveal>
-          <Reveal delay={120} className="order-1 space-y-6 lg:order-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Network Reach</span>
-            <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Nationwide Excellence, Local Precision
-            </h2>
-            <p className="text-base text-white/55 sm:text-lg">
-              Our strategic hubs are positioned to provide 24/7 assistance and delivery services. No matter
-              where your journey begins or ends, the Aziz Afridi standard follows you.
-            </p>
-            <div className="grid grid-cols-2 gap-6 pt-2">
-              {STATS.map((item) => (
-                <div key={item.label} className="border-l-2 border-accent pl-5">
-                  <div className="font-heading text-3xl font-bold sm:text-4xl">{item.value}</div>
-                  <div className="mt-1 text-xs font-semibold uppercase tracking-wider text-white/50">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </Container>
-      </section>
-
-      <section className="py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <Reveal>
-            <div className="mx-auto mb-10 max-w-2xl text-center sm:mb-16">
-              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-                Frequent Journeys
-              </span>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Popular Routes
-              </h2>
-              <p className="mt-4 text-muted sm:text-lg">
-                The trips our clients book most often, matched with the right vehicle for the road.
-              </p>
-            </div>
-          </Reveal>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {POPULAR_ROUTES.map((route, index) => (
-              <Reveal key={`${route.from}-${route.to}`} delay={Math.min(index, 5) * 70}>
-                <div className="h-full rounded-2xl border border-primary/8 bg-white p-6 shadow-[0_10px_30px_rgba(14,28,46,0.04)] sm:p-8">
-                  <span className="material-symbols-outlined mb-4 inline-flex text-3xl text-secondary">
-                    {route.icon}
-                  </span>
-                  <h4 className="font-heading text-base font-semibold sm:text-lg">
-                    {route.from} <span className="text-secondary">&harr;</span> {route.to}
-                  </h4>
-                  <p className="mt-2 text-sm text-muted">{route.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-[#f8f9fa] py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <Reveal>
-            <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Your Journey in Three Steps
-              </h2>
-              <p className="mt-4 text-muted sm:text-lg">
-                Luxury should be effortless. We&apos;ve refined our process to be as smooth as our vehicles.
-              </p>
-            </div>
-          </Reveal>
-          <div className="relative mx-auto grid max-w-5xl gap-10 md:grid-cols-3 md:gap-12">
-            <div className="absolute left-0 top-1/2 hidden h-px w-full -translate-y-1/2 bg-primary/10 md:block" />
-            {STEPS.map((step, index) => (
-              <Reveal key={step.title} delay={index * 100}>
-                <div className="group relative z-10 flex flex-col items-center text-center">
-                  <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-primary/15 bg-white shadow-[0_10px_30px_rgba(14,28,46,0.04)] transition group-hover:bg-primary group-hover:text-white">
-                    <span className="material-symbols-outlined text-4xl">{step.icon}</span>
-                  </div>
-                  <h4 className="font-heading text-xl font-semibold">{step.title}</h4>
-                  <p className="mt-3 text-sm text-muted sm:text-base">{step.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="overflow-hidden py-16 sm:py-24 lg:py-[100px]">
-        <Container>
-          <Reveal>
-            <div className="mb-10 sm:mb-16">
-              <span className="mb-4 block text-xs font-semibold uppercase tracking-[0.2em] text-secondary">
-                Testimonials
-              </span>
-              <h2 className="font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Voices of Satisfaction
-              </h2>
-            </div>
-          </Reveal>
-          <div className="grid gap-6 md:grid-cols-3 md:gap-8">
-            {REVIEWS.map((item, index) => (
-              <Reveal key={item.name} delay={index * 90}>
-              <article
-                className="h-full rounded-3xl border border-primary/8 bg-[#f3f4f5] p-8 sm:p-10"
-              >
-                <div className="mb-6 flex gap-1 text-accent">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span
-                      key={i}
-                      className="material-symbols-outlined text-[20px]"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      star
+              <li key={item.title}>
+                <Reveal delay={index * 80} className="h-full">
+                  <div className="flex h-full gap-4 rounded-card border border-line bg-surface p-6 sm:p-7">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-green-strong/10 text-green-strong">
+                      <Icon name={item.icon} size={24} />
                     </span>
+                    <div>
+                      <h3 className="font-heading text-lg font-bold text-navy-deep">{item.title}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.text}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* Network reach: centred text, wide map, stat cards overlapping its bottom edge */}
+      <Section tone="navy" className="pb-0 sm:pb-0 lg:pb-0">
+        <Reveal>
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionHeading
+              eyebrow="Network Reach"
+              title="Nationwide Excellence, Local Precision"
+              description="Our strategic hubs are positioned to provide 24/7 assistance and delivery services. No matter where your journey begins or ends, the Aziz Afridi standard follows you."
+              align="center"
+              invert
+            />
+          </div>
+        </Reveal>
+        <Reveal delay={100}>
+          <div className="relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-panel rounded-b-none sm:mt-14 lg:aspect-[21/9]">
+            <Image src={MAP} alt="Pakistan service coverage map" fill className="object-cover opacity-80" sizes="(min-width: 1200px) 1136px, 100vw" />
+            <span className="absolute left-1/2 top-1/4 h-4 w-4 -translate-x-1/2 rounded-full bg-green" />
+            <span className="absolute left-1/2 top-1/4 h-4 w-4 -translate-x-1/2 rounded-full bg-green motion-safe:animate-ping" />
+          </div>
+        </Reveal>
+      </Section>
+      <div className="bg-navy-deep pb-12 sm:pb-16">
+        <Container>
+          <ul className="relative z-10 -mt-14 grid grid-cols-2 gap-4 sm:-mt-16 lg:grid-cols-4">
+            {STATS.map((item) => (
+              <li key={item.label} className="rounded-card bg-white p-5 text-center shadow-lift sm:p-6">
+                <p className="font-heading text-3xl font-extrabold italic text-green-strong sm:text-4xl">{item.value}</p>
+                <p className="mt-1 text-xs font-bold uppercase tracking-wider text-muted">{item.label}</p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </div>
+
+      {/* Popular routes: two-column list of routes */}
+      <Section tone="surface">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Frequent Journeys"
+            title="Popular Routes"
+            description="The trips our clients book most often, matched with the right vehicle for the road."
+            align="center"
+            className="mx-auto mb-10 max-w-2xl sm:mb-14"
+          />
+        </Reveal>
+        <ul className="grid gap-4 md:grid-cols-2">
+          {POPULAR_ROUTES.map((route, index) => (
+            <li key={`${route.from}-${route.to}`}>
+              <Reveal delay={Math.min(index, 5) * 60} className="h-full">
+                <div className="flex h-full items-start gap-4 rounded-full rounded-tr-3xl rounded-br-3xl border border-line bg-white py-5 pl-5 pr-7 shadow-soft">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy text-green">
+                    <Icon name={route.icon} size={26} />
+                  </span>
+                  <div>
+                    <h3 className="font-heading text-base font-bold text-navy-deep sm:text-lg">
+                      {route.from} <span className="text-green-strong">&harr;</span> {route.to}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted">{route.text}</p>
+                  </div>
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* Three steps: large numerals */}
+      <Section tone="white">
+        <Reveal>
+          <SectionHeading
+            title="Your Journey in Three Steps"
+            description="Luxury should be effortless. We've refined our process to be as smooth as our vehicles."
+            align="center"
+            className="mx-auto mb-10 max-w-2xl sm:mb-14"
+          />
+        </Reveal>
+        <ol className="grid gap-5 md:grid-cols-3">
+          {STEPS.map((step, index) => (
+            <li key={step.title}>
+              <Reveal delay={index * 90} className="h-full">
+                <div className="relative h-full overflow-hidden rounded-panel rounded-tr-[3.5rem] bg-navy-deep p-7 text-white sm:p-9">
+                  <span aria-hidden="true" className="absolute -right-1 -top-3 font-heading text-[7rem] font-extrabold italic leading-none text-white/10">
+                    {index + 1}
+                  </span>
+                  <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-green-strong text-white">
+                    <Icon name={step.icon} size={26} />
+                  </span>
+                  <h3 className="relative mt-6 font-heading text-xl font-bold">
+                    <span className="mr-1 text-green">{index + 1}.</span>
+                    {step.title}
+                  </h3>
+                  <p className="relative mt-2 text-sm leading-relaxed text-white/80 sm:text-base">{step.text}</p>
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* Reviews */}
+      <Section tone="surface">
+        <Reveal>
+          <SectionHeading eyebrow="Testimonials" title="Voices of Satisfaction" align="center" className="mb-10 sm:mb-14" />
+        </Reveal>
+        <div className="grid gap-5 md:grid-cols-3">
+          {REVIEWS.map((item, index) => (
+            <Reveal key={item.name} delay={index * 90} className="h-full">
+              <figure className="flex h-full flex-col rounded-card rounded-tr-[3rem] border border-line bg-white p-7 shadow-soft sm:p-8">
+                <Icon name="quote" size={34} className="text-green" />
+                <div className="mt-4 flex gap-1 text-green-strong" role="img" aria-label="Rated 5 out of 5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Icon key={i} name="star" size={18} />
                   ))}
                 </div>
-                <p className="mb-8 text-base italic leading-relaxed">&ldquo;{item.quote}&rdquo;</p>
-                <div className="flex items-center gap-4">
-                  <div className="relative h-12 w-12 overflow-hidden rounded-full">
-                    <Image src={item.image} alt={item.name} fill className="object-cover" sizes="48px" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">{item.name}</div>
-                    <div className="text-xs uppercase tracking-wide text-muted">{item.role}</div>
-                  </div>
-                </div>
-              </article>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
+                <blockquote className="mt-4 flex-1 text-base leading-relaxed text-navy-deep">
+                  &ldquo;{item.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-6 flex items-center gap-3">
+                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-navy font-heading text-sm font-bold text-white">
+                    {initials(item.name)}
+                    <Image src={item.image} alt="" fill className="object-cover" sizes="48px" />
+                  </span>
+                  <span>
+                    <span className="block font-semibold text-navy-deep">{item.name}</span>
+                    <span className="block text-xs uppercase tracking-wide text-muted">{item.role}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
-      <section className="pb-16 sm:pb-24 lg:pb-[100px]">
+      {/* Closing call-to-action */}
+      <section className="bg-surface pb-12 sm:pb-16 lg:pb-24">
         <Container>
           <Reveal>
-          <div className="relative overflow-hidden rounded-[28px] px-5 py-14 text-center sm:rounded-[40px] sm:px-10 sm:py-20 md:px-16 lg:px-24">
-            <div className="absolute inset-0 bg-primary" />
-            <Image src={CTA_BG} alt="" fill className="object-cover opacity-20 mix-blend-overlay" sizes="100vw" />
-            <div className="relative z-10">
-              <h2 className="font-heading text-3xl font-semibold text-white sm:text-4xl">
-                Ready to Start Your Journey?
-              </h2>
-              <p className="mx-auto mt-6 max-w-xl text-base text-white/70 sm:mt-8 sm:text-lg">
-                Experience the ultimate in mobility. Book your signature vehicle today in any major city
-                across Pakistan.
+            <div className="relative isolate overflow-hidden rounded-panel bg-navy-deep px-6 py-12 text-center text-white sm:px-12 sm:py-16 lg:px-20">
+              <Image src={CTA_BG} alt="" fill className="-z-10 object-cover opacity-20 mix-blend-overlay" sizes="100vw" />
+              <span aria-hidden="true" className="absolute -right-10 top-0 -z-10 h-full w-40 -skew-x-[20deg] bg-green/15" />
+              <h2 className="font-heading text-3xl font-extrabold italic sm:text-4xl">Ready to Start Your Journey?</h2>
+              <p className="mx-auto mt-4 max-w-xl text-base text-white/80 sm:text-lg">
+                Experience the ultimate in mobility. Book your signature vehicle today in any major city across
+                Pakistan.
               </p>
-              <div className="mt-10 flex flex-col justify-center gap-4 sm:mt-12 sm:flex-row sm:gap-6">
-                <Link
-                  href="/cars"
-                  className="rounded-2xl bg-accent px-10 py-4 text-xs font-semibold uppercase tracking-wider !text-white transition hover:scale-105 sm:px-12 sm:py-5"
-                >
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+                <ButtonLink href="/cars" variant="green" pill size="lg">
                   Browse Fleet
-                </Link>
-                <Link
+                  <Icon name="arrow-right" size={18} />
+                </ButtonLink>
+                <ButtonLink
                   href="/contact"
-                  className="rounded-2xl border border-white/20 bg-white/10 px-10 py-4 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur transition hover:bg-white/20 sm:px-12 sm:py-5"
+                  variant="outline"
+                  pill
+                  size="lg"
+                  className="border-white/70 text-white hover:border-white hover:bg-white hover:text-navy-deep"
                 >
                   Contact Support
-                </Link>
+                </ButtonLink>
               </div>
             </div>
-          </div>
           </Reveal>
         </Container>
       </section>
