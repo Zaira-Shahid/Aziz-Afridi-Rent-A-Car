@@ -5,7 +5,15 @@ const eslintConfig = [
   ...nextVitals,
   ...nextTypescript,
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
+    ignores: [
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+      "scripts/**",
+      // Temporary: unused component, decision on deleting it is due in Step 11.
+      "src/components/cars/CarSliderSection.tsx",
+    ],
   },
 ];
 
