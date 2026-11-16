@@ -1,29 +1,11 @@
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
+import { bookingSteps } from "@/data/booking-steps";
 
-const steps: { icon: IconName; title: string; text: string }[] = [
-  {
-    icon: "car",
-    title: "Choose Your Vehicle",
-    text: "Browse our fleet of economy cars, executive sedans, luxury vehicles, SUVs, Hiace, Coaster, and Grand Cabin rentals. Select the vehicle that best suits your travel needs.",
-  },
-  {
-    icon: "message-circle",
-    title: "Share Your Trip Details",
-    text: "Send us your pickup location, destination, travel date, time, and passenger requirements through our online booking form or WhatsApp.",
-  },
-  {
-    icon: "check-circle",
-    title: "Confirm Your Booking",
-    text: "Receive your quotation, confirm your reservation, and complete the booking. Our team will assign a professional chauffeur for your journey.",
-  },
-  {
-    icon: "smile",
-    title: "Enjoy a Comfortable Ride",
-    text: "Your driver will arrive at your pickup location on time. Sit back and enjoy a safe, comfortable, and reliable journey anywhere in Islamabad, Rawalpindi, or across Pakistan.",
-  },
-];
+const stepIcons: IconName[] = ["car", "message-circle", "check-circle", "smile"];
+
+const steps = bookingSteps.map((step, index) => ({ ...step, icon: stepIcons[index] }));
 
 export function HowItWorks() {
   return (
