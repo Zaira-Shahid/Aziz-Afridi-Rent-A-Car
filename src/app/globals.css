@@ -318,16 +318,3 @@ button.bg-accent {
   color: #ffffff !important;
 }
 
-/*
- * Transitional: every WhatsApp link keeps the brand green until the remaining pages are redesigned
- * with the shared Button (white outline buttons on dark panels are left alone). Removed in the final polish step.
- */
-:root a[href^="https://wa.me/"]:not([class*="border-white"]) {
-  background-color: var(--color-green-strong) !important;
-  border-color: var(--color-green-strong) !important;
-  color: #fff !important;
-}
-:root a[href^="https://wa.me/"]:not([class*="border-white"]):hover {
-  background-color: var(--color-green-deep) !important;
-  border-color: var(--color-green-deep) !important;
-}

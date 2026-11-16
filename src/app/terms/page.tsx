@@ -129,7 +129,7 @@ export default function TermsPage() {
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
                   <Icon name="briefcase" size={24} className="text-green-strong mb-4" />
-                  <h4 className="mb-3 font-heading text-lg font-semibold text-navy-deep">Documentation</h4>
+                  <h3 className="mb-3 font-heading text-lg font-semibold text-navy-deep">Documentation</h3>
                   <p className="text-sm text-muted">
                     Clients must provide original identification documents, a valid license, and the credit card
                     used for booking during vehicle handover.
@@ -137,7 +137,7 @@ export default function TermsPage() {
                 </div>
                 <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
                   <Icon name="car" size={24} className="text-green-strong mb-4" />
-                  <h4 className="mb-3 font-heading text-lg font-semibold text-navy-deep">Vehicle Inspection</h4>
+                  <h3 className="mb-3 font-heading text-lg font-semibold text-navy-deep">Vehicle Inspection</h3>
                   <p className="text-sm text-muted">
                     You are required to inspect the vehicle with our representative and sign the condition report
                     before departure. Any pre-existing damage must be documented.
@@ -281,21 +281,21 @@ export default function TermsPage() {
               <div className="rounded-card border border-line bg-surface p-6 sm:p-8">
                 <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
                   <div className="flex-1">
-                    <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide text-green-strong">Full Refund</h5>
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-green-strong">Full Refund</h3>
                     <p className="text-sm text-muted sm:text-base">
                       Cancellations made more than 72 hours before the scheduled pickup time.
                     </p>
                   </div>
                   <div className="hidden w-px bg-line sm:block" />
                   <div className="flex-1">
-                    <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">
                       Partial Refund (50%)
-                    </h5>
+                    </h3>
                     <p className="text-sm text-muted sm:text-base">Cancellations made between 24 and 72 hours before pickup.</p>
                   </div>
                   <div className="hidden w-px bg-line sm:block" />
                   <div className="flex-1">
-                    <h5 className="mb-2 text-xs font-semibold uppercase tracking-wide text-danger">No Refund</h5>
+                    <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-danger">No Refund</h3>
                     <p className="text-sm text-muted sm:text-base">Cancellations within 24 hours of pickup or &ldquo;no-shows&rdquo;.</p>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export default function TermsPage() {
                     <Icon name="shield-check" size={30} className="text-green" />
                   </div>
                   <div className="text-center sm:text-left">
-                    <h4 className="font-heading text-lg font-semibold">Premium Protection Plan</h4>
+                    <h3 className="font-heading text-lg font-semibold">Premium Protection Plan</h3>
                     <p className="mt-2 text-sm text-white/80">
                       Reduce your excess to zero and enjoy full peace of mind. Available for an additional daily
                       fee at the time of booking.
@@ -348,7 +348,7 @@ export default function TermsPage() {
                   <div className="flex items-start gap-4">
                     <Icon name="map-pin" size={24} className="text-green-strong mt-1 shrink-0" />
                     <div>
-                      <h4 className="mb-2 font-heading text-base font-semibold text-navy-deep">GPS Tracking Notice</h4>
+                      <h3 className="mb-2 font-heading text-base font-semibold text-navy-deep">GPS Tracking Notice</h3>
                       <p className="text-sm sm:text-base">
                         All {brand.name} vehicles are fitted with GPS tracking devices for safety, theft recovery,
                         route verification, and mileage monitoring. By accepting these terms, the client consents to
