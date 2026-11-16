@@ -351,12 +351,6 @@ button.bg-accent {
   color: #ffffff !important;
 }
 
-img {
-  max-width: 100%;
-  display: block;
-  height: auto;
-}
-
 @media (max-width: 640px) {
   .brand-strip-wave {
     height: 56px;
@@ -401,18 +395,8 @@ img {
 .ride-search-button { display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 11px; background: #278a08; color: white; padding: 15px 18px; font-size: 19px; font-weight: 700; cursor: pointer; transition: background .2s; }.ride-search-button:hover { background: #1e7006; }
 @media (max-width: 1023px) { .ride-hero-main { min-height: 330px; }.ride-hero-art { height: 310px; }.ride-hero-copy h1 { font-size: 43px; }.ride-hero-copy p { font-size: 14px; }.ride-search { grid-template-columns: 1fr 1fr; }.ride-search-field:nth-child(2) { border-right: 0; } }
 @media (max-width: 639px) { .ride-hero { padding-top: 28px; }.ride-hero-main { grid-template-columns: 1fr; }.ride-hero-copy { padding-bottom: 0; }.ride-hero-copy h1 { font-size: 42px; letter-spacing: -1.8px; }.ride-hero-copy h2 { max-width: 330px; }.ride-hero-copy p { max-width: 390px; }.ride-hero-art { height: 280px; margin-top: 24px; }.ride-map { height: 195px; }.ride-search { grid-template-columns: 1fr; gap: 0; padding: 8px 18px 18px; border-radius: 16px; }.ride-search-field { padding: 13px 0; border-right: 0; border-bottom: 1px solid #eee; }.ride-search-button { margin-top: 14px; }.ride-hero::before { clip-path: polygon(0 68%, 100% 57%, 100% 100%, 0 100%); } }
-.ride-header { background: #fff; color: #06264b; border-bottom-color: #f0f0f0; }
-.ride-header nav > a, .ride-header nav > div > a { color: #24262b; font-weight: 600; }
-.ride-header nav > a:hover, .ride-header nav > div > a:hover { color: #278a08; }
-.ride-header nav a.border-b-2 { border-color: #278a08; }
-.ride-header > div > div:last-child button { color: #06264b; border-color: #ddd; }
-.ride-header > div > div > a.rounded-full { color: #06264b; border-color: #ccc; }
-.ride-header > div > div > a.bg-accent { background: #278a08; color: #fff !important; }
-.ride-header > div > div > a[aria-label="WhatsApp"] { color: #20b44b; border-color: #ddd; }
 
 @media (max-width: 639px) { .ride-cars-cutout { left: -3%; right: -3%; height: 220px; bottom: 12px; } }
-/* Keep the transparent logo readable on dark navigation and footer surfaces. */
-header:not(.ride-header) .site-brand-logo, footer .site-brand-logo, [role="dialog"] .site-brand-logo { filter: brightness(0) invert(1); }
 
 .premium-fleet-preview { background: #f7f8fa; color: #06264b; padding: 24px 0 30px; }
 .premium-fleet-intro { padding: 0 12px; }
@@ -437,17 +421,7 @@ header:not(.ride-header) .site-brand-logo, footer .site-brand-logo, [role="dialo
 .ride-location-options li:hover, .ride-location-options li[aria-selected="true"] { background: #eff8eb; color: #1e7006; }
 
 .premium-fleet-mobile-description { display: none; }
-.mobile-book-button { border-radius: 999px; background: #278a08; color: white; padding: 10px 16px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-.mobile-whatsapp-label { font-size: 12px; color: #06264b; font-weight: 650; }
-.ride-header .mobile-header-actions > a[aria-label="WhatsApp"] { width: auto; gap: 5px; padding: 0 12px; border-radius: 999px; }
 @media (max-width: 639px) {
-  .ride-header > div { height: 70px; gap: 6px; padding-inline: 14px; }
-  .ride-header .mobile-header-actions { gap: 6px; }
-  .ride-header .mobile-header-actions > a[aria-label="WhatsApp"] { height: 32px; padding: 0 8px; }
-  .ride-header .mobile-header-actions > a svg { width: 16px; height: 16px; }
-  .ride-header .mobile-whatsapp-label { font-size: 10px; }
-  .ride-header .mobile-book-button { padding: 8px 12px; font-size: 11px; }
-  .ride-header .mobile-header-actions button { width: 29px; height: 34px; border: 0; }
   .ride-hero { padding-top: 22px; padding-bottom: 22px; overflow: visible; }
   .ride-hero > div { padding-inline: 16px; }
   .ride-hero-main { position: relative; gap: 0; }
@@ -483,22 +457,20 @@ header:not(.ride-header) .site-brand-logo, footer .site-brand-logo, [role="dialo
   .premium-category-arrow { width: 17px; height: 17px; right: 5px; bottom: 9px; font-size: 16px; }
 }
 @media (max-width: 359px) {
-  .ride-header .mobile-whatsapp-label { display: none; }
-  .ride-header .mobile-book-button { padding-inline: 9px; }
   .ride-search-field { padding-inline: 4px; gap: 3px; }.ride-search-field > .material-symbols-outlined { font-size: 16px; }
   .premium-category .premium-category-badge { font-size: 9px; left: 5px; }.premium-category-arrow { right: 3px; width: 15px; height: 15px; }
 }
 
-/* WhatsApp keeps its own green action color. */
-:root a[href^="https://wa.me/"],
-:root .ride-header a[href^="https://wa.me/"] {
-  background-color: #128c4a !important;
-  border-color: #128c4a !important;
+/*
+ * Transitional: every WhatsApp link keeps the brand green until the remaining pages are redesigned
+ * with the shared Button. Removed in the final polish step.
+ */
+:root a[href^="https://wa.me/"] {
+  background-color: var(--color-green-strong) !important;
+  border-color: var(--color-green-strong) !important;
   color: #fff !important;
 }
-:root a[href^="https://wa.me/"]:hover,
-:root .ride-header a[href^="https://wa.me/"]:hover {
-  background-color: #0d743c !important;
-  border-color: #0d743c !important;
+:root a[href^="https://wa.me/"]:hover {
+  background-color: var(--color-green-deep) !important;
+  border-color: var(--color-green-deep) !important;
 }
-:root a[href^="https://wa.me/"] .mobile-whatsapp-label { color: #fff; }
