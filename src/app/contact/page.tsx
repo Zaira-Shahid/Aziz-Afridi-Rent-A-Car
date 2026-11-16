@@ -26,7 +26,7 @@ export default function ContactPage() {
           </div>
           <div className="space-y-7">
             <div className="relative h-64 overflow-hidden rounded-2xl sm:h-80">
-              <Image src="/images/contact-hero-v2.png" alt="Chauffeur-driven travel in Islamabad" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+              <Image src="/images/contact-hero-v2.webp" alt="Chauffeur-driven travel in Islamabad" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
             </div>
             <h2 className="text-2xl font-semibold">Contact the booking team</h2>
             <div className="flex flex-wrap gap-3">

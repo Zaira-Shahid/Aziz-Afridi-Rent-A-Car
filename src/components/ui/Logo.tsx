@@ -11,14 +11,14 @@ type LogoProps = {
 };
 
 /**
- * Official logo. `logo-header.png` is the supplied `logo.jpg` cropped to the artwork, with its
+ * Official logo. `logo-header.webp` is the supplied `logo.jpg` cropped to the artwork, with its
  * near-white background flattened to pure white so it blends into white surfaces.
  */
 export function Logo({ className, priority, onClick }: LogoProps) {
   return (
     <Link href="/" onClick={onClick} className={cn("block shrink-0", className)}>
       <Image
-        src="/images/brand/logo-header.png"
+        src="/images/brand/logo-header.webp"
         alt={brand.name}
         width={640}
         height={326}

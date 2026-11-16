@@ -11,7 +11,7 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
 /** Islamabad hero — local landmark image */
-const ISLAMABAD_HERO = "/services/islambad.jpeg";
+const ISLAMABAD_HERO = "/services/islambad.webp";
 
 const FLEET_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuA1A79IDJIW_aFnBsQj1JQWPCi85fII9bVRg7OP6lB_FM1HQdJCKMuU8ogEgCN8BaR7e98m8vMSjxppY1ZnkiXVlqgYQeoOtmXBwsSEKC6ly7j83OJLZ_6f9NhpEJ-j9LAl-aLND1WWTUIvkGca0VXOQRKgPACwengq_1yXUh927w_jT_ARf7iovL-okVs1HPNIcnET-cmAft3oJ3orvTPjKoSSB7pDaUy8WPoJAhlk61FaopWNyHxv";

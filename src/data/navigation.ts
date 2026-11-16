@@ -7,16 +7,16 @@ const C = "#278a08"; // secondary
 const A = "#278a08"; // accent
 
 const BRAND_LOGOS: Record<string, string> = {
-  Suzuki: "/brands/suzuki-logo.png",
-  Toyota: "/brands/toyota-logo.png",
-  Honda: "/brands/honda-logo.png",
-  Hyundai: "/brands/hyundai-logo.png",
-  Kia: "/brands/kia-logo.png",
-  Mercedes: "/brands/mercedes-logo.png",
-  "Mercedes-Benz": "/brands/mercedes-logo.png",
-  Audi: "/brands/audi-logo.png",
-  Lexus: "/brands/lexus-logo.png",
-  Changan: "/brands/changan-logo.png",
+  Suzuki: "/brands/suzuki-logo.webp",
+  Toyota: "/brands/toyota-logo.webp",
+  Honda: "/brands/honda-logo.webp",
+  Hyundai: "/brands/hyundai-logo.webp",
+  Kia: "/brands/kia-logo.webp",
+  Mercedes: "/brands/mercedes-logo.webp",
+  "Mercedes-Benz": "/brands/mercedes-logo.webp",
+  Audi: "/brands/audi-logo.webp",
+  Lexus: "/brands/lexus-logo.webp",
+  Changan: "/brands/changan-logo.webp",
 };
 
 function brandLogo(brand: string) {

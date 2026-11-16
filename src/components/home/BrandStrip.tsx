@@ -2,16 +2,16 @@ import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 
 const brands = [
-  { name: "Toyota", image: "/brands/toyota-logo.png" },
-  { name: "Honda", image: "/brands/honda-logo.png" },
-  { name: "Suzuki", image: "/brands/suzuki-logo.png" },
-  { name: "Kia", image: "/brands/kia-logo.png" },
-  { name: "Hyundai", image: "/brands/hyundai-logo.png" },
-  { name: "Mercedes", image: "/brands/mercedes-logo.png" },
-  { name: "Audi", image: "/brands/audi-logo.png" },
-  { name: "Lexus", image: "/brands/lexus-logo.png" },
-  { name: "Changan", image: "/brands/changan-logo.png" },
-  { name: "Haval", image: "/brands/haval-logo.jfif.jpeg" },
+  { name: "Toyota", image: "/brands/toyota-logo.webp" },
+  { name: "Honda", image: "/brands/honda-logo.webp" },
+  { name: "Suzuki", image: "/brands/suzuki-logo.webp" },
+  { name: "Kia", image: "/brands/kia-logo.webp" },
+  { name: "Hyundai", image: "/brands/hyundai-logo.webp" },
+  { name: "Mercedes", image: "/brands/mercedes-logo.webp" },
+  { name: "Audi", image: "/brands/audi-logo.webp" },
+  { name: "Lexus", image: "/brands/lexus-logo.webp" },
+  { name: "Changan", image: "/brands/changan-logo.webp" },
+  { name: "Haval", image: "/brands/haval-logo.jfif.webp" },
 ] as const;
 
 function BrandItem({ name, image }: { name: string; image: string }) {

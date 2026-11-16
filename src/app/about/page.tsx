@@ -24,7 +24,7 @@ export default function AboutPage() {
             <p className="mt-4 leading-relaxed text-muted">Share your pickup point, dates and destination before confirming. Request a quote covering your vehicle, driver arrangements, rental duration and additional trip costs.</p>
           </div>
           <div className="relative h-72 overflow-hidden rounded-2xl sm:h-96">
-            <Image src="/images/about-hero-v2.png" alt="Vehicles for journeys in Islamabad" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src="/images/about-hero-v2.webp" alt="Vehicles for journeys in Islamabad" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </div>
         </div>
       </Section>
