@@ -6,22 +6,20 @@
 
 /*
  * Design tokens (approved palette). `static` emits every token as a CSS
- * variable as well as a Tailwind utility (bg-ink, text-gold-strong, rounded-card, ...).
+ * variable as well as a Tailwind utility (bg-navy, text-green-strong, rounded-card, ...).
  * Spacing uses Tailwind's 4px base (--spacing: 0.25rem).
  */
 @theme static {
-  /* Brand */
-  --color-ink: #0b1f3a;
-  --color-ink-soft: #12365f;
-  --color-gold: #c9a24a;
-  --color-gold-hover: #b8913a;
-  /* Gold used as TEXT on light backgrounds (AA contrast). Plain gold is for fills, icons and text on navy. */
-  --color-gold-strong: #8a6a1f;
-  /* Approved green. Reserved for WhatsApp / booking CTAs and tiny accents. */
-  --color-green: #16a34a;
-  /* Green used as a button FILL under white text (AA contrast: #16a34a on white is only 3.3:1). */
-  --color-action: #15803d;
-  --color-action-hover: #166534;
+  /* Brand colors, sampled from the official logo (public/images/brand/logo.jpg). */
+  /* Navy wordmark. Primary buttons, links, dark panels. */
+  --color-navy: #00306c;
+  /* Darkest logo navy (car outline). Headings, header text, footer, dark banners. */
+  --color-navy-deep: #002048;
+  /* Logo green. Icons, highlighted heading words, active nav, text on navy. Only 3.2:1 on white, so never small text on light. */
+  --color-green: #3ca500;
+  /* Darker green for small text on light backgrounds and for button fills under white text (AA: 5.2:1 on white). */
+  --color-green-strong: #2b7d00;
+  --color-green-deep: #1f5c00;
 
   /* Neutrals */
   --color-surface: #f6f7f9;
@@ -32,17 +30,16 @@
 
   /* Feedback */
   --color-danger: #b42318;
-  --color-success: #157f3b;
+  --color-success: #2b7d00;
 
   /*
    * Legacy names still used by pages that are not redesigned yet.
    * They are remapped to the new palette and will be removed in the final polish step.
    */
-  --color-primary: #0b1f3a;
-  --color-secondary: #15803d;
-  --color-accent: #15803d;
+  --color-primary: #002048;
+  --color-secondary: #2b7d00;
+  --color-accent: #2b7d00;
   --color-background: #f6f7f9;
-  --color-navy: #12365f;
 
   /* Radius */
   --radius-input: 8px;
@@ -52,8 +49,8 @@
   --radius-brand: 12px;
 
   /* Shadows (soft) */
-  --shadow-soft: 0 1px 2px rgb(11 31 58 / 0.06), 0 4px 12px rgb(11 31 58 / 0.05);
-  --shadow-lift: 0 2px 4px rgb(11 31 58 / 0.06), 0 12px 28px rgb(11 31 58 / 0.12);
+  --shadow-soft: 0 1px 2px rgb(0 32 72 / 0.06), 0 4px 12px rgb(0 32 72 / 0.06);
+  --shadow-lift: 0 2px 4px rgb(0 32 72 / 0.06), 0 12px 28px rgb(0 32 72 / 0.14);
 }
 
 @theme inline {
@@ -298,7 +295,7 @@ html {
 body {
   margin: 0;
   background: var(--color-surface);
-  color: var(--color-ink);
+  color: var(--color-navy-deep);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -314,7 +311,7 @@ h6 {
 }
 
 /*
- * Base styles live in a cascade layer so Tailwind utilities (text-white, text-ink, ...)
+ * Base styles live in a cascade layer so Tailwind utilities (text-white, text-navy-deep, ...)
  * win over them without needing !important.
  */
 @layer base {
@@ -325,12 +322,12 @@ h6 {
 
   /* One visible focus ring everywhere (keyboard users). */
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-green-strong);
     outline-offset: 2px;
   }
 
   ::selection {
-    background: rgb(201 162 74 / 0.35);
+    background: rgb(60 165 0 / 0.25);
   }
 
   /* Anchored sections (#all-models, #intro, ...) stay clear of the sticky header. */
