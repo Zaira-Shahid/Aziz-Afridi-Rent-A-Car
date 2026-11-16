@@ -1,6 +1,9 @@
 export { Button } from "./Button";
 export { ButtonLink } from "./ButtonLink";
+export { buttonClasses } from "./button-styles";
+export { Card } from "./Card";
 export { Container } from "./Container";
+export { Icon } from "./Icon";
 export { Section } from "./Section";
 export { SectionHeading } from "./SectionHeading";
 export { CardLink } from "./CardLink";

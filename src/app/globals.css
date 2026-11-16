@@ -4,17 +4,61 @@
   --radius: 12px;
 }
 
+/*
+ * Design tokens (approved palette). `static` emits every token as a CSS
+ * variable as well as a Tailwind utility (bg-ink, text-gold-strong, rounded-card, ...).
+ * Spacing uses Tailwind's 4px base (--spacing: 0.25rem).
+ */
+@theme static {
+  /* Brand */
+  --color-ink: #0b1f3a;
+  --color-ink-soft: #12365f;
+  --color-gold: #c9a24a;
+  --color-gold-hover: #b8913a;
+  /* Gold used as TEXT on light backgrounds (AA contrast). Plain gold is for fills, icons and text on navy. */
+  --color-gold-strong: #8a6a1f;
+  /* Approved green. Reserved for WhatsApp / booking CTAs and tiny accents. */
+  --color-green: #16a34a;
+  /* Green used as a button FILL under white text (AA contrast: #16a34a on white is only 3.3:1). */
+  --color-action: #15803d;
+  --color-action-hover: #166534;
+
+  /* Neutrals */
+  --color-surface: #f6f7f9;
+  --color-card: #ffffff;
+  --color-line: #e3e6eb;
+  --color-fg: #1f2937;
+  --color-muted: #4b5563;
+
+  /* Feedback */
+  --color-danger: #b42318;
+  --color-success: #157f3b;
+
+  /*
+   * Legacy names still used by pages that are not redesigned yet.
+   * They are remapped to the new palette and will be removed in the final polish step.
+   */
+  --color-primary: #0b1f3a;
+  --color-secondary: #15803d;
+  --color-accent: #15803d;
+  --color-background: #f6f7f9;
+  --color-navy: #12365f;
+
+  /* Radius */
+  --radius-input: 8px;
+  --radius-button: 12px;
+  --radius-card: 16px;
+  --radius-panel: 24px;
+  --radius-brand: 12px;
+
+  /* Shadows (soft) */
+  --shadow-soft: 0 1px 2px rgb(11 31 58 / 0.06), 0 4px 12px rgb(11 31 58 / 0.05);
+  --shadow-lift: 0 2px 4px rgb(11 31 58 / 0.06), 0 12px 28px rgb(11 31 58 / 0.12);
+}
+
 @theme inline {
-  --color-primary: #06264b;
-  --color-secondary: #278a08;
-  --color-accent: #278a08;
-  --color-background: #f8f9fa;
-  --color-surface: #f8f9fa;
-  --color-muted: #44474c;
-  --color-navy: #0b345e;
   --font-heading: var(--font-sora), sans-serif;
   --font-body: var(--font-inter), sans-serif;
-  --radius-brand: 12px;
   --animate-fade-up: fade-up 0.7s ease-out both;
 }
 
@@ -204,6 +248,21 @@
   -webkit-font-smoothing: antialiased;
 }
 
+/* Respect reduced motion everywhere: no smooth scrolling, no animated transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
   .animate-fade-up,
@@ -238,8 +297,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-background);
-  color: var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -254,9 +313,30 @@ h6 {
   font-family: var(--font-heading);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/*
+ * Base styles live in a cascade layer so Tailwind utilities (text-white, text-ink, ...)
+ * win over them without needing !important.
+ */
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* One visible focus ring everywhere (keyboard users). */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgb(201 162 74 / 0.35);
+  }
+
+  /* Anchored sections (#all-models, #intro, ...) stay clear of the sticky header. */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
 }
 
 a.bg-primary,
