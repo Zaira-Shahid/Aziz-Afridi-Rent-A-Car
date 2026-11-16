@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FeaturedCarCard } from "@/components/cars/FeaturedCarCard";
+import { CarCard } from "@/components/cars/CarCard";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -99,7 +99,7 @@ export function DiscoverDrive() {
             >
               {fleet.cars.map((car) => (
                 <div key={car.slug} className="w-[82%] shrink-0 snap-center sm:w-auto">
-                  <FeaturedCarCard car={car} badge={fleet.name} />
+                  <CarCard car={car} variant="featured" badge={fleet.name} />
                 </div>
               ))}
             </div>

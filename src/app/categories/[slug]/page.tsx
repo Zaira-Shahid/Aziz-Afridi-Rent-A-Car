@@ -68,7 +68,7 @@ export default async function CategoryPage({ params }: Props) {
           cars={models}
           viewAllHref="/cars"
           viewAllLabel="View All Cars"
-          className="bg-white"
+          tone="white"
         />
       </div>
       <CtaBanner />

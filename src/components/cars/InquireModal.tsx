@@ -1,11 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { CarModel } from "@/types";
+import { Icon } from "@/components/ui/Icon";
+import { buttonClasses } from "@/components/ui/button-styles";
 import { brand } from "@/lib/brand";
 import { cn } from "@/lib/utils";
+import type { CarModel } from "@/types";
 
 const timeOptions = [
   "12:00 AM",
@@ -47,51 +49,87 @@ const emptyForm = {
   fullName: "",
   email: "",
   phone: "",
-  verified: false,
 };
 
+type FormState = typeof emptyForm;
+type FormErrors = Partial<Record<keyof FormState, string>>;
+
+/** Phone digits without the leading zero (the +92 prefix is shown next to the field). */
+function localPhoneDigits(value: string) {
+  return value.replace(/\D/g, "").replace(/^0+/, "");
+}
+
+function validate(form: FormState): FormErrors {
+  const errors: FormErrors = {};
+  if (!form.date) errors.date = "Please choose a date.";
+  if (!form.fullName.trim()) errors.fullName = "Please enter your full name.";
+  if (!/^\S+@\S+\.\S+$/.test(form.email.trim())) errors.email = "Please enter a valid e-mail address.";
+  const digits = localPhoneDigits(form.phone);
+  if (digits.length < 9 || digits.length > 11) errors.phone = "Please enter a valid phone number.";
+  return errors;
+}
+
+const fieldClass =
+  "block w-full rounded-xl border bg-surface px-3 py-3 text-sm text-navy-deep placeholder:text-muted focus:bg-white";
+const labelClass = "mb-1.5 block text-sm font-semibold text-navy-deep";
+
+/** Inquiry popup. It is only mounted while open, so every opening starts with an empty form. */
 export function InquireModal({ car, open, onClose }: InquireModalProps) {
+  if (!open) return null;
+  return createPortal(<InquiryDialog car={car} onClose={onClose} />, document.body);
+}
+
+function InquiryDialog({ car, onClose }: { car: CarModel; onClose: () => void }) {
   const titleId = useId();
-  const [mounted, setMounted] = useState(false);
-  const [form, setForm] = useState(emptyForm);
-  const [submitted, setSubmitted] = useState(false);
+  const fieldId = useId();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  const [form, setForm] = useState<FormState>(emptyForm);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    onCloseRef.current = onClose;
+  });
 
+  // Focus handling: focus the first field, keep Tab inside the dialog, close on Escape, restore focus on close.
   useEffect(() => {
-    if (!open) return;
-
+    const dialog = dialogRef.current;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    dialog?.querySelector<HTMLElement>("[data-autofocus]")?.focus();
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onCloseRef.current();
+        return;
+      }
+      if (event.key !== "Tab" || !dialog) return;
+      const items = dialog.querySelectorAll<HTMLElement>(
+        "a[href], button:not([disabled]), input, select, textarea",
+      );
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
 
-    window.addEventListener("keydown", onKeyDown);
+    document.addEventListener("keydown", onKeyDown);
     return () => {
+      document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
+      previouslyFocused?.focus?.();
     };
-  }, [open, onClose]);
+  }, []);
 
-  useEffect(() => {
-    if (open) setSubmitted(false);
-  }, [open, car.slug]);
-
-  if (!mounted || !open) return null;
-
-  function resetForm() {
-    setForm(emptyForm);
-    setSubmitted(false);
-  }
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!form.verified) return;
-
+  const whatsappUrl = () => {
     const message = [
       `Inquiry for: ${car.name}`,
       `Date: ${form.date}`,
@@ -99,210 +137,225 @@ export function InquireModal({ car, open, onClose }: InquireModalProps) {
       `Drop-off: ${form.dropoffTime}`,
       `Name: ${form.fullName}`,
       `Email: ${form.email}`,
-      `Phone: +92 ${form.phone}`,
+      `Phone: +92 ${localPhoneDigits(form.phone)}`,
     ].join("\n");
+    return `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(message)}`;
+  };
 
-    window.open(
-      `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(message)}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
-    setSubmitted(true);
+  function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   }
 
-  const inputClass =
-    "w-full rounded-[8px] border border-[#e5e5e5] bg-[#efefef] px-3 py-3 text-sm text-primary outline-none transition placeholder:text-primary/40 focus:border-secondary focus:bg-white";
+  function resetForm() {
+    setForm(emptyForm);
+    setErrors({});
+    setSent(false);
+  }
 
-  const modal = (
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const found = validate(form);
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      requestAnimationFrame(() => dialogRef.current?.querySelector<HTMLElement>("[aria-invalid='true']")?.focus());
+      return;
+    }
+    window.open(whatsappUrl(), "_blank", "noopener,noreferrer");
+    setSent(true);
+  }
+
+  const errorId = (key: keyof FormState) => `${fieldId}-${key}-error`;
+  const invalid = (key: keyof FormState) => (errors[key] ? true : undefined);
+  const borderFor = (key: keyof FormState) => (errors[key] ? "border-danger" : "border-line focus:border-green-strong");
+
+  const timeSelect = (key: "pickupTime" | "dropoffTime", label: string) => (
+    <div>
+      <label htmlFor={`${fieldId}-${key}`} className={labelClass}>
+        {label}
+      </label>
+      <div className="relative">
+        <select
+          id={`${fieldId}-${key}`}
+          value={form[key]}
+          onChange={(event) => setField(key, event.target.value)}
+          className={cn(fieldClass, "appearance-none border-line pr-10 focus:border-green-strong")}
+        >
+          {timeOptions.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
+        <Icon
+          name="chevron-down"
+          size={18}
+          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-navy-deep"
+        />
+      </div>
+    </div>
+  );
+
+  const errorText = (key: keyof FormState) =>
+    errors[key] ? (
+      <p id={errorId(key)} role="alert" className="mt-1.5 flex items-center gap-1.5 text-sm font-medium text-danger">
+        <Icon name="alert-circle" size={16} />
+        {errors[key]}
+      </p>
+    ) : null;
+
+  return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6">
-      <button
-        type="button"
-        aria-label="Close inquiry modal"
-        className="absolute inset-0 bg-black/55 backdrop-blur-md"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-navy-deep/60 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
 
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="animate-fade-up relative z-10 flex max-h-[92vh] w-full max-w-[420px] flex-col overflow-hidden rounded-[14px] bg-white shadow-[0_25px_80px_rgba(0,0,0,0.35)]"
+        className="animate-fade-up relative z-10 flex max-h-[92dvh] w-full max-w-[28rem] flex-col overflow-hidden rounded-card bg-white shadow-lift"
       >
-        {/* Header */}
-        <div className="relative flex items-center justify-center px-4 py-4">
+        <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3 sm:px-5">
           <button
             type="button"
             onClick={resetForm}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-primary/70 underline underline-offset-2 transition hover:text-secondary"
+            className="inline-flex min-h-11 items-center px-1 text-sm font-semibold text-navy underline-offset-2 hover:text-green-strong hover:underline"
           >
             Reset
           </button>
-          <h2 id={titleId} className="font-heading text-lg font-bold text-primary">
+          <h2 id={titleId} className="font-heading text-lg font-extrabold italic text-navy-deep">
             Your Information
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="absolute right-4 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-base font-bold leading-none !text-white shadow-sm transition hover:brightness-95"
+            className="inline-flex size-11 items-center justify-center rounded-xl border border-line text-navy-deep transition hover:bg-surface"
           >
-            ×
+            <Icon name="close" size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="overflow-y-auto px-5 pb-5">
-          {/* Car preview */}
-          <div className="text-center">
-            <p className="font-heading text-[17px] font-semibold leading-snug text-primary">
-              {car.name}{" "}
-              <span className="font-normal text-primary/55">Or Similar Car</span>
-            </p>
+        <form onSubmit={handleSubmit} noValidate className="overflow-y-auto px-4 pb-5 pt-4 sm:px-5">
+          <p className="text-center font-heading text-base font-bold leading-snug text-navy-deep">
+            {car.name} <span className="font-normal text-muted">Or Similar Car</span>
+          </p>
+          <div className="relative mx-auto mt-3 aspect-[16/9] w-full overflow-hidden rounded-xl bg-surface">
+            <Image src={car.image} alt={car.name} fill className="object-contain p-2" sizes="420px" />
           </div>
 
-          <div className="relative mx-auto mt-3 aspect-[16/10] w-full overflow-hidden rounded-[12px] border border-[#ececec] bg-[#f6f6f6]">
-            <Image
-              src={car.image}
-              alt={car.name}
-              fill
-              className="object-contain p-3"
-              sizes="380px"
-            />
-          </div>
-
-          {/* Date & time */}
-          <div className="mt-4 space-y-3">
-            <label className="block">
-              <span className="mb-2 block text-center text-[15px] font-medium text-primary">
-                Pickup & Drop Off Date
-              </span>
+          <div className="mt-4 space-y-3.5">
+            <div>
+              <label htmlFor={`${fieldId}-date`} className={labelClass}>
+                Pickup &amp; Drop Off Date
+              </label>
               <input
+                id={`${fieldId}-date`}
+                data-autofocus
                 type="date"
-                required
                 value={form.date}
-                onChange={(e) => setForm((prev) => ({ ...prev, date: e.target.value }))}
-                className={cn(inputClass, "text-center")}
+                onChange={(event) => setField("date", event.target.value)}
+                aria-invalid={invalid("date")}
+                aria-describedby={errors.date ? errorId("date") : undefined}
+                className={cn(fieldClass, borderFor("date"))}
               />
-            </label>
+              {errorText("date")}
+            </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <label className="block">
-                <span className="mb-2 block text-center text-[15px] font-medium text-primary">
-                  Pickup Time
-                </span>
-                <div className="relative">
-                  <select
-                    value={form.pickupTime}
-                    onChange={(e) => setForm((prev) => ({ ...prev, pickupTime: e.target.value }))}
-                    className={cn(inputClass, "appearance-none pr-11 text-center")}
-                  >
-                    {timeOptions.map((time) => (
-                      <option key={time} value={time}>
-                        {time}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[6px] bg-accent !text-white">
-                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                </div>
-              </label>
+              {timeSelect("pickupTime", "Pickup Time")}
+              {timeSelect("dropoffTime", "Drop off Time")}
+            </div>
 
-              <label className="block">
-                <span className="mb-2 block text-center text-[15px] font-medium text-primary">
-                  Drop off Time
-                </span>
-                <div className="relative">
-                  <select
-                    value={form.dropoffTime}
-                    onChange={(e) => setForm((prev) => ({ ...prev, dropoffTime: e.target.value }))}
-                    className={cn(inputClass, "appearance-none pr-11 text-center")}
-                  >
-                    {timeOptions.map((time) => (
-                      <option key={time} value={time}>
-                        {time}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[6px] bg-accent !text-white">
-                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                </div>
+            <div>
+              <label htmlFor={`${fieldId}-fullName`} className={labelClass}>
+                Full Name
               </label>
+              <input
+                id={`${fieldId}-fullName`}
+                type="text"
+                autoComplete="name"
+                placeholder="Full Name"
+                value={form.fullName}
+                onChange={(event) => setField("fullName", event.target.value)}
+                aria-invalid={invalid("fullName")}
+                aria-describedby={errors.fullName ? errorId("fullName") : undefined}
+                className={cn(fieldClass, borderFor("fullName"))}
+              />
+              {errorText("fullName")}
+            </div>
+
+            <div>
+              <label htmlFor={`${fieldId}-email`} className={labelClass}>
+                E-mail
+              </label>
+              <input
+                id={`${fieldId}-email`}
+                type="email"
+                autoComplete="email"
+                placeholder="E-mail"
+                value={form.email}
+                onChange={(event) => setField("email", event.target.value)}
+                aria-invalid={invalid("email")}
+                aria-describedby={errors.email ? errorId("email") : undefined}
+                className={cn(fieldClass, borderFor("email"))}
+              />
+              {errorText("email")}
+            </div>
+
+            <div>
+              <label htmlFor={`${fieldId}-phone`} className={labelClass}>
+                Phone
+              </label>
+              <div
+                className={cn(
+                  "flex overflow-hidden rounded-xl border bg-surface focus-within:bg-white",
+                  errors.phone ? "border-danger" : "border-line focus-within:border-green-strong",
+                )}
+              >
+                <span className="flex shrink-0 items-center border-r border-line px-3 text-sm font-semibold text-navy-deep">
+                  +92
+                </span>
+                <input
+                  id={`${fieldId}-phone`}
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel-national"
+                  placeholder="33111116892"
+                  value={form.phone}
+                  onChange={(event) => setField("phone", event.target.value)}
+                  aria-invalid={invalid("phone")}
+                  aria-describedby={errors.phone ? errorId("phone") : undefined}
+                  className="w-full bg-transparent px-3 py-3 text-sm text-navy-deep placeholder:text-muted"
+                />
+              </div>
+              {errorText("phone")}
             </div>
           </div>
 
-          {/* Contact */}
-          <div className="mt-4 space-y-3">
-            <input
-              type="text"
-              required
-              placeholder="Full Name"
-              value={form.fullName}
-              onChange={(e) => setForm((prev) => ({ ...prev, fullName: e.target.value }))}
-              className={inputClass}
-            />
-            <input
-              type="email"
-              required
-              placeholder="E-mail"
-              value={form.email}
-              onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
-              className={inputClass}
-            />
-            <div className="flex overflow-hidden rounded-[8px] border border-[#e5e5e5] bg-[#efefef] focus-within:border-secondary focus-within:bg-white">
-              <span className="flex shrink-0 items-center gap-1.5 border-r border-[#e0e0e0] px-3 text-sm text-primary">
-                <span aria-hidden="true">🇵🇰</span>
-                +92
-              </span>
-              <input
-                type="tel"
-                required
-                placeholder="33111116892"
-                value={form.phone}
-                onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
-                className="w-full bg-transparent px-3 py-3 text-sm text-primary outline-none placeholder:text-primary/40"
-              />
+          <button type="submit" className={buttonClasses({ variant: "green", pill: true, size: "lg", className: "mt-5 w-full" })}>
+            Inquire Now
+          </button>
+
+          {sent ? (
+            <div role="status" className="mt-4 rounded-xl border border-green-strong/30 bg-green-strong/10 p-3 text-center text-sm text-navy-deep">
+              <p className="flex items-center justify-center gap-2 font-semibold text-green-strong">
+                <Icon name="check-circle" size={18} />
+                Inquiry prepared — WhatsApp will open to send details.
+              </p>
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex min-h-11 items-center gap-1.5 font-bold text-navy underline underline-offset-2"
+              >
+                <Icon name="whatsapp" size={16} />
+                WhatsApp
+              </a>
             </div>
-          </div>
-
-          {/* Footer actions */}
-          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <label className="flex min-h-[52px] items-center gap-3 rounded-[6px] border border-[#d8d8d8] bg-white px-3 py-2 shadow-sm">
-              <input
-                type="checkbox"
-                checked={form.verified}
-                onChange={(e) => setForm((prev) => ({ ...prev, verified: e.target.checked }))}
-                className="h-5 w-5 accent-secondary"
-              />
-              <span className="text-sm text-primary/80">I&apos;m not a robot</span>
-              <span className="ml-auto text-[10px] leading-tight text-primary/40">
-                reCAPTCHA
-                <br />
-                Privacy · Terms
-              </span>
-            </label>
-
-            <button
-              type="submit"
-              className="min-h-[52px] rounded-[8px] border-b-[3px] border-accent bg-[#d9d9d9] px-6 text-sm font-extrabold uppercase tracking-wide text-primary transition hover:bg-[#cfcfcf]"
-            >
-              Inquire Now
-            </button>
-          </div>
-
-          {submitted ? (
-            <p className="mt-3 text-center text-sm text-secondary">
-              Inquiry prepared — WhatsApp will open to send details.
-            </p>
           ) : null}
         </form>
       </div>
     </div>
   );
-
-  return createPortal(modal, document.body);
 }

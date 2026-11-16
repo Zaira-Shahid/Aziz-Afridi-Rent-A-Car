@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CarDetailBody, CarsHero } from "@/components/cars";
+import { CarDetailBody } from "@/components/cars";
 import { CtaBanner } from "@/components/shared";
-import { brand, formatPrice } from "@/lib/brand";
+import { formatPrice } from "@/lib/brand";
 import { carCategories, carModels } from "@/data";
 import { pageMeta } from "@/lib/seo";
 
@@ -40,26 +40,6 @@ export default async function CarModelPage({ params }: Props) {
 
   return (
     <>
-      <CarsHero
-        badge={car.badge ?? car.brand}
-        title={car.name}
-        accent="Rental"
-        description={`Book the ${car.name} for daily, weekly, or monthly hire — comfortable travel with Aziz Afridi Rent A Car across Pakistan.`}
-        image={car.image}
-        imageAlt={`${car.name} rental`}
-        primaryCta={{ label: "Inquire Now", href: "/contact" }}
-        secondaryCta={{
-          label: "Call Us",
-          href: `tel:${brand.phone}`,
-        }}
-        stats={[
-          { value: formatPrice(car.priceDay), label: "Per Day" },
-          { value: `${car.seats}`, label: "Seats" },
-          { value: car.transmission, label: "Transmission" },
-          { value: car.fuel, label: "Fuel" },
-        ]}
-      />
-
       <CarDetailBody
         car={car}
         categoryName={category?.name ?? car.category}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { CarGridSection, CarsHero } from "@/components/cars";
+import { CarsCatalog, CarsHero } from "@/components/cars";
 import { SearchBanner } from "@/components/cars/SearchBanner";
 import { CtaBanner } from "@/components/shared";
 import { brand } from "@/lib/brand";
@@ -24,9 +24,6 @@ const heroImage =
 export default function CarsPage() {
   return (
     <>
-      <Suspense fallback={null}>
-        <SearchBanner />
-      </Suspense>
       <CarsHero
         badge="Aziz Afridi Fleet"
         title="Our"
@@ -43,15 +40,10 @@ export default function CarsPage() {
           { value: "24/7", label: "Support" },
         ]}
       />
-      <div id="all-models">
-        <CarGridSection
-          title="All models"
-          description="Every car in our fleet — named and priced for daily or monthly rental."
-          cars={carModels}
-          showViewAll={false}
-          className="bg-white"
-        />
-      </div>
+      <Suspense fallback={null}>
+        <SearchBanner />
+      </Suspense>
+      <CarsCatalog cars={carModels} />
       <CtaBanner />
     </>
   );
