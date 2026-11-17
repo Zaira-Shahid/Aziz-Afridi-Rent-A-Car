@@ -65,7 +65,6 @@ export function Footer() {
                   {formatPhoneDisplay()}
                 </a>
               </ContactRow>
-              <ContactRow icon="wallet">Easypaisa: {brand.easypaisa}</ContactRow>
               <ContactRow icon="mail">
                 <a href={`mailto:${brand.email}`} className={linkClass}>
                   {brand.email}
