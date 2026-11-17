@@ -29,19 +29,39 @@ type CarCardProps = {
 export function CarCard({ car, variant = "listing", badge, className }: CarCardProps) {
   const [inquireOpen, setInquireOpen] = useState(false);
   const [showAlt, setShowAlt] = useState(false);
-  const [paused, setPaused] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const hasAlt = Boolean(car.imageAlt && car.imageAlt !== car.image);
   const href = `/cars/${car.slug}`;
   const logo = brandLogo(car.brand);
   const label = badge ?? car.badge;
 
-  // Show the second colour now and then, unless the visitor prefers reduced motion.
+  // Devices with a mouse swap colour while the pointer is over the card. Touch devices
+  // (no hover) swap on a timer instead. Reduced motion: no timer, and the hover swap is instant.
   useEffect(() => {
-    if (!hasAlt || paused) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => {
+      setCanHover(hoverQuery.matches);
+      setReducedMotion(motionQuery.matches);
+    };
+    sync();
+    hoverQuery.addEventListener("change", sync);
+    motionQuery.addEventListener("change", sync);
+    return () => {
+      hoverQuery.removeEventListener("change", sync);
+      motionQuery.removeEventListener("change", sync);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasAlt || canHover || reducedMotion) return;
     const id = window.setInterval(() => setShowAlt((prev) => !prev), 2800);
-    return () => window.clearInterval(id);
-  }, [hasAlt, paused]);
+    return () => {
+      window.clearInterval(id);
+      setShowAlt(false); // back to the first photo when the timer stops
+    };
+  }, [hasAlt, canHover, reducedMotion]);
 
   const whatsappHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(
     `Hi, I want to inquire about ${car.name} rental.`,
@@ -56,27 +76,21 @@ export function CarCard({ car, variant = "listing", badge, className }: CarCardP
           "group relative flex h-full flex-col overflow-hidden focus-within:ring-2 focus-within:ring-green-strong/70",
           className,
         )}
+        onMouseEnter={() => {
+          if (hasAlt && canHover) setShowAlt(true);
+        }}
+        onMouseLeave={() => {
+          if (hasAlt && canHover) setShowAlt(false);
+        }}
       >
-        <div
-          className="relative aspect-[16/10] overflow-hidden bg-surface"
-          onMouseEnter={() => {
-            if (!hasAlt) return;
-            setPaused(true);
-            setShowAlt(true);
-          }}
-          onMouseLeave={() => {
-            if (!hasAlt) return;
-            setPaused(false);
-            setShowAlt(false);
-          }}
-        >
+        <div className="relative aspect-[16/10] overflow-hidden bg-surface">
           <Image
             src={car.image}
             alt={`${car.name} rental`}
             fill
             sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
             className={cn(
-              "object-cover transition duration-700",
+              "object-cover transition duration-700 motion-reduce:scale-100 motion-reduce:transition-none",
               hasAlt && showAlt ? "scale-105 opacity-0" : "scale-100 opacity-100",
             )}
           />
@@ -87,7 +101,7 @@ export function CarCard({ car, variant = "listing", badge, className }: CarCardP
               fill
               sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
               className={cn(
-                "object-cover transition duration-700",
+                "object-cover transition duration-700 motion-reduce:scale-100 motion-reduce:transition-none",
                 showAlt ? "scale-105 opacity-100" : "scale-100 opacity-0",
               )}
             />
