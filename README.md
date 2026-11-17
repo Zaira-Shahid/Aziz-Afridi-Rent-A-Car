@@ -28,6 +28,7 @@ Some photos (blog covers, city and service images) are loaded from third-party h
 - **Blog**: listing, category pages and post pages, with client-side search by title and excerpt. Posts come from `src/data/blog.ts` and from Firestore.
 - **Blog admin** at `/admin/blog`: Google sign-in for allowed accounts, then create, edit, delete and sync posts in Firestore. The page is not linked from the site and is marked `noindex`.
 - **Other pages**: About, FAQ (7 topics), Reviews feedback, Terms, Privacy, Booking Policy and a custom 404.
+- **Chat assistant**: a small floating chat button (full-screen panel on phones). It runs entirely in the browser with keyword matching in English and Roman Urdu, answers only from the site data (cars and prices, services, cities, FAQ, how to book, contact details) and sends anything else to WhatsApp. No AI, no API, and chats are never saved. The logic is in `src/lib/chatbot.ts`.
 - **Sticky Call and WhatsApp bar** on mobile, floating WhatsApp button on desktop.
 - **SEO**: page titles and descriptions, JSON-LD, `sitemap.xml` and `robots.txt`.
 
@@ -139,6 +140,7 @@ src/
   app/            Routes (App Router), global styles, sitemap, robots
   components/
     blog/         Blog listing, post, category and admin
+    chat/         Chat assistant panel and button
     cars/         Car card, grids, detail page, inquiry dialog, search banner
     city/         City pages and city services overview
     contact/      Contact form, booking bar, URL prefill helper
@@ -149,7 +151,7 @@ src/
     shared/       Page hero, call-to-action banner, simple content page
     ui/           Button, Card, Container, Section, Icon and other building blocks
   data/           Cars, services, cities, blog posts, navigation (page content lives here)
-  lib/            Brand details, Firebase, blog helpers, SEO
+  lib/            Brand details, Firebase, blog helpers, SEO, chat assistant engine
   types/          Shared TypeScript types
 public/           Images (fleet, brands, services) and brand assets
 scripts/          Build fix-up, screenshots and one-off maintenance scripts
