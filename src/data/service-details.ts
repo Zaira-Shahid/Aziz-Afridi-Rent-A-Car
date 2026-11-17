@@ -1267,7 +1267,7 @@ const corporateCarRental: ServiceDetail = {
         transmission: "Automatic",
         image: "/images/fleet/corolla-white.webp",
         imageAlt: "/images/fleet/corolla-black.webp",
-        priceDay: 6000,
+        priceDay: 7000,
       },
       {
         name: "Honda Civic",
@@ -1276,7 +1276,7 @@ const corporateCarRental: ServiceDetail = {
         transmission: "Automatic",
         image: "/images/fleet/civic-white.webp",
         imageAlt: "/images/fleet/civic-black.webp",
-        priceDay: 7000,
+        priceDay: 8000,
       },
       {
         name: "Toyota Camry / Grande",
