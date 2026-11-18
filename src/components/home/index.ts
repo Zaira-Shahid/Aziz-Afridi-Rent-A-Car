@@ -7,6 +7,7 @@ export { HomeServices } from "./HomeServices";
 export { HowItWorks } from "./HowItWorks";
 export { HomeDestinations } from "./HomeDestinations";
 export { PromoBanners } from "./PromoBanners";
+export { FounderStrip } from "./FounderStrip";
 export { HomeReviews } from "./HomeReviews";
 export { HomeFaq } from "./HomeFaq";
 export { HomeBlog } from "./HomeBlog";

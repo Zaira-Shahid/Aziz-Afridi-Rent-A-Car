@@ -5,6 +5,7 @@ import {
   ExploreFleet,
   FeatureStrip,
   HomeBlog,
+  FounderStrip,
   HomeCta,
   HomeDestinations,
   HomeFaq,
@@ -36,6 +37,7 @@ export default function HomePage() {
       <HowItWorks />
       <HomeDestinations />
       <PromoBanners />
+      <FounderStrip />
       <HomeReviews />
       <HomeFaq />
       <HomeBlog />

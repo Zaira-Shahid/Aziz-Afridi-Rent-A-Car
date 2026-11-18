@@ -28,6 +28,27 @@ export default function AboutPage() {
         description="Car rental with a driver for everyday plans, business commitments and journeys across Pakistan."
       />
 
+      {/* Founder */}
+      <Section tone="surface">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          <Reveal>
+            <Image
+              src="/images/aziz-afridi-ceo.webp"
+              alt="Aziz Afridi, Founder & CEO of Aziz Afridi Rent a Car"
+              width={640}
+              height={640}
+              sizes="(min-width: 1024px) 40vw, 100vw"
+              className="mx-auto aspect-square w-full max-w-md rounded-[2rem] object-cover shadow-lift"
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="text-sm font-bold uppercase tracking-widest text-green-strong">Meet Our Founder</p>
+            <h2 className="mt-3 font-heading text-4xl font-extrabold italic leading-tight text-navy-deep sm:text-5xl">Aziz Afridi</h2>
+            <p className="mt-2 text-lg font-semibold text-green-strong">Founder &amp; CEO</p>
+          </Reveal>
+        </div>
+      </Section>
+
       {/* Story: photo in an arched frame with a green offset block, text beside it */}
       <Section tone="white">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
