@@ -12,7 +12,8 @@ export const brand = {
   location: {
     label: "Aziz Afridi Rent A Car, Islamabad",
     address: "Aziz Afridi Rent A Car, Islamabad, Pakistan",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Islamabad+Pakistan",
+    mapsUrl: "https://share.google/IvT4geeFuCsP5LcV8",
+    mapEmbedUrl: "https://www.google.com/maps?q=Aziz+Afridi+Rent+A+Car+Islamabad&output=embed",
   },
   social: {
     facebook: "https://www.facebook.com/azizafridirentacar/",

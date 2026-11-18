@@ -76,6 +76,15 @@ export function Footer() {
                 </a>
               </ContactRow>
             </ul>
+            <a
+              href={brand.location.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 self-start rounded-xl border border-white/40 px-4 text-sm font-semibold text-white transition hover:border-green hover:bg-green hover:text-navy-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              <Icon name="map-pin" size={18} />
+              Find us on Google
+            </a>
             <ul className="flex flex-wrap gap-2.5" aria-label="Social media">
               {socialLinks.map(({ label, href, icon }) => (
                 <li key={label}>

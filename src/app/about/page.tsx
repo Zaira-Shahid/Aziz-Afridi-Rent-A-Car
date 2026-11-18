@@ -5,6 +5,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServicesGrid } from "@/components/services/ServicesGrid";
+import { Icon } from "@/components/ui/Icon";
+import { brand } from "@/lib/brand";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -74,6 +76,20 @@ export default function AboutPage() {
             <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">Our fleet pages bring economy cars, sedans, executive vehicles, SUVs and group transport together in one place. Daily, weekly and monthly options help you plan a short visit or recurring travel.</p>
             <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">Share your pickup point, dates and destination before confirming. Request a quote covering your vehicle, driver arrangements, rental duration and additional trip costs.</p>
           </Reveal>
+        </div>
+      </Section>
+
+      <Section tone="white" className="py-10 sm:py-12">
+        <div className="flex justify-center">
+          <a
+            href={brand.location.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-green-strong px-6 font-semibold text-white transition hover:bg-green-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+          >
+            <Icon name="map-pin" size={18} />
+            Find us on Google
+          </a>
         </div>
       </Section>
 

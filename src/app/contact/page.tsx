@@ -107,6 +107,17 @@ export default function ContactPage() {
         </p>
       </Section>
 
+      <Section tone="white" className="pt-0 sm:pt-0 lg:pt-0">
+        <iframe
+          title="Map: Aziz Afridi Rent A Car, Islamabad"
+          src={brand.location.mapEmbedUrl}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+          className="h-[300px] w-full rounded-2xl border-0 shadow-soft lg:h-[400px]"
+        />
+      </Section>
+
       <Section className="pt-8 sm:pt-10 lg:pt-12">
         <div className="grid items-start gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
           <div id="booking-inquiry" className="scroll-mt-28">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { brand } from "@/lib/brand";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
@@ -95,12 +96,20 @@ export function HomeReviews() {
             <span className="text-sm text-muted">| 895 reviews</span>
           </div>
           <a
-            href="https://www.google.com/maps"
+            href={brand.location.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-11 items-center text-sm font-bold text-green-strong underline-offset-4 hover:underline"
           >
             Write a review
+          </a>
+          <a
+            href={brand.location.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center rounded-xl bg-green-strong px-5 text-sm font-bold text-white transition hover:bg-green-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+          >
+            See our Google reviews
           </a>
         </div>
       </div>
