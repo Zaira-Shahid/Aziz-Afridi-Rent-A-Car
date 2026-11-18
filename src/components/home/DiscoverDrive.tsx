@@ -6,12 +6,14 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { fleetSections, getCarsBySlugs } from "@/data";
 
-/** The four fleets shown on the home page, with an icon each. */
+/** The six fleets shown on the home page, with an icon each. Their order comes from fleetSections. */
 const homeFleets: { slug: string; icon: IconName }[] = [
+  { slug: "economy", icon: "wallet" },
+  { slug: "standard", icon: "car" },
   { slug: "executive-suv", icon: "crown" },
+  { slug: "suv-hybrid", icon: "car-sparkles" },
   { slug: "premium", icon: "star" },
   { slug: "luxury", icon: "shield-check" },
-  { slug: "suv-hybrid", icon: "car" },
 ];
 
 export function DiscoverDrive() {
@@ -35,9 +37,9 @@ export function DiscoverDrive() {
         </div>
       </Reveal>
 
-      <ul className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-4">
+      <ul className="-mx-4 mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:mt-10 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
         {fleets.map((fleet) => (
-          <li key={fleet.slug}>
+          <li key={fleet.slug} className="w-[72%] shrink-0 snap-center sm:w-auto">
             <a
               href={`#fleet-${fleet.slug}`}
               className="group relative block aspect-[4/3] overflow-hidden rounded-card bg-navy-deep shadow-soft sm:aspect-[5/4]"
@@ -47,7 +49,7 @@ export function DiscoverDrive() {
                   src={fleet.cars[0].image}
                   alt=""
                   fill
-                  sizes="(min-width: 1024px) 24vw, 48vw"
+                  sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 72vw"
                   className="object-cover transition duration-500 motion-safe:group-hover:scale-105"
                 />
               ) : null}
