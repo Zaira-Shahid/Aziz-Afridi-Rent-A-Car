@@ -15,10 +15,11 @@ const homeFleets: { slug: string; icon: IconName }[] = [
 ];
 
 export function DiscoverDrive() {
-  const fleets = homeFleets.flatMap(({ slug, icon }) => {
-    const section = fleetSections.find((item) => item.slug === slug);
-    if (!section) return [];
-    return [{ ...section, icon, cars: getCarsBySlugs(section.carSlugs.slice(0, 3)) }];
+  // Follow the central fleet order from data/cars.ts.
+  const fleets = fleetSections.flatMap((section) => {
+    const home = homeFleets.find((item) => item.slug === section.slug);
+    if (!home) return [];
+    return [{ ...section, icon: home.icon, cars: getCarsBySlugs(section.carSlugs.slice(0, 3)) }];
   });
 
   return (

@@ -6,6 +6,7 @@ export function carImage(filename: string) {
   return `/images/fleet/${clean.split("/").map(encodeURIComponent).join("/")}`;
 }
 
+/** Display order of fleets everywhere on the site (home, /cars, menus, search, chatbot). */
 export const fleetSections: FleetSection[] = [
   {
     slug: "economy",
@@ -20,16 +21,22 @@ export const fleetSections: FleetSection[] = [
     carSlugs: ["toyota-corolla", "toyota-corolla-grande", "honda-civic-2022", "honda-civic-2025"],
   },
   {
-    slug: "premium",
-    name: "Premium Fleet",
-    description: "Premium vehicles offering luxury, comfort, and performance.",
-    carSlugs: ["honda-br-v", "toyota-revo", "toyota-prado", "toyota-fortuner"],
+    slug: "executive-suv",
+    name: "Executive SUV Fleet",
+    description: "Luxury SUVs designed for VIP travel, official visits, and premium tours.",
+    carSlugs: ["toyota-land-cruiser-v8", "toyota-prado", "toyota-fortuner", "lexus-lx"],
   },
   {
     slug: "suv-hybrid",
     name: "SUV & Hybrid Fleet",
     description: "Modern SUVs ideal for families, business trips, and long-distance travel.",
     carSlugs: ["kia-sportage", "hyundai-tucson", "hyundai-elantra"],
+  },
+  {
+    slug: "premium",
+    name: "Premium Fleet",
+    description: "Premium vehicles offering luxury, comfort, and performance.",
+    carSlugs: ["honda-br-v", "toyota-revo", "toyota-prado", "toyota-fortuner"],
   },
   {
     slug: "luxury",
@@ -45,12 +52,6 @@ export const fleetSections: FleetSection[] = [
       "audi-a4",
       "lexus-lx",
     ],
-  },
-  {
-    slug: "executive-suv",
-    name: "Executive SUV Fleet",
-    description: "Luxury SUVs designed for VIP travel, official visits, and premium tours.",
-    carSlugs: ["toyota-land-cruiser-v8", "toyota-prado", "toyota-fortuner", "lexus-lx"],
   },
   {
     slug: "group-travel",

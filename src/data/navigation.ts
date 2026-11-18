@@ -70,10 +70,10 @@ export const mainNav: NavItem[] = [
         items: [
           { label: "Economy Fleet", href: "/categories/economy", icon: "savings", iconColor: C },
           { label: "Standard Fleet", href: "/categories/standard", icon: "directions_car", iconColor: A },
-          { label: "Premium Fleet", href: "/categories/premium", icon: "workspace_premium", iconColor: C },
-          { label: "SUV & Hybrid", href: "/categories/suv-hybrid", icon: "airport_shuttle", iconColor: A },
-          { label: "Luxury Fleet", href: "/categories/luxury", icon: "diamond", iconColor: C },
           { label: "Executive SUV", href: "/categories/executive-suv", icon: "directions_car", iconColor: A },
+          { label: "SUV & Hybrid", href: "/categories/suv-hybrid", icon: "airport_shuttle", iconColor: A },
+          { label: "Premium Fleet", href: "/categories/premium", icon: "workspace_premium", iconColor: C },
+          { label: "Luxury Fleet", href: "/categories/luxury", icon: "diamond", iconColor: C },
           { label: "Group Travel", href: "/categories/group-travel", icon: "groups", iconColor: C },
           { label: "Corporate Fleet", href: "/categories/corporate", icon: "business_center", iconColor: A },
           { label: "Wedding & Event", href: "/categories/wedding-event", icon: "celebration", iconColor: C },
