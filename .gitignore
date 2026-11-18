@@ -48,3 +48,6 @@ yarn-error.log*
 /demo/
 
 /docs/design-reference/
+
+# Source photo (site uses the .webp)
+public/images/aziz-afridi-ceo.jpg
