@@ -145,6 +145,23 @@ function fleetReply(slugs: string[]): BotReply {
   return { text: lines.join("\n\n"), links };
 }
 
+/** The full fleet list, in the same order as /cars (fleetSections). */
+export function fleetListReply(): BotReply {
+  const sections = fleetSections.filter((section) => getCarsForCategory(section.slug).length > 0);
+  return {
+    text: ["Our fleets:", ...sections.map((section) => "• " + section.name), "", "Tap a fleet to see its cars and prices."].join("\n"),
+    links: [...sections.map((section) => ({ label: section.name, href: `/categories/${section.slug}` })), { label: "All cars", href: "/cars" }],
+  };
+}
+
+const FLEET_LIST_WORDS = ["fleet", "fleets", "category", "categories", "gaariyan", "gariyan", "gaarian", "gadiyan", "gaadiyan"];
+const FLEET_LIST_PHRASES = ["car types", "cars list", "car list", "kaun si gaariyan", "kon si gaariyan", "kaun si gariyan"];
+
+function wantsFleetList(raw: string[]) {
+  const phrase = ` ${raw.join(" ")} `;
+  return raw.some((w) => FLEET_LIST_WORDS.includes(w)) || FLEET_LIST_PHRASES.some((p) => phrase.includes(` ${p} `));
+}
+
 export function pricesReply(): BotReply {
   const lines: string[] = [];
   const links: ChatLink[] = [];
@@ -377,6 +394,7 @@ export function reply(input: string): BotReply {
 
   const fleets = matchFleets(q);
   if (fleets.length > 0) return fleetReply(fleets);
+  if (wantsFleetList(raw)) return fleetListReply();
 
   if (cityMatch.single) return cityReply(cityMatch.single);
 
